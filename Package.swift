@@ -4,6 +4,10 @@ import PackageDescription
 
 let package = Package(
     name: "NJKit",
+    platforms: [
+        .iOS(.v17),
+        .macOS(.v14)
+    ],
     products: [
         .library(name: "NJKit", targets: ["NJKit"]),
     ],
