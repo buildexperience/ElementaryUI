@@ -35,6 +35,7 @@ public struct NJText<Style: ShapeStyle>: View {
     public func text() -> Text {
         textBody
             .foregroundStyle(style)
+            .font(font)
     }
 }
 
