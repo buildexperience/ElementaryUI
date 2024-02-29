@@ -10,11 +10,16 @@ import SwiftUI
 public extension View {
     /// Adds a border with the specified content, line width, and shape to the view.
     ///
+    /// ```swift
+    /// Color.blue
+    ///     .border(Color.red, lineWidth: 10, antialiased: false, shape: .capsule)
+    /// ```
+    ///
     /// - Parameters:
-    ///  - content: The content of the border, a `ShapeStyle`.
-    ///  - lineWidth: The width of the border line.
-    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering.
-    ///  - shape: The shape of the border.
+    ///  - content: The content of the border, a `ShapeStyle`, defaults to `.foreground`.
+    ///  - lineWidth: The width of the border line, defaults to 1.
+    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
+    ///  - shape: The shape of the border, an `InsettableShape`.
     ///
     /// - Returns: A view with the specified border.
     ///
@@ -27,11 +32,16 @@ public extension View {
     
     /// Adds a border with the specified content, stroke style, and shape to the view.
     ///
+    /// ```swift
+    /// Color.blue
+    ///     .border(Color.red, style: StrokeStyle(lineWidth: 10, lineCap: .round, dash: [5, 1]), antialiased: false, shape: .capsule)
+    /// ```
+    ///
     /// - Parameters:
-    ///  - content: The content of the border,  a `ShapeStyle`.
+    ///  - content: The content of the border,  a `ShapeStyle`, defaults to `.foreground`.
     ///  - style: The stroke style of the border.
-    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering.
-    ///  - shape: The shape of the border.
+    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
+    ///  - shape: The shape of the border, an `InsettableShape`.
     ///
     /// - Returns: A view with the specified border.
     ///
