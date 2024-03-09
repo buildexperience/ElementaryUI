@@ -16,10 +16,10 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - content: The content of the border, a `ShapeStyle`, defaults to `.foreground`.
-    ///  - lineWidth: The width of the border line, defaults to 1.
-    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
-    ///  - shape: The shape of the border, an `InsettableShape`.
+    ///   - content: The content of the border, a `ShapeStyle`, defaults to `.foreground`.
+    ///   - lineWidth: The width of the border line, defaults to 1.
+    ///   - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
+    ///   - shape: The shape of the border, an `InsettableShape`.
     ///
     /// - Returns: A view with the specified border.
     ///
@@ -38,10 +38,10 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - content: The content of the border,  a `ShapeStyle`, defaults to `.foreground`.
-    ///  - style: The stroke style of the border.
-    ///  - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
-    ///  - shape: The shape of the border, an `InsettableShape`.
+    ///   - content: The content of the border,  a `ShapeStyle`, defaults to `.foreground`.
+    ///   - style: The stroke style of the border.
+    ///   - antialiased: A Boolean value indicating whether to use antialiased rendering, defaults to true.
+    ///   - shape: The shape of the border, an `InsettableShape`.
     ///
     /// - Returns: A view with the specified border.
     ///

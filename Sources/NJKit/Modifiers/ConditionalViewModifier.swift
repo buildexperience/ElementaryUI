@@ -49,8 +49,8 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - condition: The boolean condition to determine whether to apply the builder.
-    ///  - builder: The view builder closure to be applied.
+    ///   - condition: The boolean condition to determine whether to apply the builder.
+    ///   - builder: The view builder closure to be applied.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
@@ -81,8 +81,8 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - condition: The boolean condition to determine whether to apply the builder.
-    ///  - builder: The view builder closure to be applied.
+    ///   - condition: The boolean condition to determine whether to apply the builder.
+    ///   - builder: The view builder closure to be applied.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
@@ -114,8 +114,8 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - value: The optional value to determine whether to apply the builder.
-    ///  - builder: The view builder closure to be applied conditionally.
+    ///   - value: The optional value to determine whether to apply the builder.
+    ///   - builder: The view builder closure to be applied conditionally.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
@@ -147,8 +147,8 @@ public extension View {
     /// ```
     ///
     /// - Parameters:
-    ///  - value: The optional value to determine whether to apply the builder.
-    ///  - builder: The view builder closure to be applied conditionally.
+    ///   - value: The optional value to determine whether to apply the builder.
+    ///   - builder: The view builder closure to be applied conditionally.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
