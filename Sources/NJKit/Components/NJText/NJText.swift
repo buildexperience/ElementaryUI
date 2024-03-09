@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-/// A view that displays one or more lines of read-only text.
+/// A wrapper arround ``Text`` that displays one or more lines of read-only text.
+///
+/// - Displaying a string without localization or a ``LocalizedStringKey``:
 ///
 /// ```swift
 /// NJText("Hello, World!")
@@ -15,15 +17,29 @@ import SwiftUI
 ///     .foregroundStyle(Color.red)
 /// ```
 ///
+/// - Displaying a localized string using a bundle:
+///
+/// ```swift
+/// NJText("Hello, World!", bundle: .module)
+///     .font(Font.title, weight: .bold)
+///     .foregroundStyle(Color.red)
+/// ```
+///
 public struct NJText<Style: ShapeStyle>: View {
 //MARK: - Properties
+    /// The content type of the text, either localized or unlocalized.
     private let string: NJTextContentType
+    
+    /// The font style applied to the text.
     private let font: Font?
+    
+    /// The shape style applied to the text.
     private let style: Style
 //MARK: - Body
     public var body: some View {
         text()
     }
+    /// Returns a ``Text`` view representing the content specified by the `string` property.
     private var textBody: Text {
         switch string {
             case .localized(let localizedStringKey, let bundle):
@@ -32,7 +48,15 @@ public struct NJText<Style: ShapeStyle>: View {
                 return Text(string)
         }
     }
-    public func text() -> Text {
+}
+
+//MARK: - Public Functions
+public extension NJText {
+    /// Get the ``Text`` view used to display the content.
+    ///
+    /// - Returns: The underlying ``Text`` view used by the wrapper.
+    ///
+    func text() -> Text {
         textBody
             .foregroundStyle(style)
             .font(font)
@@ -72,8 +96,8 @@ public extension NJText where Style == Color {
     /// ```
     ///
     /// - Parameters:
-    ///  - key: The key for the localized text content.
-    ///  - bundle: The bundle containing the localized string resources. If `nil`, the main bundle is used.
+    ///   - key: The key for the localized text content.
+    ///   - bundle: The bundle containing the localized string resources. If `nil`, the main bundle is used.
     ///
     init(_ key: LocalizedStringKey, bundle: Bundle? = nil) {
         self.string = .localized(key: key, bundle: bundle)
@@ -106,8 +130,8 @@ public extension NJText {
     /// ```
     ///
     /// - Parameters:
-    ///  - font: The custom font to be applied to the text.
-    ///  - weight: The custom weight to be applied to the font. If `nil`, the default weight is used.
+    ///   - font: The custom font to be applied to the text.
+    ///   - weight: The custom weight to be applied to the font. If `nil`, the default weight is used.
     ///
     /// - Returns: An NJText view with the specified font.
     ///
