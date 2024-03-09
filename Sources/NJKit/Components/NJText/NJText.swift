@@ -27,13 +27,19 @@ import SwiftUI
 ///
 public struct NJText<Style: ShapeStyle>: View {
 //MARK: - Properties
+    /// The content type of the text, either localized or unlocalized.
     private let string: NJTextContentType
+    
+    /// The font style applied to the text.
     private let font: Font?
+    
+    /// The shape style applied to the text.
     private let style: Style
 //MARK: - Body
     public var body: some View {
         text()
     }
+    /// Returns a ``Text`` view representing the content specified by the `string` property.
     private var textBody: Text {
         switch string {
             case .localized(let localizedStringKey, let bundle):
