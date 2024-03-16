@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+/// ``EnvironmentKey`` used to store screen related information within the environment.
 fileprivate struct ScreenEnvironmentKey: EnvironmentKey {
+    /// The default value for the ``ScreenEnvironmentKey``, set to `Screen.zero`.
     static let defaultValue = Screen.zero
 }
 
