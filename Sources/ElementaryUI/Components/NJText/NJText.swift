@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```swift
 /// NJText("Hello, World!")
-///     .font(Font.title, weight: .bold)
+///     .font(.title)
 ///     .foregroundStyle(Color.red)
 /// ```
 ///
@@ -21,20 +21,20 @@ import SwiftUI
 ///
 /// ```swift
 /// NJText("Hello, World!", bundle: .module)
-///     .font(Font.title, weight: .bold)
+///     .font(.title)
 ///     .foregroundStyle(Color.red)
 /// ```
 ///
 public struct NJText<Style: ShapeStyle>: View {
 //MARK: - Properties
+    /// The environment value representing the current font.
+    @Environment(\.font) private var font
+    
+    /// The environment value representing the current foregroundStyle.
+    @Environment(\.foregroundStyle) private var foregroundStyle
+    
     /// The content type of the text, either localized or unlocalized.
     private let string: NJTextContentType
-    
-    /// The font style applied to the text.
-    private let font: Font?
-    
-    /// The shape style applied to the text.
-    private let style: Style
 //MARK: - Body
     public var body: some View {
         text()
@@ -58,7 +58,7 @@ public extension NJText {
     ///
     func text() -> Text {
         textBody
-            .foregroundStyle(style)
+            .foregroundStyle(foregroundStyle)
             .font(font)
     }
 }
@@ -71,8 +71,6 @@ public extension NJText where Style == Color {
     ///
     init<T: NJTextDisplayable>(_ text: T) {
         self.string = text.content
-        self.font = nil
-        self.style = Styling.style(for: .primaryText)
     }
     
     /// Creates a text view that displays a stored string without localization.
@@ -85,8 +83,6 @@ public extension NJText where Style == Color {
     ///
     init<S: StringProtocol>(_ content: S) {
         self.string = .unlocalized(string: String(content))
-        self.font = nil
-        self.style = Styling.style(for: .primaryText)
     }
     
     /// Creates a text view that displays localized content identified by a key.
@@ -101,49 +97,11 @@ public extension NJText where Style == Color {
     ///
     init(_ key: LocalizedStringKey, bundle: Bundle? = nil) {
         self.string = .localized(key: key, bundle: bundle)
-        self.font = nil
-        self.style = Styling.style(for: .primaryText)
-    }
-}
-
-//MARK: - Modifiers
-public extension NJText {
-    /// Applies a foreground style to the text.
-    ///
-    /// ```swift
-    /// NJText("Hello, World!")
-    ///     .foregroundStyle(Color.red)
-    /// ```
-    ///
-    /// - Parameter style: The style to be applied to the text.
-    /// - Returns: An `NJText` view with the specified foreground style.
-    ///
-    func foregroundStyle<S: ShapeStyle>(_ style: S) -> NJText<S> {
-        return NJText<S>(string: string, font: font, style: style)
-    }
-    
-    /// Applies a custom font to the text.
-    ///
-    /// ```swift
-    /// NJText("Hello, World!")
-    ///     .font(Font.title, weight: .bold)
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - font: The custom font to be applied to the text.
-    ///   - weight: The custom weight to be applied to the font. If `nil`, the default weight is used.
-    ///
-    /// - Returns: An NJText view with the specified font.
-    ///
-    func font<F: NJFont>(_ font: F?, weight: F.Weight? = nil) -> NJText {
-        //TODO: - Migrate this function to use Environment.
-        let njFont = font?.with(weight: weight)
-        return NJText(string: string, font: njFont?.font, style: style)
     }
 }
 
 #Preview {
     NJText("Hello, World!")
-        .font(Font.title, weight: .bold)
+        .font(Font.title)
         .foregroundStyle(Color.red)
 }

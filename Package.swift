@@ -3,18 +3,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "NJKit",
+    name: "ElementaryUI",
     platforms: [
         .iOS(.v17),
         .macOS(.v14)
     ],
     products: [
-        .library(name: "NJKit", targets: ["NJKit"]),
+        .library(name: "ElementaryUI", targets: ["ElementaryUI"]),
     ],
     targets: [
-        .target(name: "NJKit"),
-        .testTarget(name: "NJKitTests", dependencies: [
-            "NJKit"
+        .target(name: "ElementaryUI"),
+        .testTarget(name: "ElementaryUITests", dependencies: [
+            "ElementaryUI"
         ]),
     ]
 )

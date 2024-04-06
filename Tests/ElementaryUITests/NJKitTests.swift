@@ -1,5 +1,5 @@
 import XCTest
-@testable import NJKit
+@testable import ElementaryUI
 
 final class NJKitTests: XCTestCase {
     func testExample() throws {
