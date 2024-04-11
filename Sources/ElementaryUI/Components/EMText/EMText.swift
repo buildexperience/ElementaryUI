@@ -1,5 +1,5 @@
 //
-//  NJText.swift
+//  EMText.swift
 //  
 //
 //  Created by Joe Maghzal on 27/02/2024.
@@ -12,7 +12,7 @@ import SwiftUI
 /// - Displaying a string without localization or a ``LocalizedStringKey``:
 ///
 /// ```swift
-/// NJText("Hello, World!")
+/// EMText("Hello, World!")
 ///     .font(.title)
 ///     .foregroundStyle(Color.red)
 /// ```
@@ -20,27 +20,26 @@ import SwiftUI
 /// - Displaying a localized string using a bundle:
 ///
 /// ```swift
-/// NJText("Hello, World!", bundle: .module)
+/// EMText("Hello, World!", bundle: .module)
 ///     .font(.title)
 ///     .foregroundStyle(Color.red)
 /// ```
 ///
-public struct NJText<Style: ShapeStyle>: View {
-//MARK: - Properties
-    /// The environment value representing the current font.
-    @Environment(\.font) private var font
-    
-    /// The environment value representing the current foregroundStyle.
-    @Environment(\.foregroundStyle) private var foregroundStyle
-    
+public struct EMText: View {
     /// The content type of the text, either localized or unlocalized.
-    private let string: NJTextContentType
-//MARK: - Body
+    private let string: EMTextContentType
     public var body: some View {
         text()
     }
-    /// Returns a ``Text`` view representing the content specified by the `string` property.
-    private var textBody: Text {
+}
+
+//MARK: - Public Functions
+public extension EMText {
+    /// Get the ``Text`` view used to display the content.
+    ///
+    /// - Returns: The underlying ``Text`` view representing the content specified by the `string` property.
+    ///
+    func text() -> Text {
         switch string {
             case .localized(let localizedStringKey, let bundle):
                 return Text(localizedStringKey, bundle: bundle)
@@ -50,45 +49,32 @@ public struct NJText<Style: ShapeStyle>: View {
     }
 }
 
-//MARK: - Public Functions
-public extension NJText {
-    /// Get the ``Text`` view used to display the content.
-    ///
-    /// - Returns: The underlying ``Text`` view used by the wrapper.
-    ///
-    func text() -> Text {
-        textBody
-            .foregroundStyle(foregroundStyle)
-            .font(font)
-    }
-}
-
 //MARK: - Initializers
-public extension NJText where Style == Color {
-    /// Creates a text view that displays an `NJTextDisplayable`.
+public extension EMText {
+    /// Creates a text view that displays an `EMTextDisplayable`.
     ///
     /// - Parameter text: The content of the text to be displayed.
     ///
-    init<T: NJTextDisplayable>(_ text: T) {
+    init<T: EMTextDisplayable>(_ text: T) {
         self.string = text.content
     }
     
     /// Creates a text view that displays a stored string without localization.
     ///
     /// ```swift
-    /// NJText("Hello, World!")
+    /// EMText("Hello, World!")
     /// ```
     ///
     /// - Parameter content: The unlocalized text content represented by a string.
     ///
     init<S: StringProtocol>(_ content: S) {
-        self.string = .unlocalized(string: String(content))
+        self.string = .unlocalized(String(content))
     }
     
     /// Creates a text view that displays localized content identified by a key.
     ///
     /// ```swift
-    /// NJText("Hello!", bundle: .module)
+    /// EMText("Hello!", bundle: .module)
     /// ```
     ///
     /// - Parameters:
@@ -98,10 +84,22 @@ public extension NJText where Style == Color {
     init(_ key: LocalizedStringKey, bundle: Bundle? = nil) {
         self.string = .localized(key: key, bundle: bundle)
     }
+    
+    /// Creates a text view that displays either a localized string identified by a key, or a stored string without localization.
+    ///
+    /// ```swift
+    /// EMText(.unlocalized("Hello!"))
+    /// ```
+    ///
+    /// - Parameter string: The content of the text to be displayed.
+    ///
+    init(_ string: EMTextContentType) {
+        self.string = string
+    }
 }
 
 #Preview {
-    NJText("Hello, World!")
+    EMText("Hello, World!")
         .font(Font.title)
         .foregroundStyle(Color.red)
 }
