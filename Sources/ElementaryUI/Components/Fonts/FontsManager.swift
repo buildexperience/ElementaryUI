@@ -59,11 +59,11 @@ public extension FontsManager {
 
 //MARK: - Private Functions
 private extension FontsManager {
-    /// Registers the given `CGFont` with the Core Text font manager.
+    /// Registers the given ``CGFont`` with the Core Text font manager.
     ///
     /// - Parameter font: The font to register.
-    /// - Returns: An `Unmanaged<CFError>` object if an error occurred during registration, nil otherwise.
-    /// 
+    /// - Returns: An ``Unmanaged<CFError>`` object if an error occurred during registration, nil otherwise.
+    ///
     static func register(_ font: CGFont) -> Unmanaged<CFError>? {
         var error: Unmanaged<CFError>?
         CTFontManagerRegisterGraphicsFont(font, &error)
@@ -73,10 +73,10 @@ private extension FontsManager {
         return error
     }
     
-    /// Creates a `CGFont` from the font file located at the specified URL.
+    /// Creates a ``CGFont`` from the font file located at the specified URL.
     ///
     /// - Parameter url: The URL of the font file.
-    /// - Returns: A `CGFont` object if successful, nil otherwise.
+    /// - Returns: A ``CGFont`` object if successful, nil otherwise.
     ///
     static func cgFont(from url: URL) -> CGFont? {
         guard let dataProvider = CGDataProvider(url: url as CFURL) else {

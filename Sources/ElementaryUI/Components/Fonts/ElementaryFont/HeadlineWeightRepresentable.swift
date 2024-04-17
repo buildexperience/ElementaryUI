@@ -8,12 +8,12 @@
 import SwiftUI
 
 /// The requirements for representing the weight of the headline font styl.
-protocol HeadlineWeightRepresentable {
+public protocol HeadlineWeightRepresentable {
     /// The weight to be used for the headline font.
     static var headlineWeight: Self {get}
 }
 
-extension ElementaryFont where Self.Weight: HeadlineWeightRepresentable {
+public extension ElementaryFont where Self.Weight: HeadlineWeightRepresentable {
     /// Create a font with the headline text style, size of 17 & weight of `headlineWeight`.
     ///
     /// This font has a size of 17 relative to the ``headline`` text style.
