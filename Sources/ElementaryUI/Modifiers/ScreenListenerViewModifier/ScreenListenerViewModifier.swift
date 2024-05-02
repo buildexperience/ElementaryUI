@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A view modifier for observing screen size changes.
+/// ``ViewModifier`` for observing screen size changes.
 ///
 /// `ScreenListenerViewModifier` allows observing changes in the screen size and safe area insets. It adjusts the view's behavior based on these changes.
 ///
@@ -23,31 +23,16 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-/// - Warning: Not to be used directly, use either ``func sizeListener() -> some View``, or ``func sizeListener(_ screen: Binding<Screen>) -> some View``.
+/// - Warning: Do not use this modifier directly, use either ``func sizeListener() -> some View``, or ``func sizeListener(_ screen: Binding<Screen>) -> some View``.
 ///
 struct ScreenListenerViewModifier: ViewModifier {
-//MARK: - Properties
-    /// Value indicating whether to bind the screen size changes to a binding property.
+    /// The value indicating whether to bind the screen size changes to a ``Binding`` property.
     private let bindingScreen: Bool
     
-    /// Binding to the current screen size.
+    /// The binding value to the current screen size.
     @Binding private var screen: Screen
-//MARK: - Initializer
-    /// Creates a scren listener modifier using a ``Binding`` to the ``Screen`` object.
-    ///
-    /// - Parameter screen: The ``Binding`` to the current ``Screen`` object.
-    ///
-    init(screen: Binding<Screen>) {
-        self.bindingScreen = true
-        self._screen = screen
-    }
     
-    /// Creates a scren listener modifier without binding.
-    init() {
-        self.bindingScreen = false
-        self._screen = .constant(.zero)
-    }
-//MARK: - Body
+    /// The body of the ``ViewModifier``.
     func body(content: Content) -> some View {
         GeometryReader { proxy in
             let geometryScreen = screen(from: proxy)
@@ -63,8 +48,29 @@ struct ScreenListenerViewModifier: ViewModifier {
             }
         }
     }
+}
+
+//MARK: - Initializers
+extension ScreenListenerViewModifier {
+    /// Creates a scren listener modifier using a ``Binding`` to the ``Screen`` object.
+    ///
+    /// - Parameter screen: The ``Binding`` to the current ``Screen`` object.
+    ///
+    init(screen: Binding<Screen>) {
+        self.bindingScreen = true
+        self._screen = screen
+    }
+    
+    /// Creates a scren listener modifier without binding.
+    init() {
+        self.bindingScreen = false
+        self._screen = .constant(.zero)
+    }
+}
+
 //MARK: - Functions
-    /// Build a ``Screen`` object from a ``GeometryProxy``.
+extension ScreenListenerViewModifier {
+    /// Builds a ``Screen`` object from a ``GeometryProxy``.
     ///
     /// - Parameter proxy: The geometry proxy from which the screen size & safe area insets are extracted.
     /// - Returns: A ``Screen`` object representing the screen size and safe area insets.

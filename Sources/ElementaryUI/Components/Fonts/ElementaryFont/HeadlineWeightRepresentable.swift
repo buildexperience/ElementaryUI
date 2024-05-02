@@ -14,7 +14,7 @@ public protocol HeadlineWeightRepresentable {
 }
 
 public extension ElementaryFont where Self.Weight: HeadlineWeightRepresentable {
-    /// Create a font with the headline text style, size of 17 & weight of `headlineWeight`.
+    /// Creates a font with the headline text style, size of 17 & weight of `headlineWeight`.
     ///
     /// This font has a size of 17 relative to the ``headline`` text style.
     ///

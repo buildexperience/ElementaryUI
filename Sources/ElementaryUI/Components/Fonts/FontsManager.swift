@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-/// A manager responsible for registering custom fonts within the application.
+/// Manager responsible for registering custom fonts within the application.
 ///
 /// ```swift
 /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
 /// ```
 ///
 public struct FontsManager {
-    /// Dictionary keeping track of registered fonts by their names.
+    /// The dictionary keeping track of the registered fonts by their names.
     private static var registeredFonts = [String: CGFont]()
 }
 

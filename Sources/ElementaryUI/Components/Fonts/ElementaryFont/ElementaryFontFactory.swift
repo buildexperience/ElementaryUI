@@ -118,13 +118,13 @@ public protocol ElementaryFontFactory {
 
 //MARK: - Default Implementations
 public extension ElementaryFontFactory {
-    /// Default implementation for ``Weight``.
+    /// Default implementation of ``Weight``.
     typealias Weight = Never
 }
 
 //MARK: - Default Implementations
 public extension ElementaryFontFactory where Weight: CaseIterable & RawRepresentable<String> {
-    /// Register all font weights from the specified bundle.
+    /// Registers all font weights from the specified bundle.
     ///
     /// - Parameter bundle: The bundle containing the font files.
     ///

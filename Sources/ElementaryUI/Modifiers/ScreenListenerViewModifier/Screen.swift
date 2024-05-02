@@ -18,5 +18,6 @@ public struct Screen: Equatable, Sendable {
     
     /// The safe area inset of the listener's container view.
     public let safeAreaInsets: EdgeInsets
+    
     public static let zero = Screen(size: .zero, safeAreaInsets: EdgeInsets())
 }

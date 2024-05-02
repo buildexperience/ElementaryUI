@@ -62,7 +62,7 @@ public protocol ElementaryFont {
     ///
     associatedtype Factory: ElementaryFontFactory where Factory.Weight == Self.Weight
     
-    /// Create a custom font using a size, weight, & relative text style.
+    /// Creates a custom font using a size, weight, & relative text style.
     ///
     /// - Parameters:
     ///   - size: The size of the font.
@@ -75,7 +75,7 @@ public protocol ElementaryFont {
     ///
     static func custom(size: CGFloat, weight: Self.Weight?, relativeTo textStyle: Font.TextStyle?) -> Font
     
-    /// Create a custom font using a text style & weight.
+    /// Creates a custom font using a text style & weight.
     ///
     /// - Parameters:
     ///   - style: The text style of the font used for dynamic text styles.
@@ -87,10 +87,10 @@ public protocol ElementaryFont {
 }
 
 public extension ElementaryFont {
-    /// Default implementation for ``Weight``.
+    /// Default implementation of ``Weight``.
     typealias Weight = Never
     
-    /// Create a custom font using a text style & an optional weight.
+    /// Creates a custom font using a text style & an optional weight.
     ///
     /// - Parameters:
     ///   - style: The text style of the font used for dynamic text styles.
@@ -104,7 +104,7 @@ public extension ElementaryFont {
 }
 
 public extension ElementaryFont {
-    /// Create a custom font using a size, an optional weight, & an optional relative text style.
+    /// Creates a custom font using a size, an optional weight, & an optional relative text style.
     ///
     /// - Parameters:
     ///   - size: The size of the font.
@@ -126,7 +126,7 @@ public extension ElementaryFont {
 
 //MARK: - Pre-defined sizes
 public extension ElementaryFont {
-    /// Create a font with the large title text style & size of 34.
+    /// Creates a font with the large title text style & size of 34.
     ///
     /// This font has a size of 34 relative to the ``largeTitle`` text style.
     ///
@@ -138,7 +138,7 @@ public extension ElementaryFont {
         return custom(.largeTitle, weight: weight)
     }
     
-    /// Create a font with the title text style & size of 28.
+    /// Creates a font with the title text style & size of 28.
     ///
     /// This font has a size of 28 relative to the ``title`` text style.
     ///
@@ -150,7 +150,7 @@ public extension ElementaryFont {
         return custom(.title, weight: weight)
     }
     
-    /// Create a font with the title2 text style & size of 22.
+    /// Creates a font with the title2 text style & size of 22.
     ///
     /// This font has a size of 22 relative to the ``title2`` text style.
     ///
@@ -162,7 +162,7 @@ public extension ElementaryFont {
         return custom(.title2, weight: weight)
     }
     
-    /// Create a font with the title3 text style & size of 20.
+    /// Creates a font with the title3 text style & size of 20.
     ///
     /// This font has a size of 20 relative to the ``title3`` text style.
     ///
@@ -174,7 +174,7 @@ public extension ElementaryFont {
         return custom(.title3, weight: weight)
     }
     
-    /// Create a font with the subheadline text style & size of 15.
+    /// Creates a font with the subheadline text style & size of 15.
     ///
     /// This font has a size of 15 relative to the ``subheadline`` text style.
     ///
@@ -186,7 +186,7 @@ public extension ElementaryFont {
         return custom(.subheadline, weight: weight)
     }
     
-    /// Create a font with the body text style & size of 17.
+    /// Creates a font with the body text style & size of 17.
     ///
     /// This font has a size of 17 relative to the ``body`` text style.
     ///
@@ -198,7 +198,7 @@ public extension ElementaryFont {
         return custom(.body, weight: weight)
     }
     
-    /// Create a font with the callout text style & size of 16.
+    /// Creates a font with the callout text style & size of 16.
     ///
     /// This font has a size of 16 relative to the ``callout`` text style.
     ///
@@ -210,7 +210,7 @@ public extension ElementaryFont {
         return custom(.callout, weight: weight)
     }
     
-    /// Create a font with the footnote text style & size of 13.
+    /// Creates a font with the footnote text style & size of 13.
     ///
     /// This font has a size of 13 relative to the ``footnote`` text style.
     ///
@@ -222,7 +222,7 @@ public extension ElementaryFont {
         return custom(.footnote, weight: weight)
     }
     
-    /// Create a font with the caption text style & size of 12.
+    /// Creates a font with the caption text style & size of 12.
     ///
     /// This font has a size of 12 relative to the ``caption`` text style.
     ///
@@ -234,7 +234,7 @@ public extension ElementaryFont {
         return custom(.caption, weight: weight)
     }
     
-    /// Create a font with the caption2 text style & size of 11.
+    /// Creates a font with the caption2 text style & size of 11.
     ///
     /// This font has a size of 11 relative to the ``caption2`` text style.
     ///

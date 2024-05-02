@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Font.TextStyle {
-    /// Returns the font size associated with the text style.
+    /// The font size associated with the text style.
     ///
     /// - Returns: The font size in points.
     /// 

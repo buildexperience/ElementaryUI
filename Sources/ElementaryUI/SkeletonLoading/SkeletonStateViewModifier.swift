@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A view modifier for managing the skeleton loading state of a view.
+/// ``ViewModifier`` for managing the skeleton loading state of a view.
 ///
 /// `SkeletonStateViewModifier` allows controlling the skeleton loading state of a view by applying placeholder redaction to its content.
 /// It reads the skeleton loading state from the environment and applies redaction based on it.
@@ -32,16 +32,15 @@ import SwiftUI
 /// - Warning: Not to be used directly, use either ``func skeletonLoadable() -> some View``, or ``func skeleton(loading: Bool) -> some View``.
 ///
 struct SkeletonStateViewModifier: ViewModifier {
-//MARK: - Properties
     /// The environment value representing the current redaction reasons.
     @Environment(\.redactionReasons) private var redactionReasons
     
     /// The environment value indicating whether the skeleton loading is active.
     @Environment(\.skeletonLoading) private var skeletonLoading
     
-    /// Value representing wether this view can display skeleton loading.
+    /// The value representing wether this view can display skeleton loading.
     let loadable: Bool
-//MARK: - Computed Properties
+    
     /// Calculates the redaction reasons based on the skeleton loading state.
     private var redactions: RedactionReasons {
         var reasons = redactionReasons
@@ -54,7 +53,8 @@ struct SkeletonStateViewModifier: ViewModifier {
         }
         return reasons
     }
-//MARK: - Body
+    
+    /// The body of the ``ViewModifier``.
     func body(content: Content) -> some View {
         content
             .redacted(reason: redactions)
@@ -79,7 +79,7 @@ public extension View {
     /// - Parameter loadable: Wether this view can display skeleton loading.
     /// - Returns: A view that's able to display a skeleton loading view.
     ///
-    func skeletonLoading(_ loadable: Bool = true) -> some View {
+    func skeletonLoadable(_ loadable: Bool = true) -> some View {
         modifier(SkeletonStateViewModifier(loadable: loadable))
     }
     
@@ -109,7 +109,7 @@ public extension View {
     ///    - disabled: Wether the view should not handle any user interaction when it's loading, defaults to true.
     ///
     /// - Returns: A view with the skeleton loading state applied.
-    /// - Warning: You need to use ``func skeletonLoadable() -> some View`` to make views display the skeleton loading.
+    /// - Warning: You need to use ``func skeletonLoadable(_ loadable: Bool = true) -> some View`` to make views display the skeleton loading.
     ///
     func skeleton(loading: Bool, disabled: Bool = true) -> some View {
         self
