@@ -33,7 +33,7 @@ extension HexColorMacroError: DiagnosticMessage {
                 let joinedCharacters = characters.map({String($0)}).joined(separator: ", ")
                 return "The hex \"\(hex)\" contains invalid characters: \(joinedCharacters)"
             case .invalidLength(let hex):
-                return "The hex \"\(hex)\" must be 6 or 8 characters long"
+                return "The hex \"\(hex)\" must be exactly 6 or 8 characters long"
             case .decodingFailed(let hex):
                 return "The hex \"\(hex)\" could not be decoded"
             case .missingHex:

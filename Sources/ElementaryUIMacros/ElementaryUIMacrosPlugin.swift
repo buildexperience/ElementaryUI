@@ -8,8 +8,10 @@
 import SwiftCompilerPlugin
 import SwiftSyntaxMacros
 
+/// Compiler plugin for providing ElementaryUI macros.
 @main
 struct ElementaryUIMacrosPlugin: CompilerPlugin {
+    /// The macros provided by this plugin.
     let providingMacros: [Macro.Type] = [
         HexColorMacro.self
     ]
