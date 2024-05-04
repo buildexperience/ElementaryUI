@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A structure representing screen size and safe area insets.
+/// Screen size and safe area insets configurations of a ``View``.
 ///
 /// It encapsulates the size of the listener's container view and its safe area insets.
 /// You can use this information to adjust your layout accordingly.

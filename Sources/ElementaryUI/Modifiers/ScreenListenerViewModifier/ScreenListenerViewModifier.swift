@@ -9,7 +9,7 @@ import SwiftUI
 
 /// ``ViewModifier`` for observing screen size changes.
 ///
-/// `ScreenListenerViewModifier` allows observing changes in the screen size and safe area insets. It adjusts the view's behavior based on these changes.
+/// This modifier allows observing changes in the screen size and safe area insets. It adjusts the view's behavior based on these changes.
 ///
 /// ```swift
 /// struct ContentView: View {
@@ -19,11 +19,12 @@ import SwiftUI
 ///             Text("Hello, World!")
 ///                 .frame(height: screen.height / 4)
 ///         }.frame(maxWidth: .infinity, maxHeight: .infinity)
-///         .sizeListener($screen) //Updates the screen property
+///         .sizeListener($screen) // Updates the screen property
 ///     }
 /// }
 /// ```
-/// - Warning: Do not use this modifier directly, use either ``func sizeListener() -> some View``, or ``func sizeListener(_ screen: Binding<Screen>) -> some View``.
+/// 
+/// - Warning: This is an internal modifier not meant to be used directly. You should use either ``sizeListener()``, or ``sizeListener(_:)`` instead.
 ///
 struct ScreenListenerViewModifier: ViewModifier {
     /// The value indicating whether to bind the screen size changes to a ``Binding`` property.
@@ -106,7 +107,7 @@ public extension View {
     /// }
     /// ```
     ///
-    /// - Returns: A view wrapped in a `GeometryReader` that propagates the up-to-date size and safe area insets to the environment.
+    /// - Returns: A view wrapped in a ``GeometryReader`` that propagates the up-to-date size and safe area insets to the environment.
     ///
     func sizeListener() -> some View {
         modifier(ScreenListenerViewModifier())

@@ -7,10 +7,10 @@
 
 import Foundation
 
-/// The requirements for defining a factory that produces font names with different weights, & registering them.
+/// Requirements for defining a factory that produces font names with different weights, & registering them.
 ///
 /// Defining ``Weight``  is not required when the font has one weight.
-/// Implementing ``func register(bundle: Bundle)`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
+/// Implementing ``register(bundle:)-2x34k`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
 ///
 /// **Example conformances:**
 ///
@@ -84,8 +84,8 @@ import Foundation
 /// }
 /// ```
 ///
-/// - Note: Implementing ``func register(bundle: Bundle)`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
-/// 
+/// - Note: Implementing ``register(bundle:)-2x34k`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
+///
 /// - Note: Implementing ``Weight``  is not required when the font has one weight.
 ///
 public protocol ElementaryFontFactory {

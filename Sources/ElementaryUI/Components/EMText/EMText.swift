@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A wrapper arround ``Text`` that displays one or more lines of read-only text.
+/// Wrapper arround ``Text`` that displays one or more lines of read-only text.
 ///
 /// - Displaying a string without localization or a ``LocalizedStringKey``:
 ///
@@ -28,6 +28,8 @@ import SwiftUI
 public struct EMText: View {
     /// The content type of the text, either localized or unlocalized.
     private let string: EMTextContentType
+    
+    /// The body of the ``View``.
     public var body: some View {
         text()
     }
@@ -35,7 +37,7 @@ public struct EMText: View {
 
 //MARK: - Public Functions
 public extension EMText {
-    /// Get the ``Text`` view used to display the content.
+    /// Builds the ``Text`` view used to display the content.
     ///
     /// - Returns: The underlying ``Text`` view representing the content specified by the `string` property.
     ///
@@ -51,7 +53,7 @@ public extension EMText {
 
 //MARK: - Initializers
 public extension EMText {
-    /// Creates a text view that displays an `EMTextDisplayable`.
+    /// Creates a text view that displays an ``EMTextDisplayable``.
     ///
     /// - Parameter text: The content of the text to be displayed.
     ///

@@ -11,7 +11,7 @@ public extension View {
     /// Conditionally hides a view.
     ///
     /// ```swift
-    /// struct TestView: View {
+    /// struct ContentView: View {
     ///     @State private var showText = false
     ///     var body: some View {
     ///         Text("Hello, world!")
@@ -20,7 +20,7 @@ public extension View {
     /// }
     /// ```
     ///
-    /// - Parameter condition: The condition to use when hiding a `View`.
+    /// - Parameter condition: The condition to use when hiding a ``View``.
     /// - Returns: A view that becomes hiden when the given condition is satisfied.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///
@@ -35,7 +35,7 @@ public extension View {
     /// Conditionally applies a builder to the view if the specified condition is true.
     ///
     /// ```swift
-    /// struct TestView: View {
+    /// struct ContentView: View {
     ///     @State private var formatTitle = true
     ///     var body: some View {
     ///         Text("Hello")
@@ -54,7 +54,7 @@ public extension View {
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
-    ///   Use `func if(_ condition: Bool, @ViewBuilder _ builder: (_ content: Self) -> Self) -> Self` if you want the return type to remain the same.
+    ///   Use ``if(_:_:)`` if you want the return type to remain the same.
     ///
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, @ViewBuilder _ builder: (_ content: Self) -> Content) -> some View {
         if condition {
@@ -67,7 +67,7 @@ public extension View {
     /// Conditionally applies a builder to the view if the specified condition is true.
     ///
     /// ```swift
-    /// struct TestView: View {
+    /// struct ContentView: View {
     ///     @State private var formatTitle = true
     ///     var body: some View {
     ///         Text("Hello")
@@ -99,7 +99,7 @@ public extension View {
     /// Conditionally applies a builder to the view if the specified optional value is non-nil.
     ///
     /// ```swift
-    /// struct TestView: View {
+    /// struct ContentView: View {
     ///     @State private var title: String?
     ///     var body: some View {
     ///         Text("Hello")
@@ -119,7 +119,7 @@ public extension View {
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
-    ///   Use `func `if`<T>(let value: T?, @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Self) -> Self` if you want the return type to remain the same.
+    ///   Use ``if(let:_:)`` if you want the return type to remain the same.
     ///
     @ViewBuilder func `if`<Content: View, T>(`let` optional: T?, @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Content) -> some View {
         if let optional {
@@ -132,7 +132,7 @@ public extension View {
     /// Conditionally applies a builder to the view if the specified optional value is non-nil.
     ///
     /// ```swift
-    /// struct TestView: View {
+    /// struct ContentView: View {
     ///     @State private var title: String?
     ///     var body: some View {
     ///         Text("Hello")

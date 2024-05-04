@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-/// The requirements for defining custom fonts with different weights & styles.
+/// Requirements for defining custom fonts with different weights & styles.
 ///
 /// You can conform ``Weight`` to ``HeadlineWeightRepresentable`` to be able to use the ``headline`` font style which has a size of 17 relative to the `headline` text style, & a weight of `semibold`.
 ///
 /// Implementing ``Weight``  is not required when the font has one weight.
 ///
-/// The function ``static func custom(size: CGFloat, weight: Weight?, relativeTo textStyle: Font.TextStyle?) -> Font`` can be implicitly defined based on the ``Factory``.
+/// The function ``custom(size:weight:relativeTo:)-600rf`` can be implicitly defined based on the ``Factory``.
 ///
 /// ```swift
 /// public struct Halvetica: ElementaryFont {
@@ -47,7 +47,7 @@ import SwiftUI
 /// ```
 ///
 /// - Note: Implementing ``Weight``  is not required when the font has one weight.
-/// - Note: Implementing ``static func custom(size: CGFloat, weight: Weight?, relativeTo textStyle: Font.TextStyle?) -> Font`` as it it implicitly defined based on the ``Factory``.
+/// - Note: Implementing ``custom(size:weight:relativeTo:)-600rf`` as it it implicitly defined based on the ``Factory``.
 ///
 public protocol ElementaryFont {
     /// The diffrent weights of the font.

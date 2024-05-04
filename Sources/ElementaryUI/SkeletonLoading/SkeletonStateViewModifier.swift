@@ -9,7 +9,7 @@ import SwiftUI
 
 /// ``ViewModifier`` for managing the skeleton loading state of a view.
 ///
-/// `SkeletonStateViewModifier` allows controlling the skeleton loading state of a view by applying placeholder redaction to its content.
+/// This modifier allows controlling the skeleton loading state of a view by applying placeholder redaction to its content.
 /// It reads the skeleton loading state from the environment and applies redaction based on it.
 ///
 /// ```swift
@@ -29,7 +29,7 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// - Warning: Not to be used directly, use either ``func skeletonLoadable() -> some View``, or ``func skeleton(loading: Bool) -> some View``.
+/// - Warning: This is an internal modifier not meant to be used directly. You should use ``skeletonLoadable(_:)``, or ``skeleton(loading:disabled:)`` instead.
 ///
 struct SkeletonStateViewModifier: ViewModifier {
     /// The environment value representing the current redaction reasons.
@@ -109,7 +109,8 @@ public extension View {
     ///    - disabled: Wether the view should not handle any user interaction when it's loading, defaults to true.
     ///
     /// - Returns: A view with the skeleton loading state applied.
-    /// - Warning: You need to use ``func skeletonLoadable(_ loadable: Bool = true) -> some View`` to make views display the skeleton loading.
+    ///
+    /// - Warning: You need to use ``skeletonLoadable(_:)`` to make views display the skeleton loading.
     ///
     func skeleton(loading: Bool, disabled: Bool = true) -> some View {
         self

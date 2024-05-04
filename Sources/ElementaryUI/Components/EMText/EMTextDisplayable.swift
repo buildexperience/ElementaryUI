@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Requirements for difining objects that can display text content.
+/// Requirements for defining objects that can display text content.
 ///
 /// ```swift
 /// enum PrefrencesKey: LocalizedStringKey, EMTextDisplayable {

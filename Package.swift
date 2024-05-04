@@ -1,6 +1,7 @@
 // swift-tools-version: 5.9
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
     name: "ElementaryUI",
@@ -11,10 +12,22 @@ let package = Package(
     products: [
         .library(name: "ElementaryUI", targets: ["ElementaryUI"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+    ],
     targets: [
-        .target(name: "ElementaryUI"),
-        .testTarget(name: "ElementaryUITests", dependencies: [
-            "ElementaryUI"
+        .macro(name: "ElementaryUIMacros", dependencies: [
+            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+            .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+        ]),
+        
+        .target(name: "ElementaryUI", dependencies: [
+            "ElementaryUIMacros"
+        ]),
+        
+        .testTarget(name: "ElementaryUIMacrosTests", dependencies: [
+            "ElementaryUIMacros",
+            .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
         ]),
     ]
 )
