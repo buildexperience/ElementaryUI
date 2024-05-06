@@ -13,6 +13,8 @@ import SwiftSyntaxMacros
 struct ElementaryUIMacrosPlugin: CompilerPlugin {
     /// The macros provided by this plugin.
     let providingMacros: [Macro.Type] = [
-        HexColorMacro.self
+        HexColorMacro.self,
+        EnvironmentKeyMacro.self,
+        FocusedValueMacro.self
     ]
 }

@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftDiagnostics
 
 /// Errors that can occur during hex color validation & decoding.
-public enum HexColorMacroError: Error, Equatable {
+package enum HexColorMacroError: MacroError, Equatable {
     /// Indicates that the provided hex color contains invalid characters.
     case invalidCharacters(hex: String, characters: [Character])
     
@@ -24,10 +24,9 @@ public enum HexColorMacroError: Error, Equatable {
     case missingHex
 }
 
-//MARK: - DiagnosticMessage
-extension HexColorMacroError: DiagnosticMessage {
-    /// The diagnostic messages for ``HexColorMacroError``.
-    public var message: String {
+extension HexColorMacroError {
+    /// The diagnostic messages.
+    package var message: String {
         switch self {
             case .invalidCharacters(let hex, let characters):
                 let joinedCharacters = characters.map({String($0)}).joined(separator: ", ")
@@ -39,15 +38,5 @@ extension HexColorMacroError: DiagnosticMessage {
             case .missingHex:
                 return "Could not detect a hex string to decode"
         }
-    }
-    
-    /// The unique identifier for the diagnostic message.
-    public var diagnosticID: MessageID {
-        return MessageID(domain: "ElementaryUIMacros", id: "\(self)")
-    }
-    
-    /// The severity level of the diagnostic message.
-    public var severity: DiagnosticSeverity {
-        return .error
     }
 }
