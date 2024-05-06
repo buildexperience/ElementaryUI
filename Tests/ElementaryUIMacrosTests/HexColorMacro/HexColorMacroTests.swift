@@ -12,11 +12,13 @@ import XCTest
 #if canImport(ElementaryUIMacros)
 import ElementaryUIMacros
 
-let testMacros: [String: Macro.Type] = [
-    "color": HexColorMacro.self,
-]
-
 final class HexColorMacroTests: XCTestCase {
+//MARK: - Properties
+    private let testMacros: [String: Macro.Type] = [
+        "color": HexColorMacro.self,
+    ]
+
+//MARK: - Tests
     func testMacroColorWithoutHashtag() throws {
         assertMacroExpansion(
             """

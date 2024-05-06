@@ -12,7 +12,6 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
 
-
 /// Macro for expanding hexadecimal color strings into SwiftUI ``Color`` expressions.
 ///
 /// This macro enables the expansion of hexadecimal color strings into ``Color`` expressions. It abstracts away the conversion process and provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
@@ -35,24 +34,27 @@ import SwiftDiagnostics
 /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
 ///
 public struct HexColorMacro: ExpressionMacro {
+    /// Generates the SwiftUI color corresponding to the provided hex.
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        guard let argument = node.argumentList.first?.expression,
-              let argumentSegment = argument.as(StringLiteralExprSyntax.self)?.segments.first,
-              case .stringSegment(let argumentString) = argumentSegment
-        else {
-            throw HexColorMacroError.missingHex
-        }
-        let hex = argumentString.content.text
-        let decodingResult = HexColorDecoder.decode(hex)
-        switch decodingResult {
-            case .success((let red, let green, let blue, let opacity)):
-                return "Color(red: \(raw: red)/255, green: \(raw: green)/255, blue: \(raw: blue)/255, opacity: \(raw: opacity)/255)"
-                
-            case .failure(let error):
-               throw error
+        try withErroHandling(context: context, node: node) {
+            guard let argument = node.argumentList.first?.expression,
+                  let argumentSegment = argument.as(StringLiteralExprSyntax.self)?.segments.first,
+                  case .stringSegment(let argumentString) = argumentSegment
+            else {
+                throw HexColorMacroError.missingHex
+            }
+            let hex = argumentString.content.text
+            let decodingResult = HexColorDecoder.decode(hex)
+            switch decodingResult {
+                case .success((let red, let green, let blue, let opacity)):
+                    return "Color(red: \(raw: red)/255, green: \(raw: green)/255, blue: \(raw: blue)/255, opacity: \(raw: opacity)/255)"
+                    
+                case .failure(let error):
+                    throw error
+            }
         }
     }
 }
