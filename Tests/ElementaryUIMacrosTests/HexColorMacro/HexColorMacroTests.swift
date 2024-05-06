@@ -19,7 +19,7 @@ final class HexColorMacroTests: XCTestCase {
     ]
 
 //MARK: - Tests
-    func testMacroColorWithoutHashtag() throws {
+    func testMacroColorWithoutHashtag() {
         assertMacroExpansion(
             """
             #color("676C60")
@@ -30,7 +30,7 @@ final class HexColorMacroTests: XCTestCase {
             macros: testMacros
         )
     }
-    func testMacroColorWithHashtag() throws {
+    func testMacroColorWithHashtag() {
         assertMacroExpansion(
             """
             #color("#676C60")
@@ -41,7 +41,7 @@ final class HexColorMacroTests: XCTestCase {
             macros: testMacros
         )
     }
-    func testMacroColorWithOpacity() throws {
+    func testMacroColorWithOpacity() {
         assertMacroExpansion(
             """
             #color("#676C6080")

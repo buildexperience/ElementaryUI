@@ -19,7 +19,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
     ]
     
 //MARK: - Expansion Tests
-    func testEnvironmentKeyMacro() throws {
+    func testEnvironmentKeyMacro() {
         assertMacroExpansion(
             """
             @EnvironmentValue var skeletonLoading = true
@@ -43,7 +43,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
     }
     
 //MARK: - Validation Tests
-    func testEnvironmentKeyMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() throws {
+    func testEnvironmentKeyMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() {
         // Invalid property type, the macro requires var instead of let.
         let diagnostic = DiagnosticSpec(message: KeyMacroError.invalidPropertyType.message, line: 1, column: 1)
         
@@ -61,7 +61,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
             macros: testMacros
         )
     }
-    func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasOnlyAName() throws {
+    func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasOnlyAName() {
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property is missing a default value
@@ -87,7 +87,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
         )
         
     }
-    func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasATypeButNoValue() throws {
+    func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasATypeButNoValue() {
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property is missing a default value

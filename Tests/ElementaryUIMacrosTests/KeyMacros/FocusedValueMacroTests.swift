@@ -19,7 +19,7 @@ final class FocusedValueMacroTests: XCTestCase {
     ]
    
 //MARK: - Expansion Tests
-    func testFocusedValueMacro() throws {
+    func testFocusedValueMacro() {
         assertMacroExpansion(
             """
             @FocusedValue var signInFocus: Bool?
@@ -44,7 +44,7 @@ final class FocusedValueMacroTests: XCTestCase {
     
     
 //MARK: - Validation Tests
-    func testFocusedValueMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() throws {
+    func testFocusedValueMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() {
         // Invalid property type, the macro requires var instead of let.
         let diagnostic = DiagnosticSpec(message: KeyMacroError.invalidPropertyType.message, line: 1, column: 1)
         
@@ -62,7 +62,7 @@ final class FocusedValueMacroTests: XCTestCase {
             macros: testMacros
         )
     }
-    func testFocusedValueMacroFailsWithMissingTypeAnnotationWhenPropertyDoesNotHaveAType() throws {
+    func testFocusedValueMacroFailsWithMissingTypeAnnotationWhenPropertyDoesNotHaveAType() {
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property has no type.
@@ -88,7 +88,7 @@ final class FocusedValueMacroTests: XCTestCase {
         )
         
     }
-    func testFocusedValueMacroFailsWithInvalidOptionalTypeAnnotationWhenPropertyHasANonOptionalType() throws {
+    func testFocusedValueMacroFailsWithInvalidOptionalTypeAnnotationWhenPropertyHasANonOptionalType() {
         let expectedFixIt = FixItSpec(message: "Add '?' to the type to make it optional")
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
