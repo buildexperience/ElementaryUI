@@ -1,5 +1,5 @@
 //
-//  ElementaryFontFactory.swift
+//  EMFontFactory.swift
 //
 //
 //  Created by Joe Maghzal on 11/04/2024.
@@ -17,7 +17,7 @@ import Foundation
 /// - Conformance using ``CaseIterable`` & ``RawRepresentable<String>`` for ``Weight``:
 ///
 /// ```swift
-/// enum FontFactory: ElementaryFontFactory {
+/// enum FontFactory: EMFontFactory {
 ///     case regular, italic
 ///     static var defaultFactory: Nunito.Factory {
 ///         return .regular
@@ -39,7 +39,7 @@ import Foundation
 /// - Conformance using only ``CaseIterable`` for ``Weight``:
 ///
 /// ```swift
-/// enum FontFactory: ElementaryFontFactory {
+/// enum FontFactory: EMFontFactory {
 ///     case regular, italic
 ///     static var defaultFactory: Nunito.Factory {
 ///         return .regular
@@ -70,7 +70,7 @@ import Foundation
 /// - Conformance without ``Weight``:
 ///
 /// ```swift
-/// enum FontFactory: ElementaryFontFactory {
+/// enum FontFactory: EMFontFactory {
 ///     case regular, italic
 ///     static var defaultFactory: Nunito.Factory {
 ///         return .regular
@@ -85,14 +85,11 @@ import Foundation
 /// ```
 ///
 /// - Note: Implementing ``register(bundle:)-2x34k`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
-///
 /// - Note: Implementing ``Weight``  is not required when the font has one weight.
-///
-public protocol ElementaryFontFactory {
+public protocol EMFontFactory {
     /// The diffrent weights of the font.
     ///
     /// - Note: The definition for ``Weight`` is optional, & its default implementation is ``Never``. This can be useful for fonts having a single weight.
-    ///
     associatedtype Weight
     
     /// The default factory to use..
@@ -105,29 +102,26 @@ public protocol ElementaryFontFactory {
     ///
     /// - Parameter bundle: The bundle containing the font files.
     /// - Note: The implementation for this function is optional only when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
-    ///
     func register(bundle: Bundle)
     
     /// Returns the font name for the specified weight.
     ///
     /// - Parameter weight: The font weight.
     /// - Returns: The font name.
-    ///
     func font(weight: Self.Weight?) -> String
 }
 
 //MARK: - Default Implementations
-public extension ElementaryFontFactory {
+public extension EMFontFactory {
     /// Default implementation of ``Weight``.
     typealias Weight = Never
 }
 
 //MARK: - Default Implementations
-public extension ElementaryFontFactory where Weight: CaseIterable & RawRepresentable<String> {
+public extension EMFontFactory where Weight: CaseIterable & RawRepresentable<String> {
     /// Registers all font weights from the specified bundle.
     ///
     /// - Parameter bundle: The bundle containing the font files.
-    ///
     func register(bundle: Bundle) {
         Weight.allCases.forEach { weight in
             let font = font(weight: weight)

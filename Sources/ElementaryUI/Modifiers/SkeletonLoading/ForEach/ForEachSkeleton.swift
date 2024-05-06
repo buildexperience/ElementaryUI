@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-/// View designed to display skeleton loading for a list of items using ``ForEach``.
+/// ``View`` designed to display skeleton loading for a list of items using ``ForEach``.
 ///
 /// - Warning: This is an internal modifier not meant to be used directly. You should use ``skeletonLoadable()`` instead.
-///
 struct ForEachSkeletonView<Content: DynamicViewContent, RowContent: View>: DynamicViewContent where Content.Data.Element: Identifiable {
     /// The value indicating whether skeleton loading is active.
     @Environment(\.skeletonLoading) private var skeletonLoading
@@ -45,7 +44,6 @@ extension ForEachSkeletonView {
     ///   - content: The content view containing the real data.
     ///   - skeletonData: The skeleton data to be displayed.
     ///   - rowContent: The closure used to produce the content for each item.
-    ///
     init(content: Content, skeletonData: [Content.Data.Element], rowContent: @escaping (Content.Data.Element) -> RowContent) {
         self.content = content
         self.skeletonData = skeletonData
@@ -84,7 +82,6 @@ public extension ForEach where Data.Element: SkeletonRepresentable, Content: Vie
     ///
     /// - Returns: A ``DynamicViewContent`` that is skeleton loadable.
     /// - Warning: This modifier should be used before using any other modifier specific to ``ForEach`` or ``DynamicViewContent``.
-    ///
     func skeletonLoadable() -> some DynamicViewContent {
         ForEachSkeletonView(content: self, skeletonData: Data.Element.skeleton, rowContent: content)
     }

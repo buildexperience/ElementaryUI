@@ -13,7 +13,6 @@ extension EMTextField {
     /// This modifier allows handling text changes and validation based on the provided configuration by the text field.
     /// 
     /// - Warning: This is an internal modifier not meant to be used outside of ``EMTextField``.
-    ///
     struct ValidationViewModifier: ViewModifier {
         /// The binding value to the text input.
         @Binding var text: String
@@ -41,7 +40,7 @@ extension EMTextField {
     }
 }
 
-//MARK: - Functions
+//MARK: - Private Functions
 extension EMTextField.ValidationViewModifier {
     /// Validates the text input based on the configured validator.
     private func validate() {

@@ -27,6 +27,5 @@ public enum ValidationTrigger {
     /// Performs validation when the user presses return on the keyboard.
     ///
     /// - Parameter clearOnChange: A Boolean value indicating whether to clear the validation when the text changes, defaults to true.
-    ///
     case onSubmit(clearOnChange: Bool = true)
 }

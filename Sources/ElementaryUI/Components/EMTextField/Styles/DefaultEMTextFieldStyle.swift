@@ -18,7 +18,6 @@ public struct DefaultEMTextFieldStyle: EMTextFieldStyle {
     ///
     /// - Parameter configuration : The properties of the text field.
     /// - Returns: A view that represents the body of a text field.
-    ///
     public func makeBody(configuration: Configuration) -> some View {
         configuration.content
     }

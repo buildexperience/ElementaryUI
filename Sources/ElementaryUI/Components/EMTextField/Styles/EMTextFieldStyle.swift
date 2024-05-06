@@ -19,7 +19,6 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-/// 
 public protocol EMTextFieldStyle {
     /// The properties of a text field.
     typealias Configuration = EMTextFieldConfiguration
@@ -33,8 +32,7 @@ public protocol EMTextFieldStyle {
     ///
     /// - Parameter configuration : The properties of the text field.
     /// - Returns: A view that represents the body of a text field.
-    /// 
-    @ViewBuilder func makeBody(configuration: Configuration) -> Body
+    @ViewBuilder @MainActor func makeBody(configuration: Configuration) -> Body
 }
 
 /// Configurations for ``EMTextField`` used in an ``EMTextFieldStyle``.
