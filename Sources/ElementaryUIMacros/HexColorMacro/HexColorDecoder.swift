@@ -15,7 +15,6 @@ import Foundation
 /// let hex = "ffffff" // Adding the '#' is optional.
 /// let components = HexColorDecoder.decode(hex)
 /// ```
-///
 package enum HexColorDecoder {
     /// The hex color components.
     package typealias ColorComponents = (red: Int, green: Int, blue: Int, opacity: Int)
@@ -23,32 +22,36 @@ package enum HexColorDecoder {
     /// Decodes the hexadecimal color string into its color components.
     ///
     /// - Parameter hex: The hexadecimal color string to decode.
-    /// - Returns: A `Result` containing the color components if decoding was successful, a ``HexColorMacroError`` otherwise.
+    /// - Returns: The RGBA color components.
+    /// - Throws: ``HexColorMacroError.invalidCharacters`` if the hex contains invalid characters.
+    ///           ``HexColorMacroError.invalidLength`` if the length of the hex is invalid.
+    ///           ``HexColorMacroError.decodingFailed`` if the decoder failed to decode the hex.
     /// - Note: It's not neccessary to add the '#' prefix to the hex.
-    ///
-    package static func decode(_ hex: String) -> Result<ColorComponents, HexColorMacroError> {
-        return clean(hex)
-            .flatMap { cleanedHex in
-                let scanner = Scanner(string: cleanedHex)
-                var hexNumber = UInt64.zero
-                
-                // Scan the hexadecimal string and convert it to a UInt64.
-                guard scanner.scanHexInt64(&hexNumber) else {
-                    return .failure(.decodingFailed(hex: hex))
-                }
-                
-                // Extract the RGBA components from the UInt64.
-                let components = components(from: hexNumber)
-                return .success(components)
-            }
+    package static func decode(_ hex: String) throws -> ColorComponents {
+        let cleanedHex = try cleaned(hex)
+        let scanner = Scanner(string: cleanedHex)
+        var hexNumber = UInt64.zero
+        
+        // Scan the hexadecimal string and convert it to a UInt64.
+        guard scanner.scanHexInt64(&hexNumber) else {
+            throw HexColorMacroError.decodingFailed(hex: hex)
+        }
+        
+        // Extract the RGBA components from the UInt64.
+        let components = components(from: hexNumber)
+        return components
     }
-    
+}
+
+//MARK: - Private Functions
+extension HexColorDecoder {
     /// Cleans the hexadecimal color string by validating its characters and ensuring the correct length.
     ///
     /// - Parameter hex: The hexadecimal color string to clean.
-    /// - Returns: A `Result` containing the cleaned hexadecimal color string if successful, a ``HexColorMacroError`` otherwise..
-    ///
-    private static func clean(_ hex: String) -> Result<String, HexColorMacroError> {
+    /// - Returns: The cleaned hexadecimal color string.
+    /// - Throws: ``HexColorMacroError.invalidCharacters`` if the hex contains invalid characters.
+    ///           ``HexColorMacroError.invalidLength`` if the length of the hex is invalid.
+    private static func cleaned(_ hex: String) throws -> String {
         var cleanedHex = hex
         // Remove the '#' prefix if present.
         if hex.hasPrefix("#") {
@@ -58,24 +61,23 @@ package enum HexColorDecoder {
         // Check for invalid characters.
         let invalidCharacters = Array(cleanedHex).filter({!$0.isHexDigit})
         guard invalidCharacters.isEmpty else {
-            return .failure(.invalidCharacters(hex: hex, characters: invalidCharacters))
+            throw HexColorMacroError.invalidCharacters(hex: hex, characters: invalidCharacters)
         }
         
         // Ensure the correct length (6 or 8 characters).
         let hexCount = cleanedHex.count
         if hexCount == 8 {
-            return .success(cleanedHex)
+            return cleanedHex
         }else if hexCount == 6 {
-            return .success("\(cleanedHex)ff")
+            return "\(cleanedHex)ff"
         }
-        return .failure(.invalidLength(hex: hex))
+        throw HexColorMacroError.invalidLength(hex: hex)
     }
     
     /// Extracts the color components from the given hexadecimal number.
     ///
     /// - Parameter hexNumber: The hexadecimal number to extract color components from.
     /// - Returns: A tuple containing the red, green, blue, & opacity components.
-    ///
     private static func components(from hexNumber: UInt64) -> ColorComponents {
         let red = Int((hexNumber & 0xff000000) >> 24)
         let green = Int((hexNumber & 0x00ff0000) >> 16)

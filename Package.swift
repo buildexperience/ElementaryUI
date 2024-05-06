@@ -20,14 +20,13 @@ let package = Package(
             .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
             .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
         ]),
-        
-        .target(name: "ElementaryUI", dependencies: [
-            "ElementaryUIMacros"
-        ]),
-        
         .testTarget(name: "ElementaryUIMacrosTests", dependencies: [
             "ElementaryUIMacros",
             .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+        ]),
+        
+        .target(name: "ElementaryUI", dependencies: [
+            "ElementaryUIMacros"
         ]),
     ]
 )

@@ -32,7 +32,6 @@ import SwiftDiagnostics
 ///  ```
 ///
 /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
-///
 public struct HexColorMacro: ExpressionMacro {
     /// Generates the SwiftUI color corresponding to the provided hex.
     public static func expansion(
@@ -47,14 +46,8 @@ public struct HexColorMacro: ExpressionMacro {
                 throw HexColorMacroError.missingHex
             }
             let hex = argumentString.content.text
-            let decodingResult = HexColorDecoder.decode(hex)
-            switch decodingResult {
-                case .success((let red, let green, let blue, let opacity)):
-                    return "Color(red: \(raw: red)/255, green: \(raw: green)/255, blue: \(raw: blue)/255, opacity: \(raw: opacity)/255)"
-                    
-                case .failure(let error):
-                    throw error
-            }
+            let (red, green, blue, opacity) = try HexColorDecoder.decode(hex)
+            return "Color(red: \(raw: red)/255, green: \(raw: green)/255, blue: \(raw: blue)/255, opacity: \(raw: opacity)/255)"
         }
     }
 }

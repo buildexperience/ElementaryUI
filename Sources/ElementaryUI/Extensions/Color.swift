@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ElementaryUIMacros
 
 public extension Color {
     /// Creates a ``Color`` from a hexadecimal string representation.
@@ -27,13 +26,20 @@ public extension Color {
     /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
     /// - Warning: If the hexadecimal string is invalid or cannot be parsed, the initializer defaults to a white color with full opacity.
     init(hex: String) {
-        let decodingResult = HexColorDecoder.decode(hex)
-        switch decodingResult {
-            case .success((let red, let green, let blue, let opacity)):
-                self.init(.sRGB, red: Double(red / 255), green: Double(green / 255), blue: Double(blue / 255), opacity: Double(opacity / 255))
-                
-            case .failure:
-                self = .white
+        var hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        if hex.count == 6 {
+            hex += "ff"
         }
+        let scanner = Scanner(string: hex)
+        var number = UInt64.zero
+        guard scanner.scanHexInt64(&number) else {
+            self.init(.white)
+            return
+        }
+        let red = Double((number & 0xff000000) >> 24) / 255
+        let green = Double((number & 0x00ff0000) >> 16) / 255
+        let blue = Double((number & 0x0000ff00) >> 8) / 255
+        let opacity = Double(number & 0x000000ff) / 255
+        self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
     }
 }

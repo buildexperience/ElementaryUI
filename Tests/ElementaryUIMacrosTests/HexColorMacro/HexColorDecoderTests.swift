@@ -18,11 +18,11 @@ final class HexColorDecoderTests: XCTestCase {
 //MARK: - Hashtag Validation Tests
     func testDecoderSucceedsWithoutHashtag() {
         let hex = "ffffff"
-        XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
+        XCTAssertNoThrow(try HexColorDecoder.decode(hex))
     }
     func testDecoderSucceedsWhenHashtagIsThePrefix() {
         let hex = "#ffffff"
-        XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
+        XCTAssertNoThrow(try HexColorDecoder.decode(hex))
     }
     func testDecoderFailsWhenHashtagIsNotThePrefix() {
         let hexs = [
@@ -33,7 +33,7 @@ final class HexColorDecoderTests: XCTestCase {
             "fffff#",
         ]
         for hex in hexs {
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get())
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex))
         }
     }
     
@@ -45,7 +45,7 @@ final class HexColorDecoderTests: XCTestCase {
             "()$%*&",
         ]
         for hex in hexs {
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get()) { error in
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex)) { error in
                 let error = error as? HexColorMacroError
                 let characters = Array(hex)
                 XCTAssertEqual(error, .invalidCharacters(hex: hex, characters: characters))
@@ -59,7 +59,7 @@ final class HexColorDecoderTests: XCTestCase {
             "135ace",
         ]
         for hex in hexs {
-            XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
+            XCTAssertNoThrow(try HexColorDecoder.decode(hex))
         }
     }
     
@@ -70,7 +70,7 @@ final class HexColorDecoderTests: XCTestCase {
                 continue
             }
             let hex = Array(repeating: "f", count: i).joined()
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get()) { error in
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex)) { error in
                 let error = error as? HexColorMacroError
                 XCTAssertEqual(error, .invalidLength(hex: hex))
             }
@@ -82,26 +82,26 @@ final class HexColorDecoderTests: XCTestCase {
             "ffffffff"
         ]
         for hex in hexs {
-            XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
+            XCTAssertNoThrow(try HexColorDecoder.decode(hex))
         }
     }
     
 //MARK: - 6 Digits Components Tests
     func testDecoderWith6DigitsHexRedComponent() throws {
         for hex in SixDigits.redHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.red, 128)
         }
     }
     func testDecoderWith6DigitsHexGreenComponent() throws {
         for hex in SixDigits.greenHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.green, 128)
         }
     }
     func testDecoderWith6DigitsHexBlueComponent() throws {
         for hex in SixDigits.blueHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.blue, 128)
         }
     }
@@ -113,7 +113,7 @@ final class HexColorDecoderTests: XCTestCase {
         ]
         for hexs in hexsArray {
             for hex in hexs {
-                let components = try HexColorDecoder.decode(hex).get()
+                let components = try HexColorDecoder.decode(hex)
                 XCTAssertEqual(components.opacity, 255)
             }
         }
@@ -122,25 +122,25 @@ final class HexColorDecoderTests: XCTestCase {
 //MARK: - 8 Digits Components Tests
     func testDecoderWith8DigitsHexRedComponent() throws {
         for hex in EightDigits.redHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.red, 128)
         }
     }
     func testDecoderWith8DigitsHexGreenComponent() throws {
         for hex in EightDigits.greenHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.green, 128)
         }
     }
     func testDecoderWith8DigitsHexBlueComponent() throws {
         for hex in EightDigits.blueHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.blue, 128)
         }
     }
     func testDecoderWith8DigitsHexOpacityComponent() throws {
         for hex in EightDigits.opacityHexs {
-            let components = try HexColorDecoder.decode(hex).get()
+            let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.opacity, 128)
         }
     }
