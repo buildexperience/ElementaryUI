@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftDiagnostics
 
 /// Errors that can occur during the processing of Key Macro.
-enum KeyMacroError: MacroError {
+package enum KeyMacroError: MacroError {
     /// The property type is invalid for the applied macro.
     case invalidPropertyType
     
@@ -29,7 +29,7 @@ enum KeyMacroError: MacroError {
 
 extension KeyMacroError {
     /// The diagnostic messages.
-    public var message: String {
+    package var message: String {
         switch self {
             case .invalidPropertyType:
                 return "The applied macro is only valid for 'var' properties"

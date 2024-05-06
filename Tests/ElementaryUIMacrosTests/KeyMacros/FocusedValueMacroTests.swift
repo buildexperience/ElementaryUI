@@ -18,9 +18,8 @@ final class FocusedValueMacroTests: XCTestCase {
         "FocusedValue": FocusedValueMacro.self
     ]
    
-//MARK: - Tests
-    func testPrefrenceKeyMacro() throws {
-        let protocolName = FocusedValueMacro.keyProtocolName
+//MARK: - Expansion Tests
+    func testFocusedValueMacro() throws {
         assertMacroExpansion(
             """
             @FocusedValue var signInFocus: Bool?
@@ -28,19 +27,93 @@ final class FocusedValueMacroTests: XCTestCase {
             expandedSource: """
             var signInFocus: Bool? {
                 get {
-                    return self [\(protocolName)_signInFocus.self]
+                    return self [FocusedValueKey_signInFocus.self]
                 }
                 set(newValue) {
-                    self [\(protocolName)_signInFocus.self] = newValue
+                    self [FocusedValueKey_signInFocus.self] = newValue
                 }
             }
             
-            fileprivate struct \(protocolName)_signInFocus: \(protocolName) {
+            fileprivate struct FocusedValueKey_signInFocus: FocusedValueKey {
                 typealias Value = Bool
             }
             """,
             macros: testMacros
         )
+    }
+    
+    
+//MARK: - Validation Tests
+    func testFocusedValueMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() throws {
+        // Invalid property type, the macro requires var instead of let.
+        let diagnostic = DiagnosticSpec(message: KeyMacroError.invalidPropertyType.message, line: 1, column: 1)
+        
+        // Expect 2 diagnostics since both the PeerMacro & the AccessorMacro fail & throw the error.
+        let expectedDiagnostics = [diagnostic, diagnostic]
+        
+        assertMacroExpansion(
+            """
+            @FocusedValue let signInFocus: Bool?
+            """,
+            expandedSource: """
+            let signInFocus: Bool?
+            """,
+            diagnostics: expectedDiagnostics,
+            macros: testMacros
+        )
+    }
+    func testFocusedValueMacroFailsWithMissingTypeAnnotationWhenPropertyDoesNotHaveAType() throws {
+        // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
+        let expectedDiagnostics = [
+            // The property has no type.
+            DiagnosticSpec(message: KeyMacroError.missingTypeAnnotation.message, line: 1, column: 1)
+        ]
+        
+        assertMacroExpansion(
+            """
+            @FocusedValue var signInFocus
+            """,
+            expandedSource: """
+            var signInFocus {
+                get {
+                    return self [FocusedValueKey_signInFocus.self]
+                }
+                set(newValue) {
+                    self [FocusedValueKey_signInFocus.self] = newValue
+                }
+            }
+            """,
+            diagnostics: expectedDiagnostics,
+            macros: testMacros
+        )
+        
+    }
+    func testFocusedValueMacroFailsWithInvalidOptionalTypeAnnotationWhenPropertyHasANonOptionalType() throws {
+        let expectedFixIt = FixItSpec(message: "Add '?' to the type to make it optional")
+        // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
+        let expectedDiagnostics = [
+            // The property's type is not optional.
+            DiagnosticSpec(message: KeyMacroError.invalidOptionalTypeAnnotation.message, line: 1, column: 1, fixIts: [expectedFixIt])
+        ]
+        
+        assertMacroExpansion(
+            """
+            @FocusedValue var signInFocus: Bool
+            """,
+            expandedSource: """
+            var signInFocus: Bool {
+                get {
+                    return self [FocusedValueKey_signInFocus.self]
+                }
+                set(newValue) {
+                    self [FocusedValueKey_signInFocus.self] = newValue
+                }
+            }
+            """,
+            diagnostics: expectedDiagnostics,
+            macros: testMacros
+        )
+        
     }
 }
 #endif

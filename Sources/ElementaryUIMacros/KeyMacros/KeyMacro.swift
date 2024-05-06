@@ -88,7 +88,7 @@ public extension KeyMacro {
         providingAccessorsOf declaration: some DeclSyntaxProtocol,
         in context: some MacroExpansionContext
     ) throws -> [AccessorDeclSyntax] {
-        try withErroHandling(context: context, node: node) {
+        try withErroHandling(context: context, node: node, onFailure: []) {
             let binding = try binding(for: declaration)
             let keyName = try keyName(for: binding)
             

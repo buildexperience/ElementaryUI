@@ -39,7 +39,7 @@ public struct HexColorMacro: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try withErroHandling(context: context, node: node) {
+        try withErroHandling(context: context, node: node, onFailure: "") {
             guard let argument = node.argumentList.first?.expression,
                   let argumentSegment = argument.as(StringLiteralExprSyntax.self)?.segments.first,
                   case .stringSegment(let argumentString) = argumentSegment

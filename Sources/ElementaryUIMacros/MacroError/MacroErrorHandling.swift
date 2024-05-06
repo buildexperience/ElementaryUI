@@ -22,15 +22,23 @@ import SwiftSyntax
 /// - Throws: Any error thrown by the closure.
 package func withErroHandling<T>(
     context: some MacroExpansionContext,
-    node: SyntaxProtocol, _ body: () throws -> T
+    node: SyntaxProtocol, 
+    onFailure: T? = nil,
+    _ body: () throws -> T
 ) throws -> T {
     do {
         return try body()
     }catch let error as MacroError {
         let diagnostic = Diagnostic(node: node, message: error, fixIts: error.fixIts)
         context.diagnose(diagnostic)
+        if let onFailure {
+            return onFailure
+        }
         throw error
     }catch {
+        if let onFailure {
+            return onFailure
+        }
         throw error
     }
 }
