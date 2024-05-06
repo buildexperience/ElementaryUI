@@ -23,7 +23,6 @@ public extension View {
     /// - Parameter condition: The condition to use when hiding a ``View``.
     /// - Returns: A view that becomes hiden when the given condition is satisfied.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
-    ///
     @ViewBuilder func hidden(_ condition: Bool) -> some View {
         if !condition {
             self
@@ -55,7 +54,6 @@ public extension View {
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(_:_:)`` if you want the return type to remain the same.
-    ///
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, @ViewBuilder _ builder: (_ content: Self) -> Content) -> some View {
         if condition {
             builder(self)
@@ -86,7 +84,6 @@ public extension View {
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    ///
     func `if`(_ condition: Bool, @ViewBuilder _ builder: (_ content: Self) -> Self) -> Self {
         if condition {
             return builder(self)
@@ -120,7 +117,6 @@ public extension View {
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(let:_:)`` if you want the return type to remain the same.
-    ///
     @ViewBuilder func `if`<Content: View, T>(`let` optional: T?, @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Content) -> some View {
         if let optional {
             builder(self, optional)
@@ -152,7 +148,6 @@ public extension View {
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    ///
     func `if`<T>(`let` value: T?, @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Self) -> Self {
         if let value {
             return builder(self, value)

@@ -25,7 +25,6 @@ import SwiftUI
 /// ```
 /// 
 /// - Warning: This is an internal modifier not meant to be used directly. You should use either ``sizeListener()``, or ``sizeListener(_:)`` instead.
-///
 struct ScreenListenerViewModifier: ViewModifier {
     /// The value indicating whether to bind the screen size changes to a ``Binding`` property.
     private let bindingScreen: Bool
@@ -56,7 +55,6 @@ extension ScreenListenerViewModifier {
     /// Creates a scren listener modifier using a ``Binding`` to the ``Screen`` object.
     ///
     /// - Parameter screen: The ``Binding`` to the current ``Screen`` object.
-    ///
     init(screen: Binding<Screen>) {
         self.bindingScreen = true
         self._screen = screen
@@ -69,13 +67,12 @@ extension ScreenListenerViewModifier {
     }
 }
 
-//MARK: - Functions
+//MARK: - Private Functions
 extension ScreenListenerViewModifier {
     /// Builds a ``Screen`` object from a ``GeometryProxy``.
     ///
     /// - Parameter proxy: The geometry proxy from which the screen size & safe area insets are extracted.
     /// - Returns: A ``Screen`` object representing the screen size and safe area insets.
-    ///
     private func screen(from proxy: GeometryProxy) -> Screen {
         return Screen(size: proxy.size, safeAreaInsets: proxy.safeAreaInsets)
     }
@@ -108,7 +105,6 @@ public extension View {
     /// ```
     ///
     /// - Returns: A view wrapped in a ``GeometryReader`` that propagates the up-to-date size and safe area insets to the environment.
-    ///
     func sizeListener() -> some View {
         modifier(ScreenListenerViewModifier())
     }
@@ -129,7 +125,6 @@ public extension View {
     ///
     /// - Parameter screen: A ``Binding`` to the current ``Screen`` object.
     /// - Returns: A view wrapped in a ``GeometryReader`` that propagates the up-to-date size and safe area insets to the passed ``Binding``.
-    ///
     func sizeListener(_ screen: Binding<Screen>) -> some View {
         modifier(ScreenListenerViewModifier(screen: screen))
     }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  TextStyleSizes.swift
 //  
 //
 //  Created by Joe Maghzal on 11/04/2024.
@@ -9,9 +9,6 @@ import SwiftUI
 
 extension Font.TextStyle {
     /// The font size associated with the text style.
-    ///
-    /// - Returns: The font size in points.
-    /// 
     var size: CGFloat {
         switch self {
             case .largeTitle:

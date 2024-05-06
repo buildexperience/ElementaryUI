@@ -65,7 +65,6 @@ public typealias EMTextFieldValidator = EMValidator<String>
 /// ```
 ///
 /// - Note: The applied style will be propagated through the environment.
-///
 public struct EMTextField: View {
     /// The current style for the text field.
     @Environment(\.emTextFieldStyle) private var style
@@ -120,7 +119,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init(_ placeholder: EMTextContentType = .unlocalized(""), text: Binding<String>, prompt: Text? = nil) {
         self._text = text
         self._validation = .constant(nil)
@@ -135,7 +133,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init(_ placeholder: EMTextContentType = .unlocalized(""), text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
@@ -149,7 +146,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, prompt: Text? = nil) {
         let placeholderContent = EMTextContentType.localized(key: placeholder, bundle: nil)
         self.init(placeholderContent, text: text, prompt: prompt)
@@ -161,7 +157,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
@@ -175,7 +170,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, prompt: Text? = nil) {
         let placeholderContent = EMTextContentType.unlocalized(String(placeholder))
         self.init(placeholderContent, text: text, prompt: prompt)
@@ -187,7 +181,6 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    ///
     init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
@@ -234,7 +227,6 @@ public extension EMTextField {
     /// - Returns: A modified version of the text field with the applied validator.
     ///
     /// - Note: The validation result will be passed to the text field's style.
-    ///
     func validator<Validator: EMTextFieldValidator>(
         _ validator: Validator,
         _ trigger: ValidationTrigger,

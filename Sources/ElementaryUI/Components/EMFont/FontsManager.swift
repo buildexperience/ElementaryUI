@@ -12,7 +12,6 @@ import SwiftUI
 /// ```swift
 /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
 /// ```
-///
 public struct FontsManager {
     /// The dictionary keeping track of the registered fonts by their names.
     private static var registeredFonts = [String: CGFont]()
@@ -32,7 +31,6 @@ public extension FontsManager {
     ///   - bundle: The bundle containing the font file.
     ///
     ///  - Note: This function does nothing if the provided font was already registered.
-    ///
     static func registerFont(_ name: String, fontExtension: String, bundle: Bundle) {
         // Find the font file URL in the provided bundle.
         guard let fontURL = bundle.url(forResource: name, withExtension: fontExtension) else {
@@ -58,13 +56,12 @@ public extension FontsManager {
 }
 
 //MARK: - Private Functions
-private extension FontsManager {
+extension FontsManager {
     /// Registers the given ``CGFont`` with the Core Text font manager.
     ///
     /// - Parameter font: The font to register.
     /// - Returns: An ``Unmanaged<CFError>`` object if an error occurred during registration, nil otherwise.
-    ///
-    static func register(_ font: CGFont) -> Unmanaged<CFError>? {
+    private static func register(_ font: CGFont) -> Unmanaged<CFError>? {
         var error: Unmanaged<CFError>?
         CTFontManagerRegisterGraphicsFont(font, &error)
         guard let error else {
@@ -77,8 +74,7 @@ private extension FontsManager {
     ///
     /// - Parameter url: The URL of the font file.
     /// - Returns: A ``CGFont`` object if successful, nil otherwise.
-    ///
-    static func cgFont(from url: URL) -> CGFont? {
+    private static func cgFont(from url: URL) -> CGFont? {
         guard let dataProvider = CGDataProvider(url: url as CFURL) else {
             return nil
         }

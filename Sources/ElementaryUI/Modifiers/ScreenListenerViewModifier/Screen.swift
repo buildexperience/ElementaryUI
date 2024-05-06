@@ -11,7 +11,6 @@ import SwiftUI
 ///
 /// It encapsulates the size of the listener's container view and its safe area insets.
 /// You can use this information to adjust your layout accordingly.
-///
 public struct Screen: Equatable, Sendable {
     /// The size of the listener's container view.
     public let size: CGSize

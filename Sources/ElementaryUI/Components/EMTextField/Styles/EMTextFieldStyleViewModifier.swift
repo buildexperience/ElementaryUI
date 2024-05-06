@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+public extension EnvironmentValues {
+    /// The current text field style set in the environment.
+    @EnvironmentValue var emTextFieldStyle: (any EMTextFieldStyle) = DefaultEMTextFieldStyle()
+}
+
 public extension View {
     /// Sets the text field style for the view hierarchy.
     ///
@@ -27,7 +32,6 @@ public extension View {
     ///
     /// - Parameter style: The style to apply to all text fields within the hierarchy.
     /// - Returns: A view modified to use the specified text field style.
-    ///
     func emTextFieldStyle<Style: EMTextFieldStyle>(_ style: Style) -> some View {
         environment(\.emTextFieldStyle, style)
     }

@@ -30,7 +30,6 @@ import SwiftUI
 /// ```
 ///
 /// - Warning: This is an internal modifier not meant to be used directly. You should use ``skeletonLoadable(_:)``, or ``skeleton(loading:disabled:)`` instead.
-///
 struct SkeletonStateViewModifier: ViewModifier {
     /// The environment value representing the current redaction reasons.
     @Environment(\.redactionReasons) private var redactionReasons
@@ -78,7 +77,6 @@ public extension View {
     /// ```
     /// - Parameter loadable: Wether this view can display skeleton loading.
     /// - Returns: A view that's able to display a skeleton loading view.
-    ///
     func skeletonLoadable(_ loadable: Bool = true) -> some View {
         modifier(SkeletonStateViewModifier(loadable: loadable))
     }
@@ -111,7 +109,6 @@ public extension View {
     /// - Returns: A view with the skeleton loading state applied.
     ///
     /// - Warning: You need to use ``skeletonLoadable(_:)`` to make views display the skeleton loading.
-    ///
     func skeleton(loading: Bool, disabled: Bool = true) -> some View {
         self
             .environment(\.skeletonLoading, loading)

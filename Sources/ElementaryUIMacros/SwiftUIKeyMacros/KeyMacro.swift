@@ -47,8 +47,8 @@ extension KeyMacro {
     ///
     /// - Parameter declaration: The declaration syntax.
     /// - Returns: The binding element.
-    /// - Throws: `KeyMacroError.invalidPropertyType` if the declaration is not a variable declaration of type `var`.
-    ///           `KeyMacroError.invalidDeclaration` if the declaration is invalid.
+    /// - Throws: ``KeyMacroError.invalidPropertyType`` if the declaration is not a variable declaration of type `var`.
+    ///           ``KeyMacroError.invalidDeclaration`` if the declaration is invalid.
     static func binding(for declaration: some DeclSyntaxProtocol) throws -> PatternBindingListSyntax.Element {
         guard let variableDeclarations = declaration.as(VariableDeclSyntax.self),
               variableDeclarations.bindingSpecifier.text == "var" else {
@@ -71,7 +71,7 @@ extension KeyMacro {
     ///
     /// - Returns: The struct key name.
     ///
-    /// - Throws: `KeyMacroError.invalidDeclaration` if the binding is invalid.
+    /// - Throws: ``KeyMacroError.invalidDeclaration`` if the binding is invalid.
     static func keyName(for binding: PatternBindingListSyntax.Element) throws -> TokenSyntax {
         guard let name = binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text else {
             throw KeyMacroError.invalidDeclaration

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Macro for expanding hexadecimal color strings into SwiftUI ``Color`` expressions.
+/// Macro for expanding hexadecimal color strings into `SwiftUI` ``Color`` expressions.
 ///
 /// This macro enables the expansion of hexadecimal color strings into ``Color`` expressions. It abstracts away the conversion process and provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
 ///
@@ -19,7 +19,7 @@ import SwiftUI
 /// **Supported hex formats:**
 ///  - 6 digits, the opacity component will always be 1:
 ///  ```swift
-///  #color("ff0000") // // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 255 / 255)
+///  #color("ff0000") // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 255 / 255)
 ///  ```
 ///  - 8 digits, decodes the opacity component:
 ///  ```swift
@@ -27,7 +27,6 @@ import SwiftUI
 ///  ```
 ///
 /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
-///
 @freestanding(expression)
 public macro color(_ hex: StringLiteralType) -> Color = #externalMacro(module: "ElementaryUIMacros", type: "HexColorMacro")
 

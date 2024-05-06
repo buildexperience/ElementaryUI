@@ -17,7 +17,6 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-///
 public protocol EMTextDisplayable {
     /// The text content to be displayed.
     var content: EMTextContentType { get }

@@ -12,19 +12,19 @@ public extension Color {
     ///
     /// The hex string can include an optional alpha component in addition to the red, green, and blue components.
     ///
-    /// Supported hex formats:
-    /// - 6-character format: "#RRGGBB"
-    /// - 8-character format: "#RRGGBBAA" (with alpha component)
-    ///
-    /// ```swift
-    /// let redColor = Color(hex: "#FF0000") // Creates a red color
-    ///
-    /// let redColor = Color(hex: "#FF000080") // Creates a red color with an opacity of 0.5
-    /// ```
+    /// **Supported hex formats:**
+    ///  - 6 digits, the opacity component will always be 1:
+    ///  ```swift
+    ///  Color(hex: "ff0000") // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 255 / 255)
+    ///  ```
+    ///  - 8 digits, decodes the opacity component:
+    ///  ```swift
+    ///  Color(hex: "ff000080") // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 128 / 255)
+    ///  ```
     ///
     /// - Parameter hex: A hexadecimal string representing the color.
-    /// - Note: If the hexadecimal string is invalid or cannot be parsed, the initializer defaults to a white color with full opacity.
-    ///
+    /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
+    /// - Warning: If the hexadecimal string is invalid or cannot be parsed, the initializer defaults to a white color with full opacity.
     init(hex: String) {
         var hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         if hex.count == 6 {
@@ -41,12 +41,5 @@ public extension Color {
         let blue = Double((number & 0x0000ff00) >> 8) / 255
         let opacity = Double(number & 0x000000ff) / 255
         self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
-    }
-}
-
-#Preview {
-    VStack {
-        Color(hex: "ffe700")
-        Color(hex: "ff000080")
     }
 }
