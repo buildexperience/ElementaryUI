@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public extension EnvironmentValues {
+extension EnvironmentValues {
     /// The current state of the skeleton loading.
-    @EnvironmentValue var skeletonLoading: Bool = false
+    @EnvironmentValue public var skeletonLoading: Bool = false
 }

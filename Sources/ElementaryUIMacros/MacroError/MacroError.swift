@@ -27,31 +27,31 @@ package protocol MacroError: Error, DiagnosticMessage {
 }
 
 //MARK: - Default Implementations
-package extension MacroError {
+extension MacroError {
     /// The unique identifier for the diagnostic message.
-    var diagnosticID: MessageID {
+    package var diagnosticID: MessageID {
         return MessageID(domain: "ElementaryUIMacros", id: "\(self)")
     }
     
     /// The severity level of the diagnostic message.
-    var severity: DiagnosticSeverity {
+    package var severity: DiagnosticSeverity {
         return .error
     }
     
     /// Default implementation of `fixIts`.
-    var fixIts: [FixIt] {
+    package var fixIts: [FixIt] {
         return []
     }
 }
 
 //MARK: - Modifiers
-package extension MacroError {
+extension MacroError {
     /// Adds additional fix its to the error.
     /// Use this modifier to add additional fix its to the error.
     ///
     /// - Parameter fixIts: An array of fix its associated with the error.
     /// - Returns: A ``MacroErrorFixItWrapper`` containing the error and the provided fix its.
-    func withFixIts(_ fixIts: [FixIt]) -> MacroErrorFixItWrapper {
+    package func withFixIts(_ fixIts: [FixIt]) -> MacroErrorFixItWrapper {
         return MacroErrorFixItWrapper(error: self, fixIts: fixIts)
     }
     
@@ -60,7 +60,7 @@ package extension MacroError {
     ///
     /// - Parameter fixIt: A fix it associated with the error.
     /// - Returns: A ``MacroErrorFixItWrapper`` containing the error and the provided fix it.
-    func withFixIt(_ fixIt: FixIt) -> MacroErrorFixItWrapper {
+    package func withFixIt(_ fixIt: FixIt) -> MacroErrorFixItWrapper {
         withFixIts([fixIt])
     }
 }

@@ -25,7 +25,12 @@ final class HexColorMacroTests: XCTestCase {
             #color("676C60")
             """,
             expandedSource: """
-            Color(red: 103 / 255, green: 108 / 255, blue: 96 / 255, opacity: 255 / 255)
+            Color(
+                red: 103 / 255,
+                green: 108 / 255,
+                blue: 96 / 255,
+                opacity: 255 / 255
+            )
             """,
             macros: testMacros
         )
@@ -36,7 +41,12 @@ final class HexColorMacroTests: XCTestCase {
             #color("#676C60")
             """,
             expandedSource: """
-            Color(red: 103 / 255, green: 108 / 255, blue: 96 / 255, opacity: 255 / 255)
+            Color(
+                red: 103 / 255,
+                green: 108 / 255,
+                blue: 96 / 255,
+                opacity: 255 / 255
+            )
             """,
             macros: testMacros
         )
@@ -47,7 +57,12 @@ final class HexColorMacroTests: XCTestCase {
             #color("#676C6080")
             """,
             expandedSource: """
-            Color(red: 103 / 255, green: 108 / 255, blue: 96 / 255, opacity: 128 / 255)
+            Color(
+                red: 103 / 255,
+                green: 108 / 255,
+                blue: 96 / 255,
+                opacity: 128 / 255
+            )
             """,
             macros: testMacros
         )

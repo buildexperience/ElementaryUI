@@ -79,7 +79,7 @@ public struct EMTextField: View {
     private let prompt: Text?
     
     /// The placeholder content type for the text field.
-    private let placeholder: EMTextContentType
+    private let placeholder: TextContentType
     
     /// The configuration for validation of the text field.
     private let validationConfiguration: ValidationConfiguration?
@@ -111,19 +111,19 @@ public struct EMTextField: View {
     }
 }
 
-//MARK: - EMTextContentType Initializers
-public extension EMTextField {
+//MARK: - TextDisplayable Initializers
+extension EMTextField {
     /// Creates a text field with a text label that can be generated from a localized title string or from an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init(_ placeholder: EMTextContentType = .unlocalized(""), text: Binding<String>, prompt: Text? = nil) {
+    public init(_ placeholder: TextDisplayable = TextContentType.unlocalized(""), text: Binding<String>, prompt: Text? = nil) {
         self._text = text
         self._validation = .constant(nil)
         self.prompt = prompt
-        self.placeholder = placeholder
+        self.placeholder = placeholder.content
         self.validationConfiguration = nil
     }
     
@@ -133,22 +133,27 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init(_ placeholder: EMTextContentType = .unlocalized(""), text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable
+    public init(_ placeholder: TextDisplayable = TextContentType.unlocalized(""), text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }
 
 //MARK: - LocalizedStringKey Initializers
-public extension EMTextField {
+extension EMTextField {
     /// Creates a text field with a text label that can be generated from a localized title string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, prompt: Text? = nil) {
-        let placeholderContent = EMTextContentType.localized(key: placeholder, bundle: nil)
-        self.init(placeholderContent, text: text, prompt: prompt)
+    @inlinable
+    public init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, prompt: Text? = nil) {
+        self.init(
+            TextContentType.localized(key: placeholder, bundle: nil),
+            text: text,
+            prompt: prompt
+        )
     }
     
     /// Creates a text field with a text label that can be generated from a localized title string.
@@ -157,22 +162,27 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable
+    public init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }
 
 //MARK: - StringProtocol Initializers
-public extension EMTextField {
+extension EMTextField {
     /// Creates a text field with a text label that can be generated from an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, prompt: Text? = nil) {
-        let placeholderContent = EMTextContentType.unlocalized(String(placeholder))
-        self.init(placeholderContent, text: text, prompt: prompt)
+    @inlinable
+    public init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, prompt: Text? = nil) {
+        self.init(
+            TextContentType.unlocalized(String(placeholder)),
+            text: text,
+            prompt: prompt
+        )
     }
     
     /// Creates a text field with a text label that can be generated from an unlocalized string.
@@ -181,7 +191,8 @@ public extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display and edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable
+    public init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }
@@ -236,31 +247,4 @@ public extension EMTextField {
         let validationConfiguration = ValidationConfiguration(validator: validator, validationTrigger: trigger, onValidation: onValidation)
         return EMTextField(text: $text, validation: $validation, prompt: prompt, placeholder: placeholder, validationConfiguration: validationConfiguration)
     }
-}
-
-fileprivate struct ContentView: View {
-    @State private var validation: Bool?
-    @State private var text = ""
-    private var color: Color {
-        guard let validation else {
-            return .primary
-        }
-        return validation ? .green: .red
-    }
-    var body: some View {
-        EMTextField("Enter your email", text: $text)
-            .validator(EmailValidator(), .onSubmit(), validation: $validation) { validation in
-                print(validation as Any)
-            }.foregroundStyle(color)
-    }
-    
-    struct EmailValidator: EMValidator {
-        func validate(_ value: String) -> Bool? {
-            return value.contains(".com")
-        }
-    }
-}
-
-#Preview {
-    ContentView()
 }

@@ -22,7 +22,7 @@ public protocol HeadlineWeightRepresentable {
     static var headlineWeight: Self {get}
 }
 
-public extension EMFont where Self.Weight: HeadlineWeightRepresentable {
+extension EMFont where Self.Weight: HeadlineWeightRepresentable {
     /// Creates a font with the headline text style, size of 17 & weight of `headlineWeight`.
     ///
     /// This font has a size of 17 relative to the ``headline`` text style.
@@ -30,7 +30,8 @@ public extension EMFont where Self.Weight: HeadlineWeightRepresentable {
     /// - Parameter weight: The weight of the font, defaults to nil.
     /// - Returns: A custom font with a `headline` size & `headlineWeight` weight.
     /// - Note: The returned font supports dynamic text styles.
-    static func headline(_ weight: Self.Weight? = .headlineWeight) -> Font {
+    @inlinable
+    public static func headline(_ weight: Self.Weight? = .headlineWeight) -> Font {
         return custom(.headline, weight: weight)
     }
 }

@@ -16,17 +16,34 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
     ],
     targets: [
-        .macro(name: "ElementaryUIMacros", dependencies: [
-            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-            .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-        ]),
-        .testTarget(name: "ElementaryUIMacrosTests", dependencies: [
-            "ElementaryUIMacros",
-            .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-        ]),
+        .macro(
+            name: "ElementaryUIMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
         
-        .target(name: "ElementaryUI", dependencies: [
-            "ElementaryUIMacros"
-        ]),
+        .testTarget(
+            name: "ElementaryUIMacrosTests",
+            dependencies: [
+                "ElementaryUIMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("StrictConcurrency"),
+                .unsafeFlags([
+                    "-Xfrontend", 
+                    "-warn-concurrency"
+                ])
+            ]
+        ),
+        
+        .target(
+            name: "ElementaryUI",
+            dependencies: [
+                "ElementaryUIMacros"
+            ]
+        ),
     ]
 )

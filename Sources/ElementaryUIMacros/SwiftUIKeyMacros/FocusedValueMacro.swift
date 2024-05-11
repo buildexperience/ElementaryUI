@@ -14,7 +14,8 @@ import SwiftDiagnostics
 
 /// Macro used to generate the an ``PrefrenceKey``.
 ///
-/// This macro creates a ``FocusedValueKey`` from the property it's applied to & generates the corresponding getter & setter for the property defined in the ``FocusedValueKey`` extension:
+/// This macro creates a ``FocusedValueKey`` from the property it's applied to & generates the corresponding getter & setter for the 
+/// property defined in the ``FocusedValueKey`` extension:
 ///
 /// ```swift
 /// extension FocusedValues {
@@ -39,14 +40,14 @@ import SwiftDiagnostics
 /// ```
 /// - Warning: The property must be contained in a ``FocusedValues`` extension.
 /// - Warning: The property type must be optional.
-public struct FocusedValueMacro: KeyMacro {
-    public static let keyProtocolName = "FocusedValueKey"
+package struct FocusedValueMacro: KeyMacro {
+    package static let keyProtocolName = "FocusedValueKey"
 }
 
 //MARK: - PeerMacro
 extension FocusedValueMacro: PeerMacro {
     /// Generates the key struct for the given declaration, ensuring they adhere to the specified key protocol.
-    public static func expansion(
+    package static func expansion(
         of node: AttributeSyntax,
         providingPeersOf declaration: some DeclSyntaxProtocol,
         in context: some MacroExpansionContext

@@ -18,13 +18,13 @@ package struct MacroErrorFixItWrapper {
 }
 
 //MARK: - Initializer
-package extension MacroErrorFixItWrapper {
+extension MacroErrorFixItWrapper {
     /// Creates a new ``MacroError`` with the provided error and additional fix its.
     /// 
     /// - Parameters:
     ///   - error: The error to be wrapped.
     ///   - fixIts: The additional associated fix its to add to the error's fix its.
-    init(error: MacroError, fixIts: [FixIt]) {
+    package init(error: MacroError, fixIts: [FixIt]) {
         self.error = error
         self.additionalFixIts = fixIts
     }

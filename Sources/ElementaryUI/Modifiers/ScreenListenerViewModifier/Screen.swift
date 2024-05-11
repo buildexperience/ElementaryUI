@@ -21,7 +21,7 @@ public struct Screen: Equatable, Sendable {
     public static let zero = Screen(size: .zero, safeAreaInsets: EdgeInsets())
 }
 
-public extension EnvironmentValues {
+extension EnvironmentValues {
     /// The screen representation of the listener's container view.
-    @EnvironmentValue var screen = Screen.zero
+    @EnvironmentValue public var screen = Screen.zero
 }

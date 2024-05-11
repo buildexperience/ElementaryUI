@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public extension View {
+extension View {
     /// Adds a border with the specified content, line width, and shape to the view.
     ///
     /// ```swift
@@ -22,7 +22,12 @@ public extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    func border<T: ShapeStyle, S: InsettableShape>(_ content: T = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true, shape: S) -> some View {
+    public func border<T: ShapeStyle, S: InsettableShape>(
+        _ content: T = .foreground,
+        lineWidth: CGFloat = 1,
+        antialiased: Bool = true,
+        shape: S
+    ) -> some View {
         overlay {
             shape
                 .strokeBorder(content, lineWidth: lineWidth, antialiased: antialiased)
@@ -43,15 +48,15 @@ public extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    func border<T: ShapeStyle, S: InsettableShape>(_ content: T = .foreground, style: StrokeStyle, antialiased: Bool = true, shape: S) -> some View {
+    public func border<T: ShapeStyle, S: InsettableShape>(
+        _ content: T = .foreground,
+        style: StrokeStyle,
+        antialiased: Bool = true,
+        shape: S
+    ) -> some View {
         overlay {
             shape
                 .strokeBorder(content, style: style, antialiased: antialiased)
         }.clipShape(shape)
     }
-}
-
-#Preview {
-    Color.red
-        .border(lineWidth: 10, shape: .capsule)
 }
