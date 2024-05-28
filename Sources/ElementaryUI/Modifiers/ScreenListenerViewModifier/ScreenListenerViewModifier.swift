@@ -45,7 +45,7 @@ fileprivate struct ScreenListenerViewModifier: ViewModifier {
                     }
             }else {
                 content
-                    .environment(\.screen, screen)
+                    .environment(\.screen, geometryScreen)
             }
         }
     }
