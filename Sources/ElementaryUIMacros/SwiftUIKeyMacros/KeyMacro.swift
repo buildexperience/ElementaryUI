@@ -36,7 +36,7 @@ import SwiftDiagnostics
 ///     }
 /// }
 /// ```
-public protocol KeyMacro: AccessorMacro {
+package protocol KeyMacro: AccessorMacro {
     /// The name of the key protocol associated with the macro.
     static var keyProtocolName: String {get}
 }
@@ -49,7 +49,7 @@ extension KeyMacro {
     /// - Returns: The binding element.
     /// - Throws: ``KeyMacroError.invalidPropertyType`` if the declaration is not a variable declaration of type `var`.
     ///           ``KeyMacroError.invalidDeclaration`` if the declaration is invalid.
-    static func binding(for declaration: some DeclSyntaxProtocol) throws -> PatternBindingListSyntax.Element {
+    internal static func binding(for declaration: some DeclSyntaxProtocol) throws -> PatternBindingListSyntax.Element {
         guard let variableDeclarations = declaration.as(VariableDeclSyntax.self),
               variableDeclarations.bindingSpecifier.text == "var" else {
             throw KeyMacroError.invalidPropertyType
@@ -72,7 +72,7 @@ extension KeyMacro {
     /// - Returns: The struct key name.
     ///
     /// - Throws: ``KeyMacroError.invalidDeclaration`` if the binding is invalid.
-    static func keyName(for binding: PatternBindingListSyntax.Element) throws -> TokenSyntax {
+    internal static func keyName(for binding: PatternBindingListSyntax.Element) throws -> TokenSyntax {
         guard let name = binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text else {
             throw KeyMacroError.invalidDeclaration
         }
@@ -81,9 +81,9 @@ extension KeyMacro {
 }
 
 //MARK: - AccessorMacro
-public extension KeyMacro {
+extension KeyMacro {
     /// Generates the computed property for the given declaration, allowing access to the generated key struct.
-    static func expansion(
+    package static func expansion(
         of node: AttributeSyntax,
         providingAccessorsOf declaration: some DeclSyntaxProtocol,
         in context: some MacroExpansionContext

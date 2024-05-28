@@ -18,13 +18,13 @@ package struct MacroErrorFixItMessage: FixItMessage {
 }
 
 //MARK: - Initializer
-package extension MacroErrorFixItMessage {
+extension MacroErrorFixItMessage {
     /// Creates a fix it message with the provided message and ID.
     ///
     /// - Parameters:
     ///   - message: The fix it message.
     ///   - id: The unique identifier for the fix it.
-    init(message: String, id: String) {
+    package init(message: String, id: String) {
         self.message = message
         self.fixItID = MessageID(domain: "ElementaryUIMacros", id: id)
     }

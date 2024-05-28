@@ -12,13 +12,7 @@ import SwiftUI
 /// ```swift
 /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
 /// ```
-public struct FontsManager {
-    /// The dictionary keeping track of the registered fonts by their names.
-    private static var registeredFonts = [String: CGFont]()
-}
-
-//MARK: - Public Functions
-public extension FontsManager {
+public enum FontsManager {
     /// Registers a custom font with the specified name, font extension, and bundle.
     ///
     /// ```swift
@@ -31,7 +25,7 @@ public extension FontsManager {
     ///   - bundle: The bundle containing the font file.
     ///
     ///  - Note: This function does nothing if the provided font was already registered.
-    static func registerFont(_ name: String, fontExtension: String, bundle: Bundle) {
+    public static func registerFont(_ name: String, fontExtension: String, bundle: Bundle) {
         // Find the font file URL in the provided bundle.
         guard let fontURL = bundle.url(forResource: name, withExtension: fontExtension) else {
             assertionFailure("Could not find the url corresponding to the font \(name)")
@@ -42,15 +36,8 @@ public extension FontsManager {
             assertionFailure("Could not create the font \(name) using the url: \(fontURL)")
             return
         }
-        // Check if the font is already registered.
-        guard registeredFonts[name] != font else {
-            return
-        }
         // Register the font
-        guard let error = register(font) else {
-            registeredFonts[name] = font
-            return
-        }
+        guard let error = register(font) else {return}
         assertionFailure(String(describing: error))
     }
 }
@@ -61,6 +48,7 @@ extension FontsManager {
     ///
     /// - Parameter font: The font to register.
     /// - Returns: An ``Unmanaged<CFError>`` object if an error occurred during registration, nil otherwise.
+    @inline(__always)
     private static func register(_ font: CGFont) -> Unmanaged<CFError>? {
         var error: Unmanaged<CFError>?
         CTFontManagerRegisterGraphicsFont(font, &error)
@@ -74,6 +62,7 @@ extension FontsManager {
     ///
     /// - Parameter url: The URL of the font file.
     /// - Returns: A ``CGFont`` object if successful, nil otherwise.
+    @inline(__always)
     private static func cgFont(from url: URL) -> CGFont? {
         guard let dataProvider = CGDataProvider(url: url as CFURL) else {
             return nil

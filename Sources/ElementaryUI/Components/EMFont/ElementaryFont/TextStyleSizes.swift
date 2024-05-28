@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Font.TextStyle {
     /// The font size associated with the text style.
-    var size: CGFloat {
+    internal var size: CGFloat {
         switch self {
             case .largeTitle:
                 return 34

@@ -88,12 +88,17 @@ final class FocusedValueMacroTests: XCTestCase {
         )
         
     }
-    func testFocusedValueMacroFailsWithInvalidOptionalTypeAnnotationWhenPropertyHasANonOptionalType() {
+    func testFocusedValueMacroFailsWithInvalidOptionalTypeAnnotationWhenPropertyIsNotOptional() {
         let expectedFixIt = FixItSpec(message: "Add '?' to the type to make it optional")
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property's type is not optional.
-            DiagnosticSpec(message: KeyMacroError.invalidOptionalTypeAnnotation.message, line: 1, column: 1, fixIts: [expectedFixIt])
+            DiagnosticSpec(
+                message: KeyMacroError.invalidOptionalTypeAnnotation.message, 
+                line: 1,
+                column: 1,
+                fixIts: [expectedFixIt]
+            )
         ]
         
         assertMacroExpansion(

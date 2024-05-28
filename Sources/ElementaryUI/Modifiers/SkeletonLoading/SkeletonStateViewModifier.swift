@@ -30,7 +30,7 @@ import SwiftUI
 /// ```
 ///
 /// - Warning: This is an internal modifier not meant to be used directly. You should use ``skeletonLoadable(_:)``, or ``skeleton(loading:disabled:)`` instead.
-struct SkeletonStateViewModifier: ViewModifier {
+fileprivate struct SkeletonStateViewModifier: ViewModifier {
     /// The environment value representing the current redaction reasons.
     @Environment(\.redactionReasons) private var redactionReasons
     
@@ -38,7 +38,7 @@ struct SkeletonStateViewModifier: ViewModifier {
     @Environment(\.skeletonLoading) private var skeletonLoading
     
     /// The value representing wether this view can display skeleton loading.
-    let loadable: Bool
+    private let loadable: Bool
     
     /// Calculates the redaction reasons based on the skeleton loading state.
     private var redactions: RedactionReasons {
@@ -54,17 +54,29 @@ struct SkeletonStateViewModifier: ViewModifier {
     }
     
     /// The body of the ``ViewModifier``.
-    func body(content: Content) -> some View {
+    fileprivate func body(content: Content) -> some View {
         content
             .redacted(reason: redactions)
     }
 }
 
+//MARK: - Initializer
+extension SkeletonStateViewModifier {
+    /// Creates a new ``SkeletonStateViewModifier`` that handles displaying the skeleton loading state of a view..
+    ///
+    /// - Parameters:
+    ///   - loadable: Boolean value indication wether the view can display skeleton loading.
+    fileprivate init(_ loadable: Bool) {
+        self.loadable = loadable
+    }
+}
+
 //MARK: - Modifiers
-public extension View {
+extension View {
     /// Makes a view display a skeleton when ``EnvironmentValues/skeletonLoading`` is true.
     ///
-    /// Use this modifier to indicate that a view should display a skeleton loading view when ``EnvironmentValues/skeletonLoading`` is true.
+    /// Use this modifier to indicate that a view should display a skeleton loading view when 
+    /// ``EnvironmentValues/skeletonLoading`` is true.
     ///
     /// ```swift
     /// struct MyCellView: View {
@@ -77,8 +89,8 @@ public extension View {
     /// ```
     /// - Parameter loadable: Wether this view can display skeleton loading.
     /// - Returns: A view that's able to display a skeleton loading view.
-    func skeletonLoadable(_ loadable: Bool = true) -> some View {
-        modifier(SkeletonStateViewModifier(loadable: loadable))
+    public func skeletonLoadable(_ loadable: Bool = true) -> some View {
+        modifier(SkeletonStateViewModifier(loadable))
     }
     
     /// Applies the skeleton loading state to the view with the specified loading status.
@@ -109,7 +121,7 @@ public extension View {
     /// - Returns: A view with the skeleton loading state applied.
     ///
     /// - Warning: You need to use ``skeletonLoadable(_:)`` to make views display the skeleton loading.
-    func skeleton(loading: Bool, disabled: Bool = true) -> some View {
+    public func skeleton(loading: Bool, disabled: Bool = true) -> some View {
         self
             .environment(\.skeletonLoading, loading)
             .disabled(loading && disabled)

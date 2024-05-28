@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-/// Requirements for defining a type that can be represented by skeleton data to be used in a ``ForEach`` when skeleton loading is enabled.
+/// Requirements for defining a type that can be represented by skeleton data to be used in a ``ForEach`` when skeleton loading is
+///  enabled.
 ///
 /// ```swift
 /// struct Character: Identifiable, SkeletonRepresentable {

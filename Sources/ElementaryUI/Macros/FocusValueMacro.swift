@@ -9,7 +9,8 @@ import Foundation
 
 /// Macro used to generate the an ``PrefrenceKey``.
 ///
-/// This macro creates a ``FocusedValueKey`` from the property it's applied to & generates the corresponding getter & setter for the property defined in the ``FocusedValueKey`` extension:
+/// This macro creates a ``FocusedValueKey`` from the property it's applied to & generates the corresponding getter & setter for the 
+/// property defined in the ``FocusedValueKey`` extension:
 ///
 /// ```swift
 /// extension FocusedValues {

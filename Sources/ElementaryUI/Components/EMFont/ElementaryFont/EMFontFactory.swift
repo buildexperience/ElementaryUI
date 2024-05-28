@@ -84,12 +84,14 @@ import Foundation
 /// }
 /// ```
 ///
-/// - Note: Implementing ``register(bundle:)-2x34k`` is not required when ``Weight`` conforms to ``CaseIterable`` & ``RawRepresentable``, & its `RawValue` is ``String``.
+/// - Note: Implementing ``register(bundle:)-2x34k`` is not required when ``Weight`` conforms to ``CaseIterable``
+///  & ``RawRepresentable``, & its `RawValue` is ``String``.
 /// - Note: Implementing ``Weight``  is not required when the font has one weight.
 public protocol EMFontFactory {
     /// The diffrent weights of the font.
     ///
-    /// - Note: The definition for ``Weight`` is optional, & its default implementation is ``Never``. This can be useful for fonts having a single weight.
+    /// - Note: The definition for ``Weight`` is optional, & its default implementation is ``Never``. This can be useful for fonts 
+    /// having a single weight.
     associatedtype Weight
     
     /// The default factory to use..
@@ -112,17 +114,17 @@ public protocol EMFontFactory {
 }
 
 //MARK: - Default Implementations
-public extension EMFontFactory {
+extension EMFontFactory {
     /// Default implementation of ``Weight``.
-    typealias Weight = Never
+    public typealias Weight = Never
 }
 
 //MARK: - Default Implementations
-public extension EMFontFactory where Weight: CaseIterable & RawRepresentable<String> {
+extension EMFontFactory where Weight: CaseIterable & RawRepresentable<String> {
     /// Registers all font weights from the specified bundle.
     ///
     /// - Parameter bundle: The bundle containing the font files.
-    func register(bundle: Bundle) {
+    public func register(bundle: Bundle) {
         Weight.allCases.forEach { weight in
             let font = font(weight: weight)
             FontsManager.registerFont(font, fontExtension: fontExtension, bundle: bundle)
