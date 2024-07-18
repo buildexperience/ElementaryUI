@@ -26,7 +26,7 @@ extension EMTextField {
         /// The body of the ``ViewModifier``.
         func body(content: Content) -> some View {
             content
-                .onChange(of: text) {
+                .onChange(of: text) { newValue in
                     if case .onSubmit(let clearOnChange) = configuration.validationTrigger, clearOnChange {
                         clear()
                     }else if case .onChange = configuration.validationTrigger {

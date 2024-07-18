@@ -39,8 +39,9 @@ fileprivate struct ScreenListenerViewModifier: ViewModifier {
             let geometryScreen = screen(from: proxy)
             if bindingScreen {
                 content
-                    .onChange(of: geometryScreen, initial: true) { _, newValue in
-                        print(newValue)
+                    .onAppear {
+                        screen = geometryScreen
+                    }.onChange(of: geometryScreen) { newValue in
                         screen = newValue
                     }
             }else {

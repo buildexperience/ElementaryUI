@@ -6,7 +6,7 @@ import CompilerPluginSupport
 let package = Package(
     name: "ElementaryUI",
     platforms: [
-        .iOS(.v17),
+        .iOS(.v15),
         .macOS(.v14)
     ],
     products: [
@@ -29,13 +29,6 @@ let package = Package(
             dependencies: [
                 "ElementaryUIMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency"),
-                .unsafeFlags([
-                    "-Xfrontend", 
-                    "-warn-concurrency"
-                ])
             ]
         ),
         
