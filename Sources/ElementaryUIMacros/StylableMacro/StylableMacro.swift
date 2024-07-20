@@ -101,9 +101,16 @@ import MacrosKit
 /// - Warning: You need to implement the environment value, configuration
 /// & default style manually.
 package enum StylableMacro {
+    /// Verifies that a declaration conforms to the ``View`` protocol.
+    ///
+    /// - Parameters:
+    ///   - declaration: The declaration syntax to verify.
+    ///   - viewName: The name of the view as a ``TokenSyntax``.
+    ///
+    /// - Throws: ``StylableMacroError.missingViewConformance``
+    ///  if the declaration does not conform to ``View``.
     private static func verifyConformance(
         declaration: some DeclSyntaxProtocol,
-        node: AttributeSyntax,
         viewName: TokenSyntax
     ) throws {
         let inheritedTypes = declaration.inheritedTypes

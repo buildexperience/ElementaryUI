@@ -12,7 +12,7 @@ import SwiftUI
 /// This enum provides static methods to create ``UIFontDescriptor``
 /// or ``NSFontDescriptor`` with variable font attributes based on the platform.
 /// It maps font variation attributes to the appropriate descriptor format for **iOS** or **macOS**.
-public enum VariableFontDescriptorFactory {
+internal enum VariableFontDescriptorFactory {
 #if canImport(UIKit)
     /// Creates a ``UIFontDescriptor`` with the specified name & font variation attributes.
     ///
@@ -21,7 +21,7 @@ public enum VariableFontDescriptorFactory {
     ///   - attributes: A dictionary of font variation attributes & their corresponding values.
     ///
     /// - Returns: A ``UIFontDescriptor`` instance configured with the specified name & attributes.
-    public static func make(
+    internal static func make(
         name: String,
         attributes: [FontVariation: Double]
     ) -> UIFontDescriptor {
@@ -43,7 +43,7 @@ public enum VariableFontDescriptorFactory {
     ///   - name: The name of the font.
     ///   - attributes: A dictionary of font variation attributes & their corresponding values.
     /// - Returns: An ``NSFontDescriptor`` instance configured with the specified name & attributes.
-    public static func make(
+    internal static func make(
         name: String,
         attributes: [FontVariation: Double]
     ) -> NSFontDescriptor {
