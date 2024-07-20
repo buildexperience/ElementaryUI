@@ -138,7 +138,6 @@ extension StylableMacro: PeerMacro {
         }
         try verifyConformance(
             declaration: declaration,
-            node: node,
             viewName: viewName
         )
                 
@@ -180,7 +179,6 @@ extension StylableMacro: ExtensionMacro {
         }
         try verifyConformance(
             declaration: declaration,
-            node: node,
             viewName: viewName
         )
         
