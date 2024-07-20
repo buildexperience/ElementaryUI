@@ -20,10 +20,12 @@ final class HexColorDecoderTests: XCTestCase {
         let hex = "ffffff"
         XCTAssertNoThrow(try HexColorDecoder.decode(hex))
     }
+    
     func testDecoderSucceedsWhenHashtagIsThePrefix() {
         let hex = "#ffffff"
         XCTAssertNoThrow(try HexColorDecoder.decode(hex))
     }
+    
     func testDecoderFailsWhenHashtagIsNotThePrefix() {
         let hexs = [
             "f#ffff",
@@ -52,6 +54,7 @@ final class HexColorDecoderTests: XCTestCase {
             }
         }
     }
+    
     func testDecoderSucceedsWhenHexIsValid() {
         let hexs = [
             "123456",
@@ -76,6 +79,7 @@ final class HexColorDecoderTests: XCTestCase {
             }
         }
     }
+    
     func testDecoderSucceedsWhenHexLengthIsValid() {
         let hexs = [
             "ffffff",
@@ -93,18 +97,21 @@ final class HexColorDecoderTests: XCTestCase {
             XCTAssertEqual(components.red, 128)
         }
     }
+    
     func testDecoderWith6DigitsHexGreenComponent() throws {
         for hex in SixDigits.greenHexs {
             let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.green, 128)
         }
     }
+    
     func testDecoderWith6DigitsHexBlueComponent() throws {
         for hex in SixDigits.blueHexs {
             let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.blue, 128)
         }
     }
+    
     func testDecoderWith6DigitsHexOpacityComponent() throws {
         let hexsArray = [
             SixDigits.redHexs,
@@ -126,18 +133,21 @@ final class HexColorDecoderTests: XCTestCase {
             XCTAssertEqual(components.red, 128)
         }
     }
+    
     func testDecoderWith8DigitsHexGreenComponent() throws {
         for hex in EightDigits.greenHexs {
             let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.green, 128)
         }
     }
+    
     func testDecoderWith8DigitsHexBlueComponent() throws {
         for hex in EightDigits.blueHexs {
             let components = try HexColorDecoder.decode(hex)
             XCTAssertEqual(components.blue, 128)
         }
     }
+    
     func testDecoderWith8DigitsHexOpacityComponent() throws {
         for hex in EightDigits.opacityHexs {
             let components = try HexColorDecoder.decode(hex)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    /// Adds a border with the specified content, line width, and shape to the view.
+    /// Adds a border with the specified content, line width, & shape to the view.
     ///
     /// ```swift
     /// Color.blue
@@ -22,7 +22,7 @@ extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    public func border<T: ShapeStyle, S: InsettableShape>(
+    @inlinable public func border<T: ShapeStyle, S: InsettableShape>(
         _ content: T = .foreground,
         lineWidth: CGFloat = 1,
         antialiased: Bool = true,
@@ -34,7 +34,7 @@ extension View {
         }.clipShape(shape)
     }
     
-    /// Adds a border with the specified content, stroke style, and shape to the view.
+    /// Adds a border with the specified content, stroke style, & shape to the view.
     ///
     /// ```swift
     /// Color.blue
@@ -48,7 +48,7 @@ extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    public func border<T: ShapeStyle, S: InsettableShape>(
+    @inlinable public func border<T: ShapeStyle, S: InsettableShape>(
         _ content: T = .foreground,
         style: StrokeStyle,
         antialiased: Bool = true,

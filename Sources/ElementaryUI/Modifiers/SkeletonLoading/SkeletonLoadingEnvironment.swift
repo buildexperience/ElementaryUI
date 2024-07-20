@@ -9,5 +9,5 @@ import SwiftUI
 
 extension EnvironmentValues {
     /// The current state of the skeleton loading.
-    @EnvironmentValue public var skeletonLoading: Bool = false
+    @Entry public var skeletonLoading = false
 }

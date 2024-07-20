@@ -1,8 +1,8 @@
 //
 //  TextStyleSizes.swift
-//  
 //
-//  Created by Joe Maghzal on 11/04/2024.
+//
+//  Created by Joe Maghzal on 07/07/2024.
 //
 
 import SwiftUI
@@ -34,7 +34,8 @@ extension Font.TextStyle {
             case .caption2:
                 return 11
             @unknown default:
-                fatalError()
+                assertionFailure("Unknown text style, \(self)")
+                return 17
         }
     }
 }

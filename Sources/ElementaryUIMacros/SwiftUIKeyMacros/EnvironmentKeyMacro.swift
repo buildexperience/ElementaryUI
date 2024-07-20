@@ -11,6 +11,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
+import MacrosKit
 
 /// Macro used to generate the an ``EnvironmentKey``.
 ///

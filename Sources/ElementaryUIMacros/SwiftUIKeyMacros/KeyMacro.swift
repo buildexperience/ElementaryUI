@@ -11,6 +11,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
+import MacrosKit
 
 /// Requirements for defining a macro used to generate property keys for SwiftUI bindings.
 ///
@@ -46,7 +47,9 @@ extension KeyMacro {
     /// Decodes a variable binding from a given declaration.
     ///
     /// - Parameter declaration: The declaration syntax.
+    /// 
     /// - Returns: The binding element.
+    ///
     /// - Throws: ``KeyMacroError.invalidPropertyType`` if the declaration is not a variable declaration of type `var`.
     ///           ``KeyMacroError.invalidDeclaration`` if the declaration is invalid.
     internal static func binding(for declaration: some DeclSyntaxProtocol) throws -> PatternBindingListSyntax.Element {
@@ -60,7 +63,7 @@ extension KeyMacro {
         return binding
     }
     
-    /// Creates a struct key name from a property name and a protocol.
+    /// Creates a struct key name from a property name & a protocol.
     ///
     /// Using `text = ""` as the binding from the code below, & `EnvironmentKey` as the protocolName, this function produces
     /// `EnvironmentKey_text`.
@@ -73,9 +76,11 @@ extension KeyMacro {
     ///
     /// - Throws: ``KeyMacroError.invalidDeclaration`` if the binding is invalid.
     internal static func keyName(for binding: PatternBindingListSyntax.Element) throws -> TokenSyntax {
-        guard let name = binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text else {
+        guard let pattern = binding.pattern.as(IdentifierPatternSyntax.self) else {
             throw KeyMacroError.invalidDeclaration
         }
+        
+        let name = pattern.identifier.text
         return "\(raw: keyProtocolName)_\(raw: name)" as TokenSyntax
     }
 }

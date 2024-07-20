@@ -22,17 +22,20 @@ package enum HexColorDecoder {
     /// Decodes the hexadecimal color string into its color components.
     ///
     /// - Parameter hex: The hexadecimal color string to decode.
+    ///
     /// - Returns: The RGBA color components.
+    ///
     /// - Throws: ``HexColorMacroError.invalidCharacters`` if the hex contains invalid characters.
     ///           ``HexColorMacroError.invalidLength`` if the length of the hex is invalid.
     ///           ``HexColorMacroError.decodingFailed`` if the decoder failed to decode the hex.
+    ///
     /// - Note: It's not neccessary to add the '#' prefix to the hex.
     package static func decode(_ hex: String) throws -> ColorComponents {
         let cleanedHex = try cleaned(hex)
         let scanner = Scanner(string: cleanedHex)
         var hexNumber = UInt64.zero
         
-        // Scan the hexadecimal string and convert it to a UInt64.
+        // Scan the hexadecimal string & convert it to a UInt64.
         guard scanner.scanHexInt64(&hexNumber) else {
             throw HexColorMacroError.decodingFailed(hex: hex)
         }
@@ -45,7 +48,7 @@ package enum HexColorDecoder {
 
 //MARK: - Private Functions
 extension HexColorDecoder {
-    /// Cleans the hexadecimal color string by validating its characters and ensuring the correct length.
+    /// Cleans the hexadecimal color string by validating its characters & ensuring the correct length.
     ///
     /// - Parameter hex: The hexadecimal color string to clean.
     /// - Returns: The cleaned hexadecimal color string.

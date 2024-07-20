@@ -6,21 +6,23 @@ import CompilerPluginSupport
 let package = Package(
     name: "ElementaryUI",
     platforms: [
-        .iOS(.v17),
-        .macOS(.v14)
+        .iOS(.v15),
+        .macOS(.v12)
     ],
     products: [
         .library(name: "ElementaryUI", targets: ["ElementaryUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.0"),
+        .package(url: "https://github.com/buildexperience/MacrosKit.git", branch: "main")
     ],
     targets: [
         .macro(
             name: "ElementaryUIMacros",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+                .product(name: "MacrosKit", package: "MacrosKit")
             ]
         ),
         
@@ -29,13 +31,6 @@ let package = Package(
             dependencies: [
                 "ElementaryUIMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency"),
-                .unsafeFlags([
-                    "-Xfrontend", 
-                    "-warn-concurrency"
-                ])
             ]
         ),
         

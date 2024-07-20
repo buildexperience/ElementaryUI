@@ -10,7 +10,7 @@ import SwiftUI
 /// Macro for expanding hexadecimal color strings into `SwiftUI` ``Color`` expressions.
 ///
 /// This macro enables the expansion of hexadecimal color strings into ``Color`` expressions. It abstracts away the conversion
-///  process and provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
+///  process & provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
 ///
 /// **Supported validations:**
 ///  - **Length**: The following error will be thrown when the length of the provided hex is invalid: 

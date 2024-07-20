@@ -8,15 +8,15 @@
 import Foundation
 
 /// Validation configurations for an`` EMTextField``.
-struct ValidationConfiguration {
+internal struct ValidationConfiguration {
     /// The validator used for validating the text input.
-    let validator: any EMTextFieldValidator
+    internal let validator: any EMTextFieldValidator
     
     /// The type of trigger needed for the validation to be performed.
-    let validationTrigger: ValidationTrigger
+    internal let validationTrigger: ValidationTrigger
     
     /// An optional callback closure to be executed after validation.
-    let onValidation: ((Bool?) -> Void)?
+    internal let onValidation: ((_ validation: Bool?) -> Void)?
 }
 
 /// Types of validation triggers for an`` EMTextField``.
