@@ -9,7 +9,11 @@ import SwiftUI
 
 extension EnvironmentValues {
     /// The current text field style set in the environment.
+#if canImport(SwiftUICore)
     @Entry internal var emTextFieldStyle: (any EMTextFieldStyle) = DefaultEMTextFieldStyle()
+#else
+    @EnvironmentValue internal var emTextFieldStyle: (any EMTextFieldStyle) = DefaultEMTextFieldStyle()
+#endif
 }
 
 extension View {

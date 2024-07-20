@@ -9,7 +9,11 @@ import SwiftUI
 
 extension EnvironmentValues {
     /// The screen representation of the listener's container view.
+#if canImport(SwiftUICore)
     @Entry public var screen = Screen.zero
+#else
+    @EnvironmentValue public var screen = Screen.zero
+#endif
 }
 
 /// ``PreferenceKey`` for updating the screen size information.

@@ -9,5 +9,9 @@ import SwiftUI
 
 extension EnvironmentValues {
     /// The current state of the skeleton loading.
+    #if canImport(SwiftUICore)
     @Entry public var skeletonLoading = false
+    #else
+    @EnvironmentValue public var skeletonLoading = false
+    #endif
 }

@@ -99,22 +99,3 @@ extension View {
         modifier(ExpandableViewModifier(expanded: expanded))
     }
 }
-
-@available(iOS 18.0, macOS 15.0, watchOS 11.0, *)
-#Preview {
-    @State @Previewable var expanded = true
-    VStack {
-        Button(action: {
-            withAnimation {
-                expanded.toggle()
-                print(expanded)
-            }
-        }) {
-            Text("Expand")
-        }
-        Color.red
-            .frame(height: 200)
-            .expandable(expanded)
-        Spacer()
-    }.padding(20)
-}

@@ -169,15 +169,3 @@ public struct CornerRadii: Equatable, Hashable, Animatable, Sendable {
         self.topTrailing = topTrailing
     }
 }
-
-@available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
-#Preview {
-    RoundableRectangle(topLeadingRadius: 12)
-        .inset(by: 10)
-        .fill(.red)
-        .overlay {
-            UnevenRoundedRectangle(topLeadingRadius: 12)
-                .inset(by: 20)
-                .fill(.blue)
-        }.padding(30)
-}
