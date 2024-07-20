@@ -13,7 +13,7 @@ import SwiftUI
 /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
 /// ```
 public enum FontsManager {
-    /// Registers a custom font with the specified name, font extension, and bundle.
+    /// Registers a custom font with the specified name, font extension, & bundle.
     ///
     /// ```swift
     /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)

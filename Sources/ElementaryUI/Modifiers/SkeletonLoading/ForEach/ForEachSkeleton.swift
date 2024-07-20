@@ -9,7 +9,8 @@ import SwiftUI
 
 /// ``View`` designed to display skeleton loading for a list of items using ``ForEach``.
 ///
-/// - Warning: This is an internal modifier not meant to be used directly. You should use ``skeletonLoadable()`` instead.
+/// - Warning: This is an internal modifier not meant to be used directly. 
+/// You should use ``skeletonLoadable()`` instead.
 fileprivate struct ForEachSkeletonView<
     Content: DynamicViewContent,
     RowContent: View
@@ -17,14 +18,14 @@ fileprivate struct ForEachSkeletonView<
     /// The value indicating whether skeleton loading is active.
     @Environment(\.skeletonLoading) private var skeletonLoading
     
+    /// The content view containing the real data.
+    fileprivate let content: Content
+    
     /// The skeleton data to be displayed.
-    private let skeletonData: [Content.Data.Element]
+    fileprivate let skeletonData: [Content.Data.Element]
     
     /// The closure used to produce the content for each item.
-    private let rowContent: (Content.Data.Element) -> RowContent
-    
-    /// The content view containing the real data.
-    private let content: Content
+    fileprivate let rowContent: (_ row: Content.Data.Element) -> RowContent
     
     /// The data to be displayed.
     fileprivate var data: [Content.Data.Element] {
@@ -39,31 +40,13 @@ fileprivate struct ForEachSkeletonView<
     }
 }
 
-//MARK: - Initializer
-extension ForEachSkeletonView {
-    /// Creates a new ``ForEachSkeletonView`` that handles displaying skeleton data or real data based on the skeleton state.
-    ///
-    /// - Parameters:
-    ///   - content: The content view containing the real data.
-    ///   - skeletonData: The skeleton data to be displayed.
-    ///   - rowContent: The closure used to produce the content for each item.
-    fileprivate init(
-        content: Content,
-        skeletonData: [Content.Data.Element],
-        rowContent: @escaping (Content.Data.Element) -> RowContent
-    ) {
-        self.content = content
-        self.skeletonData = skeletonData
-        self.rowContent = rowContent
-    }
-}
-
 //MARK: - Modifiers
 extension ForEach where Data.Element: SkeletonRepresentable, Content: View {
     /// Makes a ``ForEach`` automatically load skeleton data when skeleton loading is active.
     ///
-    /// Use it only on a ``ForEach`` to automatically load skeleton data when skeleton loading is active. You will still be able to use 
-    /// any modifier specific to ``ForEach`` or ``DynamicViewContent`` after using this modifier.
+    /// Use it only on a ``ForEach`` to automatically load skeleton data when skeleton loading is active. 
+    /// You will still be able to use any modifier specific to ``ForEach`` or ``DynamicViewContent``
+    /// after using this modifier.
     ///
     /// ```swift
     /// struct ContentView: View {
@@ -89,9 +72,14 @@ extension ForEach where Data.Element: SkeletonRepresentable, Content: View {
     /// ```
     ///
     /// - Returns: A ``DynamicViewContent`` that is skeleton loadable.
-    /// - Warning: This modifier should be used before using any other modifier specific to ``ForEach`` or 
+    ///
+    /// - Warning: This modifier should be used before using any other modifier specific to ``ForEach`` or
     /// ``DynamicViewContent``.
     public func skeletonLoadable() -> some DynamicViewContent {
-        return ForEachSkeletonView(content: self, skeletonData: Data.Element.skeleton, rowContent: content)
+        return ForEachSkeletonView(
+            content: self,
+            skeletonData: Data.Element.skeleton,
+            rowContent: content
+        )
     }
 }

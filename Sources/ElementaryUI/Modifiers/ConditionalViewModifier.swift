@@ -21,9 +21,11 @@ extension View {
     /// ```
     ///
     /// - Parameter condition: The condition to use when hiding a ``View``.
+    ///
     /// - Returns: A view that becomes hiden when the given condition is satisfied.
+    ///
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
-    @ViewBuilder public func hidden(_ condition: Bool) -> some View {
+    @ViewBuilder @inlinable public func hidden(_ condition: Bool) -> some View {
         if !condition {
             self
         }
@@ -52,9 +54,10 @@ extension View {
     ///   - builder: The view builder closure to be applied.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
+    ///
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(_:_:)`` if you want the return type to remain the same.
-    @ViewBuilder public func `if`<Content: View>(
+    @ViewBuilder @inlinable public func `if`<Content: View>(
         _ condition: Bool,
         @ViewBuilder _ builder: (_ content: Self) -> Content
     ) -> some View {
@@ -86,8 +89,9 @@ extension View {
     ///   - builder: The view builder closure to be applied.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
+    ///
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    public func `if`(
+    @inlinable public func `if`(
         _ condition: Bool,
         @ViewBuilder _ builder: (_ content: Self) -> Self
     ) -> Self {
@@ -121,9 +125,10 @@ extension View {
     ///   - builder: The view builder closure to be applied conditionally.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
+    ///
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(let:_:)`` if you want the return type to remain the same.
-    @ViewBuilder public func `if`<Content: View, T>(
+    @ViewBuilder @inlinable public func `if`<Content: View, T>(
         `let` optional: T?,
         @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Content
     ) -> some View {
@@ -156,8 +161,9 @@ extension View {
     ///   - builder: The view builder closure to be applied conditionally.
     ///
     /// - Returns: A view with the specified modifications applied conditionally.
+    /// 
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    public func `if`<T>(
+    @inlinable public func `if`<T>(
         `let` value: T?,
         @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Self
     ) -> Self {

@@ -8,8 +8,9 @@
 import Foundation
 import SwiftSyntax
 import SwiftDiagnostics
+import MacrosKit
 
-/// Errors that can occur during the processing of Key Macro.
+/// Errors that can occur during the processing of ``KeyMacro``.
 package enum KeyMacroError: MacroError {
     /// The property type is invalid for the applied macro.
     case invalidPropertyType

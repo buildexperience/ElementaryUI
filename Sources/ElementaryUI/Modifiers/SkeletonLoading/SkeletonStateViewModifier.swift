@@ -10,7 +10,7 @@ import SwiftUI
 /// ``ViewModifier`` for managing the skeleton loading state of a view.
 ///
 /// This modifier allows controlling the skeleton loading state of a view by applying placeholder redaction to its content.
-/// It reads the skeleton loading state from the environment and applies redaction based on it.
+/// It reads the skeleton loading state from the environment & applies redaction based on it.
 ///
 /// ```swift
 /// struct ContentView: View {
@@ -38,7 +38,7 @@ fileprivate struct SkeletonStateViewModifier: ViewModifier {
     @Environment(\.skeletonLoading) private var skeletonLoading
     
     /// The value representing wether this view can display skeleton loading.
-    private let loadable: Bool
+    fileprivate let loadable: Bool
     
     /// Calculates the redaction reasons based on the skeleton loading state.
     private var redactions: RedactionReasons {
@@ -60,17 +60,6 @@ fileprivate struct SkeletonStateViewModifier: ViewModifier {
     }
 }
 
-//MARK: - Initializer
-extension SkeletonStateViewModifier {
-    /// Creates a new ``SkeletonStateViewModifier`` that handles displaying the skeleton loading state of a view..
-    ///
-    /// - Parameters:
-    ///   - loadable: Boolean value indication wether the view can display skeleton loading.
-    fileprivate init(_ loadable: Bool) {
-        self.loadable = loadable
-    }
-}
-
 //MARK: - Modifiers
 extension View {
     /// Makes a view display a skeleton when ``EnvironmentValues/skeletonLoading`` is true.
@@ -88,9 +77,10 @@ extension View {
     /// }
     /// ```
     /// - Parameter loadable: Wether this view can display skeleton loading.
+    /// 
     /// - Returns: A view that's able to display a skeleton loading view.
     public func skeletonLoadable(_ loadable: Bool = true) -> some View {
-        modifier(SkeletonStateViewModifier(loadable))
+        modifier(SkeletonStateViewModifier(loadable: loadable))
     }
     
     /// Applies the skeleton loading state to the view with the specified loading status.
@@ -98,7 +88,7 @@ extension View {
     /// Use this function to indicate whether the view should display a skeleton loading view based on the provided loading status.
     ///
     /// ```swift
-    /// struct MyView: View {
+    /// struct ContentView: View {
     ///     @State private var loading = true
     ///     var body: some View {
     ///         List {

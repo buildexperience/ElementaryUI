@@ -25,7 +25,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
             @EnvironmentValue var skeletonLoading = true
             """,
             expandedSource: """
-            var skeletonLoading = true {
+            var skeletonLoading {
                 get {
                     return self [EnvironmentKey_skeletonLoading.self]
                 }
@@ -45,7 +45,11 @@ final class EnvironmentKeyMacroTests: XCTestCase {
 //MARK: - Validation Tests
     func testEnvironmentKeyMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() {
         // Invalid property type, the macro requires var instead of let.
-        let diagnostic = DiagnosticSpec(message: KeyMacroError.invalidPropertyType.message, line: 1, column: 1)
+        let diagnostic = DiagnosticSpec(
+            message: KeyMacroError.invalidPropertyType.message,
+            line: 1,
+            column: 1
+        )
         
         // Expect 2 diagnostics since both the PeerMacro & the AccessorMacro fail & throw the error.
         let expectedDiagnostics = [diagnostic, diagnostic]
@@ -61,11 +65,16 @@ final class EnvironmentKeyMacroTests: XCTestCase {
             macros: testMacros
         )
     }
+    
     func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasOnlyAName() {
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property is missing a default value
-            DiagnosticSpec(message: KeyMacroError.missingDefaultValue.message, line: 1, column: 1)
+            DiagnosticSpec(
+                message: KeyMacroError.missingDefaultValue.message,
+                line: 1,
+                column: 1
+            )
         ]
         
         assertMacroExpansion(
@@ -85,13 +94,17 @@ final class EnvironmentKeyMacroTests: XCTestCase {
             diagnostics: expectedDiagnostics,
             macros: testMacros
         )
-        
     }
+    
     func testEnvironmentKeyMacroFailsWithMissingDefaultValueWhenPropertyHasATypeButNoValue() {
         // Expect 1 diagnostic since only the PeerMacro fails & throws the error.
         let expectedDiagnostics = [
             // The property is missing a default value
-            DiagnosticSpec(message: KeyMacroError.missingDefaultValue.message, line: 1, column: 1)
+            DiagnosticSpec(
+                message: KeyMacroError.missingDefaultValue.message,
+                line: 1,
+                column: 1
+            )
         ]
         
         assertMacroExpansion(
@@ -111,7 +124,6 @@ final class EnvironmentKeyMacroTests: XCTestCase {
             diagnostics: expectedDiagnostics,
             macros: testMacros
         )
-        
     }
 }
 #endif

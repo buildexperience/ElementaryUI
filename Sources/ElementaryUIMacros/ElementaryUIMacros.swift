@@ -10,10 +10,11 @@ import SwiftSyntaxMacros
 
 /// Compiler plugin for providing ElementaryUI macros.
 @main
-struct ElementaryUIMacrosPlugin: CompilerPlugin {
+internal struct ElementaryUIMacrosPlugin: CompilerPlugin {
     /// The macros provided by this plugin.
-    let providingMacros: [Macro.Type] = [
+    internal let providingMacros: [Macro.Type] = [
         HexColorMacro.self,
+        StylableMacro.self,
         EnvironmentKeyMacro.self,
         FocusedValueMacro.self
     ]

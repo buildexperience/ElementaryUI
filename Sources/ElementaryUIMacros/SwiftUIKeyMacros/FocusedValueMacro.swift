@@ -11,6 +11,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
+import MacrosKit
 
 /// Macro used to generate the an ``PrefrenceKey``.
 ///
@@ -60,7 +61,10 @@ extension FocusedValueMacro: PeerMacro {
                 throw KeyMacroError.missingTypeAnnotation
             }
             guard let wrappedType = type.as(OptionalTypeSyntax.self)?.wrappedType else {
-                let fixItMessage = MacroErrorFixItMessage(message: "Add '?' to the type to make it optional", id: "invalidOptionalTypeAnnotation")
+                let fixItMessage = MacroErrorFixItMessage(
+                    message: "Add '?' to the type to make it optional",
+                    id: "invalidOptionalTypeAnnotation"
+                )
                 let fixIt = FixIt(message: fixItMessage, changes: [
                     FixIt.Change.replaceTrailingTrivia(token: "\(type)", newTrivia: "\(type)?")
                 ])

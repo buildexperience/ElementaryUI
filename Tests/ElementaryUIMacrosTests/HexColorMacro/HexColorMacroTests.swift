@@ -35,6 +35,7 @@ final class HexColorMacroTests: XCTestCase {
             macros: testMacros
         )
     }
+    
     func testMacroColorWithHashtag() {
         assertMacroExpansion(
             """
@@ -51,6 +52,7 @@ final class HexColorMacroTests: XCTestCase {
             macros: testMacros
         )
     }
+    
     func testMacroColorWithOpacity() {
         assertMacroExpansion(
             """

@@ -11,14 +11,15 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
+import MacrosKit
 
-/// Macro for expanding hexadecimal color strings into SwiftUI ``Color`` expressions.
+/// Macro for expanding hexadecimal color strings into `SwiftUI` ``Color`` expressions.
 ///
-/// This macro enables the expansion of hexadecimal color strings into ``Color`` expressions. It abstracts away the conversion 
-/// process and provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
+/// This macro enables the expansion of hexadecimal color strings into ``Color`` expressions. It abstracts away the conversion
+///  process & provides a convenient way to include colors in Swift code using hexadecimal notation with compiler validations.
 ///
 /// **Supported validations:**
-///  - **Length**: The following error will be thrown when the length of the provided hex is invalid: 
+///  - **Length**: The following error will be thrown when the length of the provided hex is invalid:
 ///  `The hex "123456789" must be exactly 6 or 8 characters long`.
 ///
 ///  - **Characters**: The following error will be thrown when the provided hex contains invalid characters:
@@ -30,7 +31,7 @@ import SwiftDiagnostics
 /// **Supported hex formats:**
 ///  - 6 digits, the opacity component will always be 1:
 ///  ```swift
-///  #color("ff0000") // // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 255 / 255)
+///  #color("ff0000") // Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255, opacity: 255 / 255)
 ///  ```
 ///  - 8 digits, decodes the opacity component:
 ///  ```swift
@@ -45,13 +46,10 @@ package struct HexColorMacro: ExpressionMacro {
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
         try withErroHandling(context: context, node: node, onFailure: "") {
-            guard let argument = node.argumentList.first?.expression,
-                  let argumentSegment = argument.as(StringLiteralExprSyntax.self)?.segments.first,
-                  case .stringSegment(let argumentString) = argumentSegment
-            else {
+            guard let argument = node.arguments.arguments.first?.value else {
                 throw HexColorMacroError.missingHex
             }
-            let hex = argumentString.content.text
+            let hex = argument.text
             let (red, green, blue, opacity) = try HexColorDecoder.decode(hex)
             return """
             Color(

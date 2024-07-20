@@ -18,14 +18,17 @@ public struct DefaultEMTextFieldStyle: EMTextFieldStyle {
     ///
     /// - Parameter configuration : The properties of the text field.
     /// - Returns: A view that represents the body of a text field.
-    public func makeBody(configuration: Configuration) -> some View {
-        configuration.content
+    public func makeBody(
+        content: Content,
+        configuration: EMTextFieldConfiguration
+    ) -> some View {
+        content
     }
 }
 
-public extension EMTextFieldStyle where Self == DefaultEMTextFieldStyle {
+extension EMTextFieldStyle where Self == DefaultEMTextFieldStyle {
     /// The default style for ``EMTextField``.
-    static var `default`: DefaultEMTextFieldStyle {
+    public static var `default`: DefaultEMTextFieldStyle {
         return DefaultEMTextFieldStyle()
     }
 }

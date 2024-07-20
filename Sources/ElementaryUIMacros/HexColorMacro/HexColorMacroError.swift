@@ -8,6 +8,7 @@
 import Foundation
 import SwiftSyntax
 import SwiftDiagnostics
+import MacrosKit
 
 /// Errors that can occur during hex color validation & decoding.
 package enum HexColorMacroError: MacroError, Equatable {
