@@ -42,6 +42,10 @@ extension View {
     public func emTextFieldStyle<Style: EMTextFieldStyle>(
         _ style: Style
     ) -> some View {
+#if swift(>=6.0)
         modifier(EMTextField.StyleViewModifier(style: style))
+#else
+        environment(\.emTextFieldStyle, style)
+#endif
     }
 }
