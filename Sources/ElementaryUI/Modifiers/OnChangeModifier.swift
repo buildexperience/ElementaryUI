@@ -10,6 +10,8 @@ import SwiftUI
 @available(iOS, deprecated: 17.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
 @available(macOS, deprecated: 14.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
 @available(watchOS, deprecated: 10.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+@available(tvOS, deprecated: 15.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+@available(visionOS, deprecated: 1.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
 extension View {
     /// Adds a modifier for this view that fires an action when a specific
     /// value changes.
@@ -51,16 +53,17 @@ extension View {
     ///   - newValue: The new value that failed the comparison check.
     ///
     /// - Returns: A view that fires an action when the specified value changes.
+    @_disfavoredOverload
     @ViewBuilder public func onChange<V: Equatable>(
         of value: V,
-        onAppear: Bool = false,
+        initial: Bool = false,
         _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void
     ) -> some View {
         if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
             self
-                .onChange(of: value, initial: onAppear, action)
+                .onChange(of: value, initial: initial, action)
         }else {
-            if onAppear {
+            if initial {
                 self
                     .onAppear {
                         action(value, value)

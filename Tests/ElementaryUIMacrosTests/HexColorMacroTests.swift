@@ -13,12 +13,12 @@ import XCTest
 import ElementaryUIMacros
 
 final class HexColorMacroTests: XCTestCase {
-//MARK: - Properties
+// MARK: - Properties
     private let testMacros: [String: Macro.Type] = [
         "color": HexColorMacro.self,
     ]
 
-//MARK: - Tests
+// MARK: - Tests
     func testMacroColorWithoutHashtag() {
         assertMacroExpansion(
             """
@@ -26,10 +26,10 @@ final class HexColorMacroTests: XCTestCase {
             """,
             expandedSource: """
             Color(
-                red: 103 / 255,
-                green: 108 / 255,
-                blue: 96 / 255,
-                opacity: 255 / 255
+                red: 103.0 / 255,
+                green: 108.0 / 255,
+                blue: 96.0 / 255,
+                opacity: 255.0 / 255
             )
             """,
             macros: testMacros
@@ -43,10 +43,10 @@ final class HexColorMacroTests: XCTestCase {
             """,
             expandedSource: """
             Color(
-                red: 103 / 255,
-                green: 108 / 255,
-                blue: 96 / 255,
-                opacity: 255 / 255
+                red: 103.0 / 255,
+                green: 108.0 / 255,
+                blue: 96.0 / 255,
+                opacity: 255.0 / 255
             )
             """,
             macros: testMacros
@@ -60,10 +60,10 @@ final class HexColorMacroTests: XCTestCase {
             """,
             expandedSource: """
             Color(
-                red: 103 / 255,
-                green: 108 / 255,
-                blue: 96 / 255,
-                opacity: 128 / 255
+                red: 103.0 / 255,
+                green: 108.0 / 255,
+                blue: 96.0 / 255,
+                opacity: 128.0 / 255
             )
             """,
             macros: testMacros

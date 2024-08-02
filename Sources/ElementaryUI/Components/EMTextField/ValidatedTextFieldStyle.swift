@@ -15,7 +15,7 @@ public struct ValidatedTextFieldStyle {
     private let validationConfiguration: ValidationConfiguration
 }
 
-//MARK: - EMTextFieldStyle
+// MARK: - EMTextFieldStyle
 extension ValidatedTextFieldStyle: EMTextFieldStyle {
     public func makeBody(
         content: Content,
@@ -36,7 +36,7 @@ extension ValidatedTextFieldStyle: EMTextFieldStyle {
     }
 }
 
-//MARK: - Initializer
+// MARK: - Initializer
 extension ValidatedTextFieldStyle {
     public init(
         validation: Binding<Bool?> = .constant(nil),
@@ -53,7 +53,7 @@ extension ValidatedTextFieldStyle {
     }
 }
 
-//MARK: - Private Functions
+// MARK: - Private Functions
 extension ValidatedTextFieldStyle {
     /// Validates the text input based on the configured validator.
     private func validate(text: String) {
@@ -69,7 +69,7 @@ extension ValidatedTextFieldStyle {
     }
 }
 
-//MARK: - Modifiers
+// MARK: - Modifiers
 extension EMTextField {
     /// Applies a validator to the text field with the specified validation type & optional callback.
     ///

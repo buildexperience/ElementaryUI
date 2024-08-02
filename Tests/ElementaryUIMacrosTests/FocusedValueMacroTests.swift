@@ -13,12 +13,12 @@ import XCTest
 import ElementaryUIMacros
 
 final class FocusedValueMacroTests: XCTestCase {
-//MARK: - Properties
+// MARK: - Properties
     private let testMacros: [String: Macro.Type] = [
         "FocusedValue": FocusedValueMacro.self
     ]
     
-//MARK: - Expansion Tests
+// MARK: - Expansion Tests
     func testFocusedValueMacro() {
         assertMacroExpansion(
             """
@@ -42,7 +42,7 @@ final class FocusedValueMacroTests: XCTestCase {
         )
     }
     
-//MARK: - Validation Tests
+// MARK: - Validation Tests
     func testFocusedValueMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() {
         // Invalid property type, the macro requires var instead of let.
         let diagnostic = DiagnosticSpec(

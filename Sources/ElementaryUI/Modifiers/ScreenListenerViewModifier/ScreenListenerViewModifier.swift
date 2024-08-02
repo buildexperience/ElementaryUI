@@ -51,7 +51,7 @@ fileprivate struct ScreenListenerViewModifier: ViewModifier {
     }
 }
 
-//MARK: - Initializers
+// MARK: - Initializers
 extension ScreenListenerViewModifier {
     /// Creates a scren listener modifier using a ``Binding`` to the ``Screen`` object.
     ///
@@ -62,7 +62,7 @@ extension ScreenListenerViewModifier {
     }
 }
 
-//MARK: - Modifiers
+// MARK: - Modifiers
 extension View {
     /// Adds a listener to a view's size & safe area insets.
     ///

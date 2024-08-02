@@ -15,7 +15,7 @@ extension StylableMacro {
     }
 }
 
-//MARK: - Functions
+// MARK: - Functions
 extension StylableMacro.DeclarationsFactory {
     /// Creates a protocol declaration for the style protocol.
     ///

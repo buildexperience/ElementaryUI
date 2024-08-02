@@ -8,11 +8,13 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    /// The current text field style set in the environment.
+// TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
-    @Entry internal var emTextFieldStyle: (any EMTextFieldStyle) = DefaultEMTextFieldStyle()
+    /// The current text field style set in the environment.
+    @Entry internal var emTextFieldStyle: (any EMTextFieldStyle) = .default
 #else
-    @EnvironmentValue internal var emTextFieldStyle: (any EMTextFieldStyle) = DefaultEMTextFieldStyle()
+    /// The current text field style set in the environment.
+    @EnvironmentValue internal var emTextFieldStyle: (any EMTextFieldStyle) = .default
 #endif
 }
 
@@ -37,7 +39,9 @@ extension View {
     /// - Parameter style: The style to apply to all text fields within the hierarchy.
     /// 
     /// - Returns: A view modified to use the specified text field style.
-    public func emTextFieldStyle<Style: EMTextFieldStyle>(_ style: Style) -> some View {
+    public func emTextFieldStyle<Style: EMTextFieldStyle>(
+        _ style: Style
+    ) -> some View {
         modifier(EMTextField.StyleViewModifier(style: style))
     }
 }

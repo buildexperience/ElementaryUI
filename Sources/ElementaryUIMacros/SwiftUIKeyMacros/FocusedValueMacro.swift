@@ -45,7 +45,7 @@ package struct FocusedValueMacro: KeyMacro {
     package static let keyProtocolName = "FocusedValueKey"
 }
 
-//MARK: - PeerMacro
+// MARK: - PeerMacro
 extension FocusedValueMacro: PeerMacro {
     /// Generates the key struct for the given declaration, ensuring they adhere to the specified key protocol.
     package static func expansion(

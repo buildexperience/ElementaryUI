@@ -40,7 +40,7 @@ fileprivate struct ForEachSkeletonView<
     }
 }
 
-//MARK: - Modifiers
+// MARK: - Modifiers
 extension ForEach where Data.Element: SkeletonRepresentable, Content: View {
     /// Makes a ``ForEach`` automatically load skeleton data when skeleton loading is active.
     ///

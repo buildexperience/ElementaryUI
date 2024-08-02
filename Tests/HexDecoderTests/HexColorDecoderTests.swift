@@ -6,24 +6,22 @@
 //
 
 import Foundation
+import HexDecoder
 import XCTest
 
-#if canImport(ElementaryUIMacros)
-import ElementaryUIMacros
-
 final class HexColorDecoderTests: XCTestCase {
-//MARK: - Properties
+// MARK: - Properties
     typealias Components = HexColorDecoder.ColorComponents
     
-//MARK: - Hashtag Validation Tests
+// MARK: - Hashtag Validation Tests
     func testDecoderSucceedsWithoutHashtag() {
         let hex = "ffffff"
-        XCTAssertNoThrow(try HexColorDecoder.decode(hex))
+        XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
     }
     
     func testDecoderSucceedsWhenHashtagIsThePrefix() {
         let hex = "#ffffff"
-        XCTAssertNoThrow(try HexColorDecoder.decode(hex))
+        XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
     }
     
     func testDecoderFailsWhenHashtagIsNotThePrefix() {
@@ -35,11 +33,11 @@ final class HexColorDecoderTests: XCTestCase {
             "fffff#",
         ]
         for hex in hexs {
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex))
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get())
         }
     }
     
-//MARK: - Characters Validation Tests
+// MARK: - Characters Validation Tests
     func testDecoderFailsWhenHexContainsInvalidCharacters() {
         let hexs = [
             "qwgrty",
@@ -47,8 +45,8 @@ final class HexColorDecoderTests: XCTestCase {
             "()$%*&",
         ]
         for hex in hexs {
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex)) { error in
-                let error = error as? HexColorMacroError
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get()) { error in
+                let error = error as? HexColorDecoderError
                 let characters = Array(hex)
                 XCTAssertEqual(error, .invalidCharacters(hex: hex, characters: characters))
             }
@@ -62,19 +60,19 @@ final class HexColorDecoderTests: XCTestCase {
             "135ace",
         ]
         for hex in hexs {
-            XCTAssertNoThrow(try HexColorDecoder.decode(hex))
+            XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
         }
     }
     
-//MARK: - Length Validation Tests
+// MARK: - Length Validation Tests
     func testDecoderFailsWhenHexLengthIsInvalid() {
         for i in 0...10 {
             guard i != 6 && i != 8 else {
                 continue
             }
             let hex = Array(repeating: "f", count: i).joined()
-            XCTAssertThrowsError(try HexColorDecoder.decode(hex)) { error in
-                let error = error as? HexColorMacroError
+            XCTAssertThrowsError(try HexColorDecoder.decode(hex).get()) { error in
+                let error = error as? HexColorDecoderError
                 XCTAssertEqual(error, .invalidLength(hex: hex))
             }
         }
@@ -86,28 +84,28 @@ final class HexColorDecoderTests: XCTestCase {
             "ffffffff"
         ]
         for hex in hexs {
-            XCTAssertNoThrow(try HexColorDecoder.decode(hex))
+            XCTAssertNoThrow(try HexColorDecoder.decode(hex).get())
         }
     }
     
-//MARK: - 6 Digits Components Tests
+// MARK: - 6 Digits Components Tests
     func testDecoderWith6DigitsHexRedComponent() throws {
         for hex in SixDigits.redHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.red, 128)
         }
     }
     
     func testDecoderWith6DigitsHexGreenComponent() throws {
         for hex in SixDigits.greenHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.green, 128)
         }
     }
     
     func testDecoderWith6DigitsHexBlueComponent() throws {
         for hex in SixDigits.blueHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.blue, 128)
         }
     }
@@ -120,43 +118,43 @@ final class HexColorDecoderTests: XCTestCase {
         ]
         for hexs in hexsArray {
             for hex in hexs {
-                let components = try HexColorDecoder.decode(hex)
+                let components = try HexColorDecoder.decode(hex).get()
                 XCTAssertEqual(components.opacity, 255)
             }
         }
     }
     
-//MARK: - 8 Digits Components Tests
+// MARK: - 8 Digits Components Tests
     func testDecoderWith8DigitsHexRedComponent() throws {
         for hex in EightDigits.redHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.red, 128)
         }
     }
     
     func testDecoderWith8DigitsHexGreenComponent() throws {
         for hex in EightDigits.greenHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.green, 128)
         }
     }
     
     func testDecoderWith8DigitsHexBlueComponent() throws {
         for hex in EightDigits.blueHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.blue, 128)
         }
     }
     
     func testDecoderWith8DigitsHexOpacityComponent() throws {
         for hex in EightDigits.opacityHexs {
-            let components = try HexColorDecoder.decode(hex)
+            let components = try HexColorDecoder.decode(hex).get()
             XCTAssertEqual(components.opacity, 128)
         }
     }
 }
 
-//MARK: - SixDigits
+// MARK: - SixDigits
 extension HexColorDecoderTests {
     enum SixDigits {
         static let redHexs = [
@@ -177,7 +175,7 @@ extension HexColorDecoderTests {
     }
 }
 
-//MARK: - EightDigits
+// MARK: - EightDigits
 extension HexColorDecoderTests {
     enum EightDigits {
         static let redHexs = [
@@ -206,4 +204,3 @@ extension HexColorDecoderTests {
         ]
     }
 }
-#endif

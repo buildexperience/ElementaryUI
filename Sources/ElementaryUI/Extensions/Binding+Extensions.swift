@@ -25,7 +25,7 @@ extension Binding {
         return Binding<Mapped> {
             return getterTransform(wrappedValue)
         }set: { newValue in
-            wrappedValue = setterTransform(newValue)
+            self.transaction(transaction).wrappedValue = setterTransform(newValue)
         }
     }
     
@@ -41,7 +41,7 @@ extension Binding {
         return Binding<Mapped> {
             return wrappedValue[keyPath: keyPath]
         }set: { newValue in
-            wrappedValue[keyPath: keyPath] = newValue
+            self.transaction(transaction).wrappedValue[keyPath: keyPath] = newValue
         }
     }
     
@@ -61,8 +61,8 @@ extension Binding {
     ) -> Binding<Mapped> {
         return Binding<Mapped> {
             return wrappedValue[keyPath: getterKeyPath]
-        }set: { newValue in
-            wrappedValue = newValue[keyPath: setterKeyPath]
+        }set: { newValue, transaction in
+            self.transaction(transaction).wrappedValue = newValue[keyPath: setterKeyPath]
         }
     }
 }

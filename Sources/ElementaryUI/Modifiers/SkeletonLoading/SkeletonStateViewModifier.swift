@@ -43,10 +43,8 @@ fileprivate struct SkeletonStateViewModifier: ViewModifier {
     /// Calculates the redaction reasons based on the skeleton loading state.
     private var redactions: RedactionReasons {
         var reasons = redactionReasons
-        if loadable {
-            if skeletonLoading {
-                reasons.insert(.placeholder)
-            }
+        if loadable && skeletonLoading {
+            reasons.insert(.placeholder)
         }else {
             reasons.remove(.placeholder)
         }
@@ -60,7 +58,7 @@ fileprivate struct SkeletonStateViewModifier: ViewModifier {
     }
 }
 
-//MARK: - Modifiers
+// MARK: - Modifiers
 extension View {
     /// Makes a view display a skeleton when ``EnvironmentValues/skeletonLoading`` is true.
     ///
@@ -106,14 +104,17 @@ extension View {
     ///
     /// - Parameters:
     ///    - loading: The status of the skeleton loading.
-    ///    - disabled: Wether the view should not handle any user interaction when it's loading, defaults to true.
+    ///    - shouldDisable: Wether the view should not handle any user interaction when it's loading, defaults to true.
     ///
     /// - Returns: A view with the skeleton loading state applied.
     ///
     /// - Warning: You need to use ``skeletonLoadable(_:)`` to make views display the skeleton loading.
-    public func skeleton(loading: Bool, disabled: Bool = true) -> some View {
+    public func skeleton(
+        loading: Bool,
+        shouldDisable: Bool = true
+    ) -> some View {
         self
             .environment(\.skeletonLoading, loading)
-            .disabled(loading && disabled)
+            .disabled(loading && shouldDisable)
     }
 }

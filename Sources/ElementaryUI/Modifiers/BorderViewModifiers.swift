@@ -22,7 +22,7 @@ extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    @inlinable public func border<T: ShapeStyle, S: InsettableShape>(
+    public func border<T: ShapeStyle, S: InsettableShape>(
         _ content: T = .foreground,
         lineWidth: CGFloat = 1,
         antialiased: Bool = true,
@@ -48,7 +48,7 @@ extension View {
     ///   - shape: The shape of the border, an ``InsettableShape``.
     ///
     /// - Returns: A view with the specified border.
-    @inlinable public func border<T: ShapeStyle, S: InsettableShape>(
+    public func border<T: ShapeStyle, S: InsettableShape>(
         _ content: T = .foreground,
         style: StrokeStyle,
         antialiased: Bool = true,

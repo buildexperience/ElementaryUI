@@ -12,6 +12,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftDiagnostics
 import MacrosKit
+import HexDecoder
 
 /// Macro for expanding hexadecimal color strings into `SwiftUI` ``Color`` expressions.
 ///
@@ -49,16 +50,20 @@ package struct HexColorMacro: ExpressionMacro {
             guard let argument = node.arguments.arguments.first?.value else {
                 throw HexColorMacroError.missingHex
             }
+            
             let hex = argument.text
-            let (red, green, blue, opacity) = try HexColorDecoder.decode(hex)
-            return """
-            Color(
-                red: \(raw: red)/255,
-                green: \(raw: green)/255,
-                blue: \(raw: blue)/255,
-                opacity: \(raw: opacity)/255
-            )
-            """
+            return try HexColorDecoder.decode(hex)
+                .mapError({HexColorMacroError.decodingFailed($0)})
+                .map { red, green, blue, opacity in
+                    return """
+                    Color(
+                        red: \(raw: red)/255,
+                        green: \(raw: green)/255,
+                        blue: \(raw: blue)/255,
+                        opacity: \(raw: opacity)/255
+                    )
+                    """
+                }.get()
         }
     }
 }

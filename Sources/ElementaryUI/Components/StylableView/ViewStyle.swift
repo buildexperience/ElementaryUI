@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+public struct EmptyConfiguration { }
+
 /// Requirements  for defining a style for a view, providing a way to customize
 /// the appearance & behavior of a view's content.
 ///
@@ -36,6 +38,22 @@ public protocol ViewStyle<Configuration>: DynamicProperty {
     ) -> Self.Body
 }
 
+// MARK: - Default Implementation
+extension ViewStyle where Configuration == EmptyConfiguration {
+    /// Creates the body of the styled view.
+    ///
+    /// - Parameters:
+    ///   - content: The content to be styled, wrapped in an ``AnyView``.
+    ///
+    /// - Returns: The styled view.
+    @ViewBuilder @MainActor func makeBody(
+        content: Self.Content
+    ) -> some View {
+        makeBody(content: content, configuration: EmptyConfiguration())
+    }
+}
+
+// MARK: - Modifiers
 extension ViewStyle {
     /// Creates the body of the styled view.
     ///
@@ -63,6 +81,40 @@ extension ViewStyle {
         configuration: Self.Configuration,
         @ViewBuilder _ styledContent: (_ styledContent: Content) -> StyledContent
     ) -> Self.Body {
-        makeBody(content: AnyView(styledContent(content)), configuration: configuration)
+        makeBody(
+            content: AnyView(styledContent(content)),
+            configuration: configuration
+        )
+    }
+    
+    /// Creates the body of the styled view.
+    ///
+    /// Use this function to style the content of the view after applying other styles to it:.
+    ///
+    /// ```swift
+    /// struct RedContentStyle: ContentViewStyle {
+    ///     func makeBody(content: Content, configuration: ContentConfiguration) -> some View {
+    ///         RoundedContentStyle().body(content, configuration: configuration) { styledContent in
+    ///             styledContent // The content after applying RoundedContentStyle.
+    ///                 .foregroundStyle(.red)
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - content: The content to style.
+    ///   - configuration: The configuration data used to customize the styled view.
+    ///   - styledContent: The styled content.
+    ///
+    /// - Returns: The styled view.
+    @MainActor public func body<StyledContent: View>(
+        configuration: Self.Configuration,
+        @ViewBuilder _ styledContent: () -> StyledContent
+    ) -> Self.Body {
+        makeBody(
+            content: AnyView(styledContent()),
+            configuration: configuration
+        )
     }
 }

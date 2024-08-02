@@ -57,7 +57,7 @@ extension View {
     ///
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(_:_:)`` if you want the return type to remain the same.
-    @ViewBuilder @inlinable public func `if`<Content: View>(
+    @ViewBuilder public func `if`<Content: View>(
         _ condition: Bool,
         @ViewBuilder _ builder: (_ content: Self) -> Content
     ) -> some View {
@@ -91,7 +91,7 @@ extension View {
     /// - Returns: A view with the specified modifications applied conditionally.
     ///
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    @inlinable public func `if`(
+    public func `if`(
         _ condition: Bool,
         @ViewBuilder _ builder: (_ content: Self) -> Self
     ) -> Self {
@@ -128,7 +128,7 @@ extension View {
     ///
     /// - Warning: The type of the returned view is different from the one the modifier is applied to.
     ///   Use ``if(let:_:)`` if you want the return type to remain the same.
-    @ViewBuilder @inlinable public func `if`<Content: View, T>(
+    @ViewBuilder public func `if`<Content: View, T>(
         `let` optional: T?,
         @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Content
     ) -> some View {
@@ -163,7 +163,7 @@ extension View {
     /// - Returns: A view with the specified modifications applied conditionally.
     /// 
     /// - Note: The type of the returned view is the same as the one the modifier is applied to.
-    @inlinable public func `if`<T>(
+    public func `if`<T>(
         `let` value: T?,
         @ViewBuilder _ builder: (_ content: Self, _ value: T) -> Self
     ) -> Self {

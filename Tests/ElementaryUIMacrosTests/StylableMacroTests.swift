@@ -13,12 +13,12 @@ import XCTest
 import ElementaryUIMacros
 
 final class StylableMacroTests: XCTestCase {
-//MARK: - Properties
+// MARK: - Properties
     private let testMacros: [String: Macro.Type] = [
         "Stylable": StylableMacro.self,
     ]
     
-//MARK: - Tests
+// MARK: - Tests
     func testMacroExpansion() {
         assertMacroExpansion(
             """
@@ -145,7 +145,7 @@ final class StylableMacroTests: XCTestCase {
         )
     }
     
-//MARK: - Arguments Tests
+// MARK: - Arguments Tests
     func testMacroExpansionWithConfigurationsArgument() {
         let configurations = "MyView2Configuration"
         assertMacroExpansion(
@@ -340,7 +340,7 @@ final class StylableMacroTests: XCTestCase {
         )
     }
 
-//MARK: - Diagnostic Tests
+// MARK: - Diagnostic Tests
     func testMacroFailsWithMissingViewConformance() {
         // Missing View conformance.
         let diagnostic = DiagnosticSpec(

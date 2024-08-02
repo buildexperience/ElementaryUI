@@ -70,6 +70,9 @@ public struct EMTextField: View {
     /// The current style for the text field.
     @Environment(\.emTextFieldStyle) private var style
     
+    /// The current style for the prompt.
+    @Environment(\.promptStyle) private var promptStyle
+    
     /// The binding to the text value of the text field.
     @Binding private var text: String
     
@@ -84,14 +87,23 @@ public struct EMTextField: View {
         return EMTextFieldConfiguration(text: $text, validation: nil)
     }
     
+    /// The prompt styled with the current environment style.
+    private var styledPrompt: Text? {
+        guard let promptStyle else {
+            return prompt
+        }
+        let newPrompt = prompt ?? Text(placeholder.content)
+        return promptStyle(newPrompt)
+    }
+    
     /// The internal representation of the text field.
     private var textField: some View {
         Group {
             switch placeholder {
                 case .localized(let key, _):
-                    TextField(key, text: $text, prompt: prompt)
+                    TextField(key, text: $text, prompt: styledPrompt)
                 case .unlocalized(let string):
-                    TextField(string, text: $text, prompt: prompt)
+                    TextField(string, text: $text, prompt: styledPrompt)
             }
         }
     }
@@ -109,7 +121,7 @@ public struct EMTextField: View {
     }
 }
 
-//MARK: - TextDisplayable Initializers
+// MARK: - TextDisplayable Initializers
 extension EMTextField {
     /// Creates a text field with a text label that can be generated from a localized title string or from an unlocalized string.
     ///
@@ -117,7 +129,11 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    public init(_ placeholder: TextDisplayable = TextContentType.unlocalized(""), text: Binding<String>, prompt: Text? = nil) {
+    public init(
+        _ placeholder: TextDisplayable = TextContentType.unlocalized(""),
+        text: Binding<String>,
+        prompt: Text? = nil
+    ) {
         self._text = text
         self.prompt = prompt
         self.placeholder = placeholder.content
@@ -129,13 +145,16 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    @inlinable
-    public init(_ placeholder: TextDisplayable = TextContentType.unlocalized(""), text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable public init(
+        _ placeholder: TextDisplayable = TextContentType.unlocalized(""),
+        text: Binding<String>,
+        @ViewBuilder prompt: () -> Text?
+    ) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }
 
-//MARK: - LocalizedStringKey Initializers
+// MARK: - LocalizedStringKey Initializers
 extension EMTextField {
     /// Creates a text field with a text label that can be generated from a localized title string.
     ///
@@ -143,8 +162,11 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    @inlinable
-    public init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, prompt: Text? = nil) {
+    @inlinable public init(
+        _ placeholder: LocalizedStringKey = "",
+        text: Binding<String>,
+        prompt: Text? = nil
+    ) {
         self.init(
             TextContentType.localized(key: placeholder, bundle: nil),
             text: text,
@@ -158,13 +180,16 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    @inlinable
-    public init(_ placeholder: LocalizedStringKey = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable public init(
+        _ placeholder: LocalizedStringKey = "",
+        text: Binding<String>,
+        @ViewBuilder prompt: () -> Text?
+    ) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }
 
-//MARK: - StringProtocol Initializers
+// MARK: - StringProtocol Initializers
 extension EMTextField {
     /// Creates a text field with a text label that can be generated from an unlocalized string.
     ///
@@ -172,8 +197,11 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    @inlinable
-    public init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, prompt: Text? = nil) {
+    @inlinable public init<S: StringProtocol>(
+        _ placeholder: S = "",
+        text: Binding<String>,
+        prompt: Text? = nil
+    ) {
         self.init(
             TextContentType.unlocalized(String(placeholder)),
             text: text,
@@ -187,8 +215,11 @@ extension EMTextField {
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
     ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
-    @inlinable
-    public init<S: StringProtocol>(_ placeholder: S = "", text: Binding<String>, @ViewBuilder prompt: () -> Text?) {
+    @inlinable public init<S: StringProtocol>(
+        _ placeholder: S = "",
+        text: Binding<String>,
+        @ViewBuilder prompt: () -> Text?
+    ) {
         self.init(placeholder, text: text, prompt: prompt())
     }
 }

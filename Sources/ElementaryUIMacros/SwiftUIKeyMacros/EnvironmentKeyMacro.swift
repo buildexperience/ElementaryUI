@@ -44,7 +44,7 @@ package struct EnvironmentKeyMacro: KeyMacro {
     package static let keyProtocolName = "EnvironmentKey"
 }
 
-//MARK: - PeerMacro
+// MARK: - PeerMacro
 extension EnvironmentKeyMacro: PeerMacro {
     /// Generates the key struct for the given declaration, ensuring they adhere to the specified key protocol.
     package static func expansion(

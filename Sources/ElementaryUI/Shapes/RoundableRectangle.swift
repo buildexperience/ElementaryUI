@@ -12,6 +12,8 @@ import SwiftUI
 @available(iOS, deprecated: 16.0, message: "Use `UnevenRoundedRectangle` instead.")
 @available(macOS, deprecated: 13.0, message: "Use `UnevenRoundedRectangle` instead.")
 @available(watchOS, deprecated: 9.0, message: "Use `UnevenRoundedRectangle` instead.")
+@available(tvOS, deprecated: 16.0, message: "Use `UnevenRoundedRectangle` instead.")
+@available(visionOS, deprecated: 1.0, message: "Use `UnevenRoundedRectangle` instead.")
 public struct RoundableRectangle: Shape, Animatable, Sendable {
     /// The inset amount applied to the frame of the shape.
     @usableFromInline internal var inset = CGFloat.zero
@@ -92,7 +94,7 @@ public struct RoundableRectangle: Shape, Animatable, Sendable {
     }
 }
 
-//MARK: - InsettableShape
+// MARK: - InsettableShape
 extension RoundableRectangle: InsettableShape {
     /// Returns `self` inset by `amount`.
     @inlinable public func inset(by amount: CGFloat) -> some InsettableShape {
@@ -102,7 +104,7 @@ extension RoundableRectangle: InsettableShape {
     }
 }
 
-//MARK: - Initializers
+// MARK: - Initializers
 extension RoundableRectangle {
     /// Creates a new rounded rectangle shape with uneven corners.
     ///
@@ -118,8 +120,7 @@ extension RoundableRectangle {
     ///   - bottomLeadingRadius: The radius of the bottom leading corner.
     ///   - bottomTrailingRadius: The radius of the bottom trailing corner.
     ///   - topTrailingRadius: The radius of the top trailing corner.
-    @inlinable
-    public init(
+    @inlinable public init(
         topLeadingRadius: CGFloat = 0,
         bottomLeadingRadius: CGFloat = 0,
         bottomTrailingRadius: CGFloat = 0,
@@ -136,7 +137,46 @@ extension RoundableRectangle {
     }
 }
 
+extension Shape where Self == RoundableRectangle {
+    /// A rectangular shape with rounded corners with different values, aligned
+    /// inside the frame of the view containing it.
+    @available(iOS, deprecated: 16.0, message: "Use `.rect` instead.")
+    @available(macOS, deprecated: 13.0, message: "Use `.rect` instead.")
+    @available(watchOS, deprecated: 9.0, message: "Use `.rect` instead.")
+    @available(tvOS, deprecated: 16.0, message: "Use `.rect` instead.")
+    @available(visionOS, deprecated: 1.0, message: "Use `.rect` instead.")
+    public static func roundableRect(cornerRadii: CornerRadii) -> Self {
+        return RoundableRectangle(cornerRadii: cornerRadii)
+    }
+    
+    /// A rectangular shape with rounded corners with different values, aligned
+    /// inside the frame of the view containing it.
+    @available(iOS, deprecated: 16.0, message: "Use `.rect` instead.")
+    @available(macOS, deprecated: 13.0, message: "Use `.rect` instead.")
+    @available(watchOS, deprecated: 9.0, message: "Use `.rect` instead.")
+    @available(tvOS, deprecated: 16.0, message: "Use `.rect` instead.")
+    @available(visionOS, deprecated: 1.0, message: "Use `.rect` instead.")
+    public static func roundableRect(
+        topLeadingRadius: CGFloat = 0,
+        bottomLeadingRadius: CGFloat = 0,
+        bottomTrailingRadius: CGFloat = 0,
+        topTrailingRadius: CGFloat = 0
+    ) -> Self {
+        return RoundableRectangle(
+            topLeadingRadius: topLeadingRadius,
+            bottomLeadingRadius: bottomLeadingRadius,
+            bottomTrailingRadius: bottomTrailingRadius,
+            topTrailingRadius: topTrailingRadius
+        )
+    }
+}
+
 /// Describes the corner radius values of a rounded rectangle with uneven corners.
+@available(iOS, deprecated: 16.0, message: "Use `RectangleCornerRadii` with `UnevenRoundedRectangle` instead.")
+@available(macOS, deprecated: 13.0, message: "Use `RectangleCornerRadii` with `UnevenRoundedRectangle` instead.")
+@available(watchOS, deprecated: 9.0, message: "Use `RectangleCornerRadii` with `UnevenRoundedRectangle` instead.")
+@available(tvOS, deprecated: 16.0, message: "Use `RectangleCornerRadii` with `UnevenRoundedRectangle` instead.")
+@available(visionOS, deprecated: 1.0, message: "Use `RectangleCornerRadii` with `UnevenRoundedRectangle` instead.")
 public struct CornerRadii: Equatable, Hashable, Animatable, Sendable {
     /// The radius of the top-leading corner.
     public var topLeading: CGFloat

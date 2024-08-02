@@ -60,14 +60,7 @@ extension ExpandableViewModifier {
     /// ``AnimatableModifier`` that animates the height of a view.
     fileprivate struct AnimatableHeightModifier: AnimatableModifier {
         /// The height of the view to be animated.
-        private var height: CGFloat?
-        
-        /// Creates a new ``AnimatableHeightModifier`` with the specified height.
-        ///
-        /// - Parameter height: The height to animate to.
-        fileprivate init(height: CGFloat?) {
-            self.height = height
-        }
+        fileprivate var height: CGFloat?
         
         /// The data to animate.
         fileprivate var animatableData: CGFloat {

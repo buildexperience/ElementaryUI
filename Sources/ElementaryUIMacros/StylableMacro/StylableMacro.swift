@@ -118,14 +118,14 @@ package enum StylableMacro {
             let name = inherited.type.as(IdentifierTypeSyntax.self)?.name
             return name?.text == "View"
         }
-        guard hasViewConformance != true else {return}
+        guard !(hasViewConformance ?? false) else {return}
         
         let error = StylableMacroError.missingViewConformance(name: viewName.text)
         throw error
     }
 }
 
-//MARK: - PeerMacro
+// MARK: - PeerMacro
 extension StylableMacro: PeerMacro {
     /// Generates the style protocol for a view.
     package static func expansion(
@@ -164,7 +164,7 @@ extension StylableMacro: PeerMacro {
     }
 }
 
-//MARK: - ExtensionMacro
+// MARK: - ExtensionMacro
 extension StylableMacro: ExtensionMacro {
     /// Generates the style view modifier & aggregated style for a styled view.
     package static func expansion(
@@ -175,7 +175,7 @@ extension StylableMacro: ExtensionMacro {
         in context: some MacroExpansionContext
     ) throws -> [ExtensionDeclSyntax] {
         guard let viewName = declaration.typeName else {
-            throw NSError()
+            throw StylableMacroError.invalidDeclaration
         }
         try verifyConformance(
             declaration: declaration,

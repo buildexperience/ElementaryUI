@@ -13,12 +13,12 @@ import XCTest
 import ElementaryUIMacros
 
 final class EnvironmentKeyMacroTests: XCTestCase {
-//MARK: - Properties
+// MARK: - Properties
     private let testMacros: [String: Macro.Type] = [
         "EnvironmentValue": EnvironmentKeyMacro.self
     ]
     
-//MARK: - Expansion Tests
+// MARK: - Expansion Tests
     func testEnvironmentKeyMacro() {
         assertMacroExpansion(
             """
@@ -42,7 +42,7 @@ final class EnvironmentKeyMacroTests: XCTestCase {
         )
     }
     
-//MARK: - Validation Tests
+// MARK: - Validation Tests
     func testEnvironmentKeyMacroFailsWithInvalidPropertyTypeWhenPropertyIsLet() {
         // Invalid property type, the macro requires var instead of let.
         let diagnostic = DiagnosticSpec(

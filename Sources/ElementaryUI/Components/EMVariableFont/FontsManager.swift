@@ -25,7 +25,11 @@ public enum FontsManager {
     ///   - bundle: The bundle containing the font file.
     ///
     ///  - Note: This function does nothing if the provided font was already registered.
-    public static func registerFont(_ name: String, fontExtension: String, bundle: Bundle) {
+    public static func registerFont(
+        _ name: String,
+        fontExtension: String,
+        bundle: Bundle
+    ) {
         // Find the font file URL in the provided bundle.
         guard let fontURL = bundle.url(forResource: name, withExtension: fontExtension) else {
             assertionFailure("Could not find the url corresponding to the font \(name)")
@@ -42,14 +46,15 @@ public enum FontsManager {
     }
 }
 
-//MARK: - Private Functions
+// MARK: - Private Functions
 extension FontsManager {
     /// Registers the given ``CGFont`` with the Core Text font manager.
     ///
     /// - Parameter font: The font to register.
     /// - Returns: An ``Unmanaged<CFError>`` object if an error occurred during registration, nil otherwise.
-    @inline(__always)
-    private static func register(_ font: CGFont) -> Unmanaged<CFError>? {
+    @inline(__always) private static func register(
+        _ font: CGFont
+    ) -> Unmanaged<CFError>? {
         var error: Unmanaged<CFError>?
         CTFontManagerRegisterGraphicsFont(font, &error)
         guard let error else {
@@ -62,8 +67,9 @@ extension FontsManager {
     ///
     /// - Parameter url: The URL of the font file.
     /// - Returns: A ``CGFont`` object if successful, nil otherwise.
-    @inline(__always)
-    private static func cgFont(from url: URL) -> CGFont? {
+    @inline(__always) private static func cgFont(
+        from url: URL
+    ) -> CGFont? {
         guard let dataProvider = CGDataProvider(url: url as CFURL) else {
             return nil
         }

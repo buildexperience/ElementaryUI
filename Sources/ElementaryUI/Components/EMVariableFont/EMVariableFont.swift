@@ -57,7 +57,7 @@ public protocol EMVariableFont {
     func font(_ size: Double, weight: Weight, width: Double?) -> Font
 }
 
-//MARK: - Default Implementations
+// MARK: - Default Implementations
 extension EMVariableFont {
     /// Creates a ``Font`` with the specified size & font variation attributes.
     ///
@@ -66,8 +66,14 @@ extension EMVariableFont {
     ///   - attributes: A dictionary of font variation attributes & their corresponding values.
     ///
     /// - Returns: A ``Font`` instance configured with the specified size & attributes.
-    public func font(_ size: Double, attributes: [FontVariation: Double]) -> Font {
-        let decriptor = VariableFontDescriptorFactory.make(name: name, attributes: attributes)
+    public func font(
+        _ size: Double,
+        attributes: [FontVariation: Double]
+    ) -> Font {
+        let decriptor = VariableFontDescriptorFactory.make(
+            name: name,
+            attributes: attributes
+        )
         
 #if canImport(UIKit)
         let uiFont = UIFont(descriptor: decriptor, size: size)
@@ -90,7 +96,11 @@ extension EMVariableFont {
     ///   - width: An optional width for the font.
     ///
     /// - Returns: A ``Font`` instance configured with the specified size, weight, & optionally width.
-    public func font(_ size: Double, weight: Weight, width: Double? = nil) -> Font {
+    public func font(
+        _ size: Double,
+        weight: Weight,
+        width: Double? = nil
+    ) -> Font {
         var attributes: [FontVariation: Double] = [
             .weight: weight.value
         ]
@@ -110,7 +120,11 @@ extension EMVariableFont {
     ///   - width: An optional width for the font.
     ///
     /// - Returns: A ``Font`` instance configured with the specified text style, weight, & optionally width.
-    public func font(_ style: Font.TextStyle, weight: Weight, width: Double? = nil) -> Font {
+    public func font(
+        _ style: Font.TextStyle,
+        weight: Weight,
+        width: Double? = nil
+    ) -> Font {
         return font(style.size, weight: weight, width: width)
     }
 }

@@ -49,7 +49,7 @@ fileprivate struct BackgroundScreenListenerViewModifier: ViewModifier {
     }
 }
 
-//MARK: - Modifiers
+// MARK: - Modifiers
 extension View {
     /// Adds a background size listener to the view.
     ///

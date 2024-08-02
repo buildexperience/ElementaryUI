@@ -18,9 +18,9 @@ import SwiftUI
     ///
     /// - Returns: A path that describes this shape.
     public func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addLine(to: CGPoint(x: rect.width, y: 0))
-        return path
+        Path { path in
+            path.move(to: rect.origin)
+            path.addLine(to: CGPoint(x: rect.width, y: 0))
+        }
     }
 }

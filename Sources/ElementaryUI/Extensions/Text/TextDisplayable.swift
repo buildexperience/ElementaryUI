@@ -31,7 +31,7 @@ public enum TextContentType {
     case unlocalized(String)
 }
 
-//MARK: - TextDisplayable
+// MARK: - TextDisplayable
 extension TextContentType: TextDisplayable {
     /// The text content to be displayed.
     public var content: TextContentType {

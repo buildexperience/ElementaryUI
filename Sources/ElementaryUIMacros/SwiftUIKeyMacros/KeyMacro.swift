@@ -42,7 +42,7 @@ package protocol KeyMacro: AccessorMacro {
     static var keyProtocolName: String {get}
 }
 
-//MARK: - Functions
+// MARK: - Functions
 extension KeyMacro {
     /// Decodes a variable binding from a given declaration.
     ///
@@ -52,7 +52,9 @@ extension KeyMacro {
     ///
     /// - Throws: ``KeyMacroError.invalidPropertyType`` if the declaration is not a variable declaration of type `var`.
     ///           ``KeyMacroError.invalidDeclaration`` if the declaration is invalid.
-    internal static func binding(for declaration: some DeclSyntaxProtocol) throws -> PatternBindingListSyntax.Element {
+    internal static func binding(
+        for declaration: some DeclSyntaxProtocol
+    ) throws -> PatternBindingListSyntax.Element {
         guard let variableDeclarations = declaration.as(VariableDeclSyntax.self),
               variableDeclarations.bindingSpecifier.text == "var" else {
             throw KeyMacroError.invalidPropertyType
@@ -75,7 +77,9 @@ extension KeyMacro {
     /// - Returns: The struct key name.
     ///
     /// - Throws: ``KeyMacroError.invalidDeclaration`` if the binding is invalid.
-    internal static func keyName(for binding: PatternBindingListSyntax.Element) throws -> TokenSyntax {
+    internal static func keyName(
+        for binding: PatternBindingListSyntax.Element
+    ) throws -> TokenSyntax {
         guard let pattern = binding.pattern.as(IdentifierPatternSyntax.self) else {
             throw KeyMacroError.invalidDeclaration
         }
@@ -85,7 +89,7 @@ extension KeyMacro {
     }
 }
 
-//MARK: - AccessorMacro
+// MARK: - AccessorMacro
 extension KeyMacro {
     /// Generates the computed property for the given declaration, allowing access to the generated key struct.
     package static func expansion(
