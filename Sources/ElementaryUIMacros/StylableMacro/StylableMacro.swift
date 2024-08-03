@@ -111,8 +111,10 @@ package enum StylableMacro {
     ///  if the declaration does not conform to ``View``.
     private static func verifyConformance(
         declaration: some DeclSyntaxProtocol,
-        viewName: TokenSyntax
-    ) throws {
+        viewName: TokenSyntax,
+        context: some MacroExpansionContext,
+        node: AttributeSyntax
+    ) {
         let inheritedTypes = declaration.inheritedTypes
         let hasViewConformance = inheritedTypes?.contains { inherited in
             let name = inherited.type.as(IdentifierTypeSyntax.self)?.name
@@ -121,7 +123,8 @@ package enum StylableMacro {
         guard !(hasViewConformance ?? false) else {return}
         
         let error = StylableMacroError.missingViewConformance(name: viewName.text)
-        throw error
+        let diagnostic = Diagnostic(node: node, message: error)
+        context.diagnose(diagnostic)
     }
 }
 
@@ -133,34 +136,46 @@ extension StylableMacro: PeerMacro {
         providingPeersOf declaration: some DeclSyntaxProtocol,
         in context: some MacroExpansionContext
     ) throws -> [DeclSyntax] {
-        guard let viewName = declaration.typeName else {
-            throw StylableMacroError.invalidDeclaration
-        }
-        try verifyConformance(
-            declaration: declaration,
-            viewName: viewName
-        )
-                
-        let accessLevel = declaration.accessLevel?.modifier
-        let arguments = node.arguments?.arguments
-        let factory = Argument.Factory(arguments: arguments)
-        let styleProtocol = factory.argument(
-            key: .styleProtocol,
-            defaultValue: "\(viewName)Style"
-        )
-        let configurations = factory.argument(
-            key: .configurations,
-            defaultValue: "\(viewName)Configuration"
-        )
-        
-        let declarationFactory = DeclarationsFactory(styleProtocol: styleProtocol)
-        
-        return [
-            declarationFactory.styleProtocol(
-                configurations: configurations,
-                accessLevel: accessLevel
+        try withErroHandling(context: context, node: node, onFailure: []) {
+            guard let viewName = declaration.typeName?.trimmed else {
+                throw StylableMacroError.invalidDeclaration
+            }
+            verifyConformance(
+                declaration: declaration,
+                viewName: viewName,
+                context: context,
+                node: node
             )
-        ]
+            
+            let arguments = node.arguments?.arguments
+            let factory = Argument.Factory(arguments: arguments)
+            let styleProtocol = factory.argument(
+                key: .styleProtocol,
+                defaultValue: "\(viewName)Style"
+            )
+            let configurations = factory.argument(
+                key: .configurations,
+                defaultValue: "\(styleProtocol)Configuration"
+            )
+            let protocolAccessLevel = factory.argument(
+                key: .accessLevel
+            )
+            let accessLevel = try protocolAccessLevel.map { value in
+                let string = value.text
+                guard let level = AccessLevel(rawValue: string) else {
+                    throw StylableMacroError.invalidAccessModifier(string)
+                }
+                return level
+            } ?? declaration.accessLevel
+            let declarationFactory = DeclarationsFactory(styleProtocol: styleProtocol)
+            
+            return [
+                declarationFactory.styleProtocol(
+                    configurations: configurations,
+                    accessLevel: accessLevel?.modifier
+                )
+            ]
+        }
     }
 }
 
@@ -174,40 +189,44 @@ extension StylableMacro: ExtensionMacro {
         conformingTo protocols: [TypeSyntax],
         in context: some MacroExpansionContext
     ) throws -> [ExtensionDeclSyntax] {
-        guard let viewName = declaration.typeName else {
-            throw StylableMacroError.invalidDeclaration
+        try withErroHandling(context: context, node: node, onFailure: []) {
+            guard let viewName = declaration.typeName?.trimmed else {
+                throw StylableMacroError.invalidDeclaration
+            }
+            verifyConformance(
+                declaration: declaration,
+                viewName: viewName,
+                context: context,
+                node: node
+            )
+            
+            let arguments = node.arguments?.arguments
+            let factory = Argument.Factory(arguments: arguments)
+            let styleProtocol = factory.argument(
+                key: .styleProtocol,
+                defaultValue: "\(viewName)Style"
+            )
+            let environmentKey = factory.argument(
+                key: .environmentKey,
+                defaultValue: styleProtocol.lowerCasedPrefix
+            )
+            
+            let declarationFactory = DeclarationsFactory(styleProtocol: styleProtocol)
+            let aggregatedDeclaration = declarationFactory.aggregatedStyle(
+                type: type
+            )
+            let modifierDeclaration = declarationFactory.modifier(
+                type: type,
+                environmentKey: environmentKey
+            )
+            
+            guard let modifier = modifierDeclaration.as(ExtensionDeclSyntax.self),
+                  let aggregated = aggregatedDeclaration.as(ExtensionDeclSyntax.self)
+            else {
+                return []
+            }
+            
+            return [modifier, aggregated]
         }
-        try verifyConformance(
-            declaration: declaration,
-            viewName: viewName
-        )
-        
-        let arguments = node.arguments?.arguments
-        let factory = Argument.Factory(arguments: arguments)
-        let styleProtocol = factory.argument(
-            key: .styleProtocol,
-            defaultValue: "\(viewName)Style"
-        )
-        let environmentKey = factory.argument(
-            key: .environmentKey,
-            defaultValue: styleProtocol.lowerCasedPrefix
-        )
-        
-        let declarationFactory = DeclarationsFactory(styleProtocol: styleProtocol)
-        let aggregatedDeclaration = declarationFactory.aggregatedStyle(
-            type: type
-        )
-        let modifierDeclaration = declarationFactory.modifier(
-            type: type,
-            environmentKey: environmentKey
-        )
-        
-        guard let modifier = modifierDeclaration.as(ExtensionDeclSyntax.self),
-              let aggregated = aggregatedDeclaration.as(ExtensionDeclSyntax.self)
-        else {
-            return []
-        }
-        
-        return [modifier, aggregated]
     }
 }

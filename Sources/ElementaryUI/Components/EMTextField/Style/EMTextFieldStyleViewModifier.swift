@@ -28,10 +28,8 @@ extension View {
     ///     var body: some View {
     ///         VStack {
     ///             EMTextField("Username", text: $username)
-    ///                 .emTextFieldStyle(MyCustomTextFieldStyle())
     ///             EMTextField("Password", text: $password)
-    ///                 .emTextFieldStyle(MyCustomTextFieldStyle())
-    ///         }
+    ///         }.emTextFieldStyle(MyCustomTextFieldStyle())
     ///     }
     /// }
     /// ```
@@ -42,6 +40,7 @@ extension View {
     public func emTextFieldStyle<Style: EMTextFieldStyle>(
         _ style: Style
     ) -> some View {
+        // TODO: - Remove `swift(>=6.0)` when Xcode 16 comes out of beta.
 #if swift(>=6.0)
         modifier(EMTextField.StyleViewModifier(style: style))
 #else

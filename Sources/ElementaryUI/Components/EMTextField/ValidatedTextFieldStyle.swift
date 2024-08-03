@@ -19,7 +19,7 @@ public struct ValidatedTextFieldStyle {
 extension ValidatedTextFieldStyle: EMTextFieldStyle {
     public func makeBody(
         content: Content,
-        configuration: EMTextFieldConfiguration
+        configuration: Configuration
     ) -> some View {
         let text = configuration.text.wrappedValue
         content

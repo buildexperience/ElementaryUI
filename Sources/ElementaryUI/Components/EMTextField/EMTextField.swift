@@ -83,8 +83,8 @@ public struct EMTextField: View {
     private let placeholder: TextContentType
     
     /// The configuration of the text field used by the current style.
-    private var configuration: EMTextFieldConfiguration {
-        return EMTextFieldConfiguration(text: $text, validation: nil)
+    private var configuration: EMTextFieldStyleConfiguration {
+        return EMTextFieldStyleConfiguration(text: $text, validation: nil)
     }
     
     /// The prompt styled with the current environment style.

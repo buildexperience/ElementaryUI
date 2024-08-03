@@ -104,8 +104,29 @@ import SwiftUI
 public macro Stylable(
     environmentKey: String = "",
     style: String = "",
-    configurations: Any.Type = Never.self
+    configurations: Any.Type = Never.self,
+    accessLevel: MacroAccessLevel = .internal
 ) = #externalMacro(
     module: "ElementaryUIMacros",
     type: "StylableMacro"
 )
+
+public enum MacroAccessLevel {
+    /// Public access level.
+    case `public`
+    
+    /// Package private access level.
+    case `package`
+    
+    /// Internal access level.
+    case `internal`
+    
+    /// Private access level.
+    case `private`
+    
+    /// Fileprivate access level.
+    case `fileprivate`
+    
+    /// Open access level.
+    case `open`
+}

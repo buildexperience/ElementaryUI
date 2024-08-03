@@ -12,15 +12,19 @@ public struct DefaultEMTextFieldStyle: EMTextFieldStyle {
     /// Creates a default text field style.
     public init() { }
     
-    /// Creates a view that represents the body of a text field.
+    /// Creates a view that represents the styled body of a text field.
     ///
-    /// The system calls this method for each ``EMTextField`` instance in a view hierarchy where this style is the current text field style.
+    /// The system calls this method for each ``EMTextField`` instance 
+    /// in a view hierarchy where this style is the current text field style.
     ///
-    /// - Parameter configuration : The properties of the text field.
-    /// - Returns: A view that represents the body of a text field.
+    /// - Parameters:
+    ///  - content : The content of the text field.
+    ///  - configuration : The properties of the text field.
+    ///
+    /// - Returns: The styled styled body of the text field.
     public func makeBody(
         content: Content,
-        configuration: EMTextFieldConfiguration
+        configuration: Configuration
     ) -> some View {
         content
     }

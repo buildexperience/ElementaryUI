@@ -30,6 +30,7 @@ extension StylableMacro.DeclarationsFactory {
     ) -> DeclSyntax {
         return """
         \(accessLevel)protocol \(styleProtocol): ViewStyle where Configuration == \(configurations) {
+            typealias Configuration = \(configurations)
         }
         """
     }
@@ -53,13 +54,13 @@ extension StylableMacro.DeclarationsFactory {
             }
         
             fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                let newContent = currentStyle.makeBody(
+                let newContent = style.makeBody(
                     content: content,
                     configuration: configuration
                 )
         
                 VStack {
-                    AnyView(style.makeBody(
+                    AnyView(currentStyle.makeBody(
                         content: AnyView(newContent),
                         configuration: configuration)
                     )

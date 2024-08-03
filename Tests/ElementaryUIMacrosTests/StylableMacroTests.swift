@@ -31,6 +31,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
             }
             
             extension MyView {
@@ -63,13 +64,13 @@ final class StylableMacroTests: XCTestCase {
                     }
             
                     fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                        let newContent = currentStyle.makeBody(
+                        let newContent = style.makeBody(
                             content: content,
                             configuration: configuration
                         )
             
                         VStack {
-                            AnyView(style.makeBody(
+                            AnyView(currentStyle.makeBody(
                                 content: AnyView(newContent),
                                 configuration: configuration)
                             )
@@ -94,6 +95,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             public protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
             }
             
             extension MyView {
@@ -126,13 +128,13 @@ final class StylableMacroTests: XCTestCase {
                     }
             
                     fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                        let newContent = currentStyle.makeBody(
+                        let newContent = style.makeBody(
                             content: content,
                             configuration: configuration
                         )
             
                         VStack {
-                            AnyView(style.makeBody(
+                            AnyView(currentStyle.makeBody(
                                 content: AnyView(newContent),
                                 configuration: configuration)
                             )
@@ -159,6 +161,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             public protocol MyViewStyle: ViewStyle where Configuration == \(configurations) {
+                typealias Configuration = \(configurations)
             }
             
             extension MyView {
@@ -191,13 +194,13 @@ final class StylableMacroTests: XCTestCase {
                     }
             
                     fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                        let newContent = currentStyle.makeBody(
+                        let newContent = style.makeBody(
                             content: content,
                             configuration: configuration
                         )
             
                         VStack {
-                            AnyView(style.makeBody(
+                            AnyView(currentStyle.makeBody(
                                 content: AnyView(newContent),
                                 configuration: configuration)
                             )
@@ -225,6 +228,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             public protocol \(style): ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
             }
             
             extension MyView {
@@ -257,13 +261,13 @@ final class StylableMacroTests: XCTestCase {
                     }
             
                     fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                        let newContent = currentStyle.makeBody(
+                        let newContent = style.makeBody(
                             content: content,
                             configuration: configuration
                         )
             
                         VStack {
-                            AnyView(style.makeBody(
+                            AnyView(currentStyle.makeBody(
                                 content: AnyView(newContent),
                                 configuration: configuration)
                             )
@@ -277,7 +281,7 @@ final class StylableMacroTests: XCTestCase {
     }
     
     func testMacroExpansionWithEnvironmentKeyArgument() {
-        let environmentKey = "DefaultMyViewStyle2"
+        let environmentKey = "defaultMyViewStyle2"
         assertMacroExpansion(
             """
             @Stylable(environmentKey: "\(environmentKey)"
@@ -289,6 +293,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             public protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
             }
             
             extension MyView {
@@ -321,13 +326,76 @@ final class StylableMacroTests: XCTestCase {
                     }
             
                     fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-                        let newContent = currentStyle.makeBody(
+                        let newContent = style.makeBody(
                             content: content,
                             configuration: configuration
                         )
             
                         VStack {
-                            AnyView(style.makeBody(
+                            AnyView(currentStyle.makeBody(
+                                content: AnyView(newContent),
+                                configuration: configuration)
+                            )
+                        }
+                    }
+                }
+            }
+            """,
+            macros: testMacros
+        )
+    }
+    func testMacroExpansionWithAccessLevelArgument() {
+        assertMacroExpansion(
+            """
+            @Stylable(accessLevel: .private)
+            public struct MyView: View {
+            }
+            """,
+            expandedSource: """
+            public struct MyView: View {
+            }
+            
+            private protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
+            }
+            
+            extension MyView {
+                internal struct StyleViewModifier<Style: MyViewStyle>: ViewModifier {
+                    @Environment(\\.myViewStyle) private var currentStyle
+                    private let style: Style
+                    private var newStyle: any MyViewStyle {
+                        return AggregatedStyle(currentStyle: currentStyle, style: style)
+                    }
+            
+                    internal init(style: Style) {
+                        self.style = style
+                    }
+            
+                    internal func body(content: Content) -> some View {
+                        content
+                            .environment(\\.myViewStyle, newStyle)
+                    }
+                }
+            }
+            
+            extension MyView {
+                fileprivate struct AggregatedStyle<Style: MyViewStyle>: MyViewStyle {
+                    private let currentStyle: any MyViewStyle
+                    private let style: Style
+            
+                    fileprivate init(currentStyle: any MyViewStyle, style: Style) {
+                        self.currentStyle = currentStyle
+                        self.style = style
+                    }
+            
+                    fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
+                        let newContent = style.makeBody(
+                            content: content,
+                            configuration: configuration
+                        )
+            
+                        VStack {
+                            AnyView(currentStyle.makeBody(
                                 content: AnyView(newContent),
                                 configuration: configuration)
                             )
@@ -342,22 +410,140 @@ final class StylableMacroTests: XCTestCase {
 
 // MARK: - Diagnostic Tests
     func testMacroFailsWithMissingViewConformance() {
+        let error = StylableMacroError.missingViewConformance(name: "MyView")
         // Missing View conformance.
         let diagnostic = DiagnosticSpec(
-            message: StylableMacroError.missingViewConformance(name: "MyView").message,
+            message: error.message,
             line: 1,
-            column: 1
+            column: 1,
+            severity: error.severity
         )
         // Expect 2 diagnostics since both the PeerMacro & the ExtensionMacro fail & throws the error.
         let expectedDiagnostics = [diagnostic, diagnostic]
         assertMacroExpansion(
             """
             @Stylable
-            struct MyView {
-            }
+            enum MyView { }
             """,
             expandedSource: """
-            struct MyView {
+            enum MyView { }
+            
+            protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
+                typealias Configuration = MyViewConfiguration
+            }
+            
+            extension MyView {
+                internal struct StyleViewModifier<Style: MyViewStyle>: ViewModifier {
+                    @Environment(\\.myViewStyle) private var currentStyle
+                    private let style: Style
+                    private var newStyle: any MyViewStyle {
+                        return AggregatedStyle(currentStyle: currentStyle, style: style)
+                    }
+            
+                    internal init(style: Style) {
+                        self.style = style
+                    }
+            
+                    internal func body(content: Content) -> some View {
+                        content
+                            .environment(\\.myViewStyle, newStyle)
+                    }
+                }
+            }
+            
+            extension MyView {
+                fileprivate struct AggregatedStyle<Style: MyViewStyle>: MyViewStyle {
+                    private let currentStyle: any MyViewStyle
+                    private let style: Style
+            
+                    fileprivate init(currentStyle: any MyViewStyle, style: Style) {
+                        self.currentStyle = currentStyle
+                        self.style = style
+                    }
+            
+                    fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
+                        let newContent = style.makeBody(
+                            content: content,
+                            configuration: configuration
+                        )
+            
+                        VStack {
+                            AnyView(currentStyle.makeBody(
+                                content: AnyView(newContent),
+                                configuration: configuration)
+                            )
+                        }
+                    }
+                }
+            }
+            """,
+            diagnostics: expectedDiagnostics,
+            macros: testMacros
+        )
+    }
+    func testMacroFailsWithInvalidAccessLevel() {
+        let modifier = "publicss"
+        let error = StylableMacroError.invalidAccessModifier(modifier)
+        // Missing View conformance.
+        let diagnostic = DiagnosticSpec(
+            message: error.message,
+            line: 1,
+            column: 1,
+            severity: error.severity
+        )
+        // Expect 2 diagnostics since both the PeerMacro & the ExtensionMacro fail & throws the error.
+        let expectedDiagnostics = [diagnostic]
+        assertMacroExpansion(
+            """
+            @Stylable(accessLevel: .\(modifier))
+            struct MyView: View { }
+            """,
+            expandedSource: """
+            struct MyView: View { }
+            
+            extension MyView {
+                internal struct StyleViewModifier<Style: MyViewStyle>: ViewModifier {
+                    @Environment(\\.myViewStyle) private var currentStyle
+                    private let style: Style
+                    private var newStyle: any MyViewStyle {
+                        return AggregatedStyle(currentStyle: currentStyle, style: style)
+                    }
+            
+                    internal init(style: Style) {
+                        self.style = style
+                    }
+            
+                    internal func body(content: Content) -> some View {
+                        content
+                            .environment(\\.myViewStyle, newStyle)
+                    }
+                }
+            }
+            
+            extension MyView {
+                fileprivate struct AggregatedStyle<Style: MyViewStyle>: MyViewStyle {
+                    private let currentStyle: any MyViewStyle
+                    private let style: Style
+            
+                    fileprivate init(currentStyle: any MyViewStyle, style: Style) {
+                        self.currentStyle = currentStyle
+                        self.style = style
+                    }
+            
+                    fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
+                        let newContent = style.makeBody(
+                            content: content,
+                            configuration: configuration
+                        )
+            
+                        VStack {
+                            AnyView(currentStyle.makeBody(
+                                content: AnyView(newContent),
+                                configuration: configuration)
+                            )
+                        }
+                    }
+                }
             }
             """,
             diagnostics: expectedDiagnostics,

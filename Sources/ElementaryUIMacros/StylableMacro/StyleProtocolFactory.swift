@@ -19,6 +19,9 @@ extension StylableMacro {
         
         /// Argument key for the environment key name.
         case environmentKey
+        
+        /// Argument key for the access level.
+        case accessLevel
     }
 }
 
@@ -39,7 +42,19 @@ extension StylableMacro.Argument {
             key: StylableMacro.Argument,
             defaultValue: TokenSyntax
         ) -> TokenSyntax {
-            return arguments?[key.rawValue] ?? defaultValue
+            return argument(key: key) ?? defaultValue
+        }
+        
+        /// Retrieves the argument value for the given key & returns nil if the key is not found..
+        ///
+        /// - Parameters:
+        ///   - key: The key for the argument to retrieve.
+        ///
+        /// - Returns: The argument value for the given key or the default value if the key is not found.
+        internal func argument(
+            key: StylableMacro.Argument
+        ) -> TokenSyntax? {
+            return arguments?[key.rawValue]
         }
     }
 }
