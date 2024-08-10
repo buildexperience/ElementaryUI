@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-/// Manager responsible for registering custom fonts within the application.
+/// Manager responsible for registering custom fonts 
+/// within the application.
 ///
 /// ```swift
 /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
 /// ```
 public enum FontsManager {
-    /// Registers a custom font with the specified name, font extension, & bundle.
+    /// Registers a custom font with the specified name, 
+    /// font extension, & bundle.
     ///
     /// ```swift
     /// FontsManager.registerFont("Halvetica", fontExtension: "ttf", bundle: .module)
@@ -24,7 +26,8 @@ public enum FontsManager {
     ///   - fontExtension: The file extension of the font file.
     ///   - bundle: The bundle containing the font file.
     ///
-    ///  - Note: This function does nothing if the provided font was already registered.
+    ///  - Note: This function does nothing if the provided 
+    ///  font was already registered.
     public static func registerFont(
         _ name: String,
         fontExtension: String,
@@ -32,12 +35,16 @@ public enum FontsManager {
     ) {
         // Find the font file URL in the provided bundle.
         guard let fontURL = bundle.url(forResource: name, withExtension: fontExtension) else {
-            assertionFailure("Could not find the url corresponding to the font \(name)")
+            assertionFailure(
+                "Could not find the url corresponding to the font \(name)"
+            )
             return
         }
         // Create a CGFont instance from the font URL.
         guard let font = cgFont(from: fontURL) else {
-            assertionFailure("Could not create the font \(name) using the url: \(fontURL)")
+            assertionFailure(
+                "Could not create the font \(name) using the url: \(fontURL)"
+            )
             return
         }
         // Register the font
@@ -51,7 +58,8 @@ extension FontsManager {
     /// Registers the given ``CGFont`` with the Core Text font manager.
     ///
     /// - Parameter font: The font to register.
-    /// - Returns: An ``Unmanaged<CFError>`` object if an error occurred during registration, nil otherwise.
+    /// - Returns: An ``Unmanaged<CFError>`` object if an error 
+    /// occurred during registration, nil otherwise.
     @inline(__always) private static func register(
         _ font: CGFont
     ) -> Unmanaged<CFError>? {

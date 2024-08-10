@@ -42,10 +42,11 @@ import MacrosKit
 /// }
 ///
 /// public protocol ContentViewStyle: ViewStyle where Configuration == ContentConfiguration {
+///     typealias Configuration = ContentConfiguration
 /// }
 ///
 /// extension ContentView {
-///     internal struct StyleViewModifier<Style: ContentViewStyle>: ViewModifier {
+///      internal struct StyleViewModifier<Style: ContentViewStyle>: ViewModifier {
 ///         @Environment(\.contentViewStyle) private var currentStyle
 ///         private let style: Style
 ///         private var newStyle: any ContentViewStyle {
@@ -74,13 +75,13 @@ import MacrosKit
 ///         }
 ///
 ///         fileprivate func makeBody(content: Content, configuration: Style.Configuration) -> some View {
-///             let newContent = currentStyle.makeBody(
+///             let newContent = style.makeBody(
 ///                 content: content,
 ///                 configuration: configuration
 ///             )
 ///
 ///             VStack {
-///                 AnyView(style.makeBody(
+///                 AnyView(currentStyle.makeBody(
 ///                     content: AnyView(newContent),
 ///                     configuration: configuration)
 ///                 )

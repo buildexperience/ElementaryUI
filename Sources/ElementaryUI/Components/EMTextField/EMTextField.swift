@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-/// Specialized ``EMValidator`` for ``EMTextField``.
-public typealias EMTextFieldValidator = EMValidator<String>
-
 /// Styllable wrapper arround ``TextField`` that displays an editable text interface.
 ///
 /// ``EMTextField`` provides a flexible way to create text fields with various placeholder types, bindings, & prompts. It supports validation through the ``validator(_:_:validation:_:)`` modifier, allowing you to apply custom validators & define validation triggers.
@@ -66,7 +63,7 @@ public typealias EMTextFieldValidator = EMValidator<String>
 ///
 /// - Note: The applied style will be propagated through the environment.
 @Stylable(environmentKey: "emTextFieldStyle")
-public struct EMTextField: View {
+@MainActor public struct EMTextField: View {
     /// The current style for the text field.
     @Environment(\.emTextFieldStyle) private var style
     
@@ -89,11 +86,11 @@ public struct EMTextField: View {
     
     /// The prompt styled with the current environment style.
     private var styledPrompt: Text? {
-        guard let promptStyle else {
+        guard !(promptStyle is EmptyPromptStyle) else {
             return prompt
         }
         let newPrompt = prompt ?? Text(placeholder.content)
-        return promptStyle(newPrompt)
+        return promptStyle.makeBody(content: newPrompt)
     }
     
     /// The internal representation of the text field.
@@ -123,12 +120,14 @@ public struct EMTextField: View {
 
 // MARK: - TextDisplayable Initializers
 extension EMTextField {
-    /// Creates a text field with a text label that can be generated from a localized title string or from an unlocalized string.
+    /// Creates a text field with a text label that can be generated from 
+    /// a localized title string or from an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     public init(
         _ placeholder: TextDisplayable = TextContentType.unlocalized(""),
         text: Binding<String>,
@@ -139,12 +138,14 @@ extension EMTextField {
         self.placeholder = placeholder.content
     }
     
-    /// Creates a text field with a text label that can be generated from a localized title string or from an unlocalized string.
+    /// Creates a text field with a text label that can be generated from 
+    /// a localized title string or from an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     @inlinable public init(
         _ placeholder: TextDisplayable = TextContentType.unlocalized(""),
         text: Binding<String>,
@@ -156,12 +157,14 @@ extension EMTextField {
 
 // MARK: - LocalizedStringKey Initializers
 extension EMTextField {
-    /// Creates a text field with a text label that can be generated from a localized title string.
+    /// Creates a text field with a text label that can be generated from 
+    /// a localized title string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     @inlinable public init(
         _ placeholder: LocalizedStringKey = "",
         text: Binding<String>,
@@ -174,12 +177,14 @@ extension EMTextField {
         )
     }
     
-    /// Creates a text field with a text label that can be generated from a localized title string.
+    /// Creates a text field with a text label that can be generated from 
+    /// a localized title string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     @inlinable public init(
         _ placeholder: LocalizedStringKey = "",
         text: Binding<String>,
@@ -191,12 +196,14 @@ extension EMTextField {
 
 // MARK: - StringProtocol Initializers
 extension EMTextField {
-    /// Creates a text field with a text label that can be generated from an unlocalized string.
+    /// Creates a text field with a text label that can be generated from
+    /// an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     @inlinable public init<S: StringProtocol>(
         _ placeholder: S = "",
         text: Binding<String>,
@@ -209,12 +216,14 @@ extension EMTextField {
         )
     }
     
-    /// Creates a text field with a text label that can be generated from an unlocalized string.
+    /// Creates a text field with a text label that can be generated from 
+    /// an unlocalized string.
     ///
     /// - Parameters:
     ///   - placeholder: The content of the text field, describing its purpose.
     ///   - text: The text to display & edit.
-    ///   - prompt: A ``Text`` representing the prompt of the text field which provides users with guidance on what to type into the text  field.
+    ///   - prompt: A ``Text`` representing the prompt of the text field 
+    ///   which provides users with guidance on what to type into the text  field.
     @inlinable public init<S: StringProtocol>(
         _ placeholder: S = "",
         text: Binding<String>,

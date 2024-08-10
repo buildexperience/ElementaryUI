@@ -15,8 +15,9 @@ import MacrosKit
 
 /// Macro used to generate the an ``EnvironmentKey``.
 ///
-/// This macro creates an ``EnvironmentKey`` from the property it's applied to & generates the corresponding getter & setter for the 
-/// property defined in the ``EnvironmentValues`` extension:
+/// This macro creates an ``EnvironmentKey`` from the property it's applied to
+/// & generates the corresponding getter & setter for the property defined in
+/// the ``EnvironmentValues`` extension:
 ///
 /// ```swift
 /// extension EnvironmentValues {
@@ -41,6 +42,7 @@ import MacrosKit
 /// ```
 /// - Warning: The property must be contained in an ``EnvironmentValues`` extension.
 package struct EnvironmentKeyMacro: KeyMacro {
+    /// The name of the key protocol associated with the macro.
     package static let keyProtocolName = "EnvironmentKey"
 }
 

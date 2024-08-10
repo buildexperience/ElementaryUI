@@ -26,9 +26,11 @@ import SwiftUI
 /// ```
 /// 
 /// - Warning: This is an internal modifier not meant to be used directly. 
-/// You should use either ``sizeListener()``, or ``sizeListener(_:)`` instead.
+/// You should use either ``sizeListener()``, 
+/// or ``sizeListener(_:)`` instead.
 fileprivate struct ScreenListenerViewModifier: ViewModifier {
-    /// The value indicating whether to bind the screen size changes to a ``Binding`` property.
+    /// The value indicating whether to bind the screen size 
+    /// changes to a ``Binding`` property.
     private let bindingScreen: Bool
     
     /// The binding value to the current screen size.
@@ -53,9 +55,11 @@ fileprivate struct ScreenListenerViewModifier: ViewModifier {
 
 // MARK: - Initializers
 extension ScreenListenerViewModifier {
-    /// Creates a scren listener modifier using a ``Binding`` to the ``Screen`` object.
+    /// Creates a scren listener modifier using a ``Binding`` 
+    /// to the ``Screen`` object.
     ///
-    /// - Parameter screen: The ``Binding`` to the current ``Screen`` object.
+    /// - Parameter screen: The ``Binding`` to the 
+    /// current ``Screen`` object.
     fileprivate init(screen: Binding<Screen>? = nil) {
         self.bindingScreen = screen != nil
         self._screen = screen ?? .constant(.zero)
@@ -66,7 +70,8 @@ extension ScreenListenerViewModifier {
 extension View {
     /// Adds a listener to a view's size & safe area insets.
     ///
-    /// You can access the updated ``Screen`` object using ``EnvironmentValues/screen``.
+    /// You can access the updated ``Screen`` object
+    /// using ``EnvironmentValues/screen``.
     ///
     /// ```swift
     /// @main
@@ -88,15 +93,17 @@ extension View {
     /// }
     /// ```
     ///
-    /// - Returns: A view wrapped in a ``GeometryReader`` that propagates
-    /// the up-to-date size & safe area insets to the environment.
+    /// - Returns: A view wrapped in a ``GeometryReader`` 
+    /// that propagates the up-to-date size & safe area insets to the environment.
     public func sizeListener() -> some View {
         modifier(ScreenListenerViewModifier())
     }
     
-    /// Adds a listener to a view's size & safe area insets & binds them to a ``Binding`` property.
+    /// Adds a listener to a view's size & safe area insets & binds 
+    /// them to a ``Binding`` property.
     ///
-    /// You can access the updated ``Screen`` object using the passed ``Binding`` property.
+    /// You can access the updated ``Screen`` object using 
+    /// the passed ``Binding`` property.
     ///
     /// ```swift
     /// struct ContentView: View {
@@ -108,10 +115,12 @@ extension View {
     /// }
     /// ```
     ///
-    /// - Parameter screen: A ``Binding`` to the current ``Screen`` object.
-    /// 
-    /// - Returns: A view wrapped in a ``GeometryReader`` that propagates 
-    /// the up-to-date size & safe area insets to the passed ``Binding``.
+    /// - Parameter screen: A ``Binding`` to the 
+    /// current ``Screen`` object.
+    ///
+    /// - Returns: A view wrapped in a ``GeometryReader`` 
+    /// that propagates the up-to-date size & safe area insets to
+    /// the passed ``Binding``.
     public func sizeListener(_ screen: Binding<Screen>) -> some View {
         modifier(ScreenListenerViewModifier(screen: screen))
     }

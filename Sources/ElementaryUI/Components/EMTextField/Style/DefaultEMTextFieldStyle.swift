@@ -21,7 +21,7 @@ public struct DefaultEMTextFieldStyle: EMTextFieldStyle {
     ///  - content : The content of the text field.
     ///  - configuration : The properties of the text field.
     ///
-    /// - Returns: The styled styled body of the text field.
+    /// - Returns: The styled body of the text field.
     public func makeBody(
         content: Content,
         configuration: Configuration

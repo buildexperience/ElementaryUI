@@ -30,7 +30,7 @@ extension StylableMacro.DeclarationsFactory {
     ) -> DeclSyntax {
         return """
         \(accessLevel)protocol \(styleProtocol): ViewStyle where Configuration == \(configurations) {
-            typealias Configuration = \(configurations)
+            associatedtype Configuration = \(configurations)
         }
         """
     }

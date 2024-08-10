@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 5.9
 
 import PackageDescription
 import CompilerPluginSupport
@@ -13,8 +13,7 @@ let package = Package(
         .visionOS(.v1)
     ],
     products: [
-        .library(name: "ElementaryUI", targets: ["ElementaryUI"]),
-        .library(name: "HexDecoder", targets: ["HexDecoder"])
+        .library(name: "ElementaryUI", targets: ["ElementaryUI"])
     ],
     dependencies: [
         .package(

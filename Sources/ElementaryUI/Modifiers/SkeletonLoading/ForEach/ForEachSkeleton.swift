@@ -11,10 +11,10 @@ import SwiftUI
 ///
 /// - Warning: This is an internal modifier not meant to be used directly. 
 /// You should use ``skeletonLoadable()`` instead.
-fileprivate struct ForEachSkeletonView<
+@MainActor fileprivate struct ForEachSkeletonView<
     Content: DynamicViewContent,
     RowContent: View
->: DynamicViewContent where Content.Data.Element: Identifiable {
+> where Content.Data.Element: Identifiable & Sendable {
     /// The value indicating whether skeleton loading is active.
     @Environment(\.skeletonLoading) private var skeletonLoading
     
@@ -39,6 +39,13 @@ fileprivate struct ForEachSkeletonView<
         }.disabled(skeletonLoading)
     }
 }
+
+// MARK: - DynamicViewContent
+#if swift(>=5.10)
+extension ForEachSkeletonView: @preconcurrency DynamicViewContent { }
+#else
+extension ForEachSkeletonView: DynamicViewContent { }
+#endif
 
 // MARK: - Modifiers
 extension ForEach where Data.Element: SkeletonRepresentable, Content: View {
@@ -75,7 +82,7 @@ extension ForEach where Data.Element: SkeletonRepresentable, Content: View {
     ///
     /// - Warning: This modifier should be used before using any other modifier specific to ``ForEach`` or
     /// ``DynamicViewContent``.
-    public func skeletonLoadable() -> some DynamicViewContent {
+    @MainActor public func skeletonLoadable() -> some DynamicViewContent {
         return ForEachSkeletonView(
             content: self,
             skeletonData: Data.Element.skeleton,

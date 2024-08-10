@@ -30,8 +30,8 @@ final class StylableMacroTests: XCTestCase {
             struct MyView: View {
             }
             
-            protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            protocol MyViewStyle: ViewStyle where Configuration == MyViewStyleConfiguration {
+                associatedtype Configuration = MyViewStyleConfiguration
             }
             
             extension MyView {
@@ -94,8 +94,8 @@ final class StylableMacroTests: XCTestCase {
             public struct MyView: View {
             }
             
-            public protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            public protocol MyViewStyle: ViewStyle where Configuration == MyViewStyleConfiguration {
+                associatedtype Configuration = MyViewStyleConfiguration
             }
             
             extension MyView {
@@ -161,7 +161,7 @@ final class StylableMacroTests: XCTestCase {
             }
             
             public protocol MyViewStyle: ViewStyle where Configuration == \(configurations) {
-                typealias Configuration = \(configurations)
+                associatedtype Configuration = \(configurations)
             }
             
             extension MyView {
@@ -227,8 +227,8 @@ final class StylableMacroTests: XCTestCase {
             public struct MyView: View {
             }
             
-            public protocol \(style): ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            public protocol \(style): ViewStyle where Configuration == MyView2StyleConfiguration {
+                associatedtype Configuration = MyView2StyleConfiguration
             }
             
             extension MyView {
@@ -292,8 +292,8 @@ final class StylableMacroTests: XCTestCase {
             public struct MyView: View {
             }
             
-            public protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            public protocol MyViewStyle: ViewStyle where Configuration == MyViewStyleConfiguration {
+                associatedtype Configuration = MyViewStyleConfiguration
             }
             
             extension MyView {
@@ -355,8 +355,8 @@ final class StylableMacroTests: XCTestCase {
             public struct MyView: View {
             }
             
-            private protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            private protocol MyViewStyle: ViewStyle where Configuration == MyViewStyleConfiguration {
+                associatedtype Configuration = MyViewStyleConfiguration
             }
             
             extension MyView {
@@ -418,7 +418,8 @@ final class StylableMacroTests: XCTestCase {
             column: 1,
             severity: error.severity
         )
-        // Expect 2 diagnostics since both the PeerMacro & the ExtensionMacro fail & throws the error.
+        // Expect 2 diagnostics since both the PeerMacro 
+        // & the ExtensionMacro fail & throws the error.
         let expectedDiagnostics = [diagnostic, diagnostic]
         assertMacroExpansion(
             """
@@ -428,8 +429,8 @@ final class StylableMacroTests: XCTestCase {
             expandedSource: """
             enum MyView { }
             
-            protocol MyViewStyle: ViewStyle where Configuration == MyViewConfiguration {
-                typealias Configuration = MyViewConfiguration
+            protocol MyViewStyle: ViewStyle where Configuration == MyViewStyleConfiguration {
+                associatedtype Configuration = MyViewStyleConfiguration
             }
             
             extension MyView {

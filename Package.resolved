@@ -1,5 +1,5 @@
 {
-  "originHash" : "8df8464361b8d3c1f1e8498c78b96d1402f772948e4c51c66e51fb010b1441a9",
+  "originHash" : "2753c9a7eccbc12460357ec6aad27fca343358a1788fb83204d7b281a79f3ca0",
   "pins" : [
     {
       "identity" : "macroskit",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/buildexperience/MacrosKit.git",
       "state" : {
         "branch" : "main",
-        "revision" : "919c83f82d54ed65c89abbc5f9189bc1027dae0d"
+        "revision" : "32150b5c2f3d91a75f0a9a283044954a276dd26a"
       }
     },
     {
@@ -20,5 +20,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

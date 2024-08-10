@@ -66,3 +66,7 @@ extension Binding {
         }
     }
 }
+
+#if swift(>=5.10)
+extension KeyPath: @unchecked @retroactive Sendable { }
+#endif

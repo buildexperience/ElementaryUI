@@ -41,7 +41,8 @@ public protocol EMVariableFont {
     ///
     /// - Parameters:
     ///   - size: The size of the font to be created.
-    ///   - attributes: A dictionary of font variation attributes & their corresponding values.
+    ///   - attributes: A dictionary of font variation attributes 
+    ///   & their corresponding values.
     ///
     /// - Returns: A ``Font`` instance configured with the specified size & attributes.
     func font(_ size: Double, attributes: [FontVariation: Double]) -> Font
@@ -53,7 +54,8 @@ public protocol EMVariableFont {
     ///   - weight: The weight of the font to be applied.
     ///   - width: An optional width for the font.
     ///
-    /// - Returns: A ``Font`` instance configured with the specified size, weight, & optionally width.
+    /// - Returns: A ``Font`` instance configured with the specified 
+    /// size, weight, & optionally width.
     func font(_ size: Double, weight: Weight, width: Double?) -> Font
 }
 
@@ -63,9 +65,11 @@ extension EMVariableFont {
     ///
     /// - Parameters:
     ///   - size: The size of the font to be created.
-    ///   - attributes: A dictionary of font variation attributes & their corresponding values.
+    ///   - attributes: A dictionary of font variation attributes 
+    ///   & their corresponding values.
     ///
-    /// - Returns: A ``Font`` instance configured with the specified size & attributes.
+    /// - Returns: A ``Font`` instance configured with the specified 
+    /// size & attributes.
     public func font(
         _ size: Double,
         attributes: [FontVariation: Double]
@@ -95,7 +99,8 @@ extension EMVariableFont {
     ///   - weight: The weight of the font to be applied.
     ///   - width: An optional width for the font.
     ///
-    /// - Returns: A ``Font`` instance configured with the specified size, weight, & optionally width.
+    /// - Returns: A ``Font`` instance configured with the specified 
+    /// size, weight, & optionally width.
     public func font(
         _ size: Double,
         weight: Weight,
@@ -119,7 +124,8 @@ extension EMVariableFont {
     ///   - weight: The weight of the font to be applied.
     ///   - width: An optional width for the font.
     ///
-    /// - Returns: A ``Font`` instance configured with the specified text style, weight, & optionally width.
+    /// - Returns: A ``Font`` instance configured with the specified 
+    /// text style, weight, & optionally width.
     public func font(
         _ style: Font.TextStyle,
         weight: Weight,

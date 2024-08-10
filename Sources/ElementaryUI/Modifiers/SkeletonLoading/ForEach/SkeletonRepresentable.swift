@@ -18,7 +18,7 @@ import SwiftUI
 ///     static let skeleton = [Character(name: "test")]
 /// }
 /// ```
-public protocol SkeletonRepresentable: Identifiable {
+public protocol SkeletonRepresentable: Identifiable, Sendable {
     /// The skeleton data to be displayed.
     static var skeleton: [Self] {get}
 }

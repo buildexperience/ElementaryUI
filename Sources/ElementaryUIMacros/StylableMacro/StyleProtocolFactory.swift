@@ -31,13 +31,16 @@ extension StylableMacro.Argument {
         /// The macro arguments.
         internal let arguments: [String?: TokenSyntax]?
         
-        /// Retrieves the argument value for the given key or returns a default value if the key is not found.
+        /// Retrieves the argument value for the given key or returns a 
+        /// default value if the key is not found.
         ///
         /// - Parameters:
         ///   - key: The key for the argument to retrieve.
-        ///   - defaultValue: The default value to return if the argument key is not found.
+        ///   - defaultValue: The default value to return if the 
+        ///   argument key is not found.
         ///
-        /// - Returns: The argument value for the given key or the default value if the key is not found.
+        /// - Returns: The argument value for the given key or the 
+        /// default value if the key is not found.
         internal func argument(
             key: StylableMacro.Argument,
             defaultValue: TokenSyntax
@@ -45,12 +48,13 @@ extension StylableMacro.Argument {
             return argument(key: key) ?? defaultValue
         }
         
-        /// Retrieves the argument value for the given key & returns nil if the key is not found..
+        /// Retrieves the argument value for the given key & returns nil 
+        /// if the key is not found..
         ///
-        /// - Parameters:
-        ///   - key: The key for the argument to retrieve.
+        /// - Parameter key: The key for the argument to retrieve.
         ///
-        /// - Returns: The argument value for the given key or the default value if the key is not found.
+        /// - Returns: The argument value for the given key or the 
+        /// default value if the key is not found.
         internal func argument(
             key: StylableMacro.Argument
         ) -> TokenSyntax? {

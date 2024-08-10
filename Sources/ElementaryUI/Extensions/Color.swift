@@ -11,7 +11,8 @@ import HexDecoder
 extension Color {
     /// Creates a ``Color`` from a hexadecimal string representation.
     ///
-    /// The hex string can include an optional alpha component in addition to the red, green, & blue components.
+    /// The hex string can include an optional alpha component in addition 
+    /// to the red, green, & blue components.
     ///
     /// **Supported hex formats:**
     ///  - 6 digits, the opacity component will always be 1:
@@ -29,7 +30,8 @@ extension Color {
     /// 
     /// - Note: Adding the '#' is optional & won't affect the decoding proccess.
     ///
-    /// - Warning: If the hexadecimal string is invalid or cannot be parsed, the initializer defaults to a white color with full opacity.
+    /// - Warning: If the hexadecimal string is invalid or cannot be parsed, 
+    /// the initializer defaults to a white color with full opacity.
     public init(hex: String) {
         do {
             let (red, green, blue, opacity) = try HexColorDecoder.decode(hex).get()

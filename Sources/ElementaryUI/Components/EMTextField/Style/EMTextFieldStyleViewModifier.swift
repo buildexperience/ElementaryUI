@@ -21,7 +21,8 @@ extension EnvironmentValues {
 extension View {
     /// Sets the text field style for the view hierarchy.
     ///
-    /// Use this modifier to apply a specific style to all ``EMTextField`` views within the hierarchy below the modified view.
+    /// Use this modifier to apply a specific style to all ``EMTextField`` 
+    /// views within the hierarchy below the modified view.
     ///
     /// ```swift
     /// struct ContentView: View {
@@ -34,15 +35,23 @@ extension View {
     /// }
     /// ```
     ///
-    /// - Parameter style: The style to apply to all text fields within the hierarchy.
-    /// 
+    /// - Parameters:
+    ///  - style: The style to apply to all text fields within the hierarchy.
+    ///  - override: Wether to override the existing styles, or aggregate
+    ///  them with the new style.
+    ///
     /// - Returns: A view modified to use the specified text field style.
-    public func emTextFieldStyle<Style: EMTextFieldStyle>(
-        _ style: Style
+    @ViewBuilder public func emTextFieldStyle<Style: EMTextFieldStyle>(
+        _ style: Style,
+        override: Bool = false
     ) -> some View {
-        // TODO: - Remove `swift(>=6.0)` when Xcode 16 comes out of beta.
-#if swift(>=6.0)
-        modifier(EMTextField.StyleViewModifier(style: style))
+            // TODO: - Remove `swift(>=5.10)` when Xcode 16 comes out of beta.
+#if swift(>=5.10)
+        if override {
+            environment(\.emTextFieldStyle, style)
+        }else {
+            modifier(EMTextField.StyleViewModifier(style: style))
+        }
 #else
         environment(\.emTextFieldStyle, style)
 #endif

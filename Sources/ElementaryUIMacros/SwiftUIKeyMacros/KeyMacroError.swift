@@ -18,7 +18,8 @@ package enum KeyMacroError: MacroError {
     /// The property declaration is invalid.
     case invalidDeclaration
     
-    /// The property declaration is missing a default value or an explicitly stated getter.
+    /// The property declaration is missing a default value 
+    /// or an explicitly stated getter.
     case missingDefaultValue
     
     /// The property declaration is missing a type annotation.

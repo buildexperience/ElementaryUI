@@ -13,9 +13,11 @@ import SwiftSyntaxMacros
 import SwiftDiagnostics
 import MacrosKit
 
-/// Requirements for defining a macro used to generate property keys for SwiftUI bindings.
+/// Requirements for defining a macro used to generate 
+/// property keys for SwiftUI bindings.
 ///
-/// This macro enables the creation of a value that can be stored & retreived from it's key protocol storage:
+/// This macro enables the creation of a value that can be 
+/// stored & retreived from it's key protocol storage:
 ///
 /// ```swift
 /// public struct EnvironmentKeyMacro: KeyMacro {
@@ -50,8 +52,11 @@ extension KeyMacro {
     /// 
     /// - Returns: The binding element.
     ///
-    /// - Throws: ``KeyMacroError.invalidPropertyType`` if the declaration is not a variable declaration of type `var`.
-    ///           ``KeyMacroError.invalidDeclaration`` if the declaration is invalid.
+    /// - Throws: ``KeyMacroError.invalidPropertyType``
+    /// if the declaration is not a variable declaration of type `var`.
+    ///           
+    /// - Throws: ``KeyMacroError.invalidDeclaration``
+    /// if the declaration is invalid.
     internal static func binding(
         for declaration: some DeclSyntaxProtocol
     ) throws -> PatternBindingListSyntax.Element {
@@ -67,16 +72,16 @@ extension KeyMacro {
     
     /// Creates a struct key name from a property name & a protocol.
     ///
-    /// Using `text = ""` as the binding from the code below, & `EnvironmentKey` as the protocolName, this function produces
-    /// `EnvironmentKey_text`.
+    /// Using `text = ""` as the binding from the code below, 
+    /// & `EnvironmentKey`  as the protocolName, this function
+    /// produces `EnvironmentKey_text`.
     ///
-    /// - Parameters:
-    ///   - binding: The binding element.
-    ///   - protocolName: The name of the key protocol.
+    /// - Parameter binding: The binding element.
     ///
     /// - Returns: The struct key name.
     ///
-    /// - Throws: ``KeyMacroError.invalidDeclaration`` if the binding is invalid.
+    /// - Throws: ``KeyMacroError.invalidDeclaration`` 
+    /// if the binding is invalid.
     internal static func keyName(
         for binding: PatternBindingListSyntax.Element
     ) throws -> TokenSyntax {
@@ -91,7 +96,8 @@ extension KeyMacro {
 
 // MARK: - AccessorMacro
 extension KeyMacro {
-    /// Generates the computed property for the given declaration, allowing access to the generated key struct.
+    /// Generates the computed property for the given declaration,
+    /// allowing access to the generated key struct.
     package static func expansion(
         of node: AttributeSyntax,
         providingAccessorsOf declaration: some DeclSyntaxProtocol,

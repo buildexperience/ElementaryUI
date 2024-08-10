@@ -24,7 +24,8 @@ import SwiftUI
 /// ```
 ///
 /// - Warning: This is an internal modifier not meant to be used directly.
-/// You should use either ``backgroundSizeListener(_:, _:)``, or ``backgroundSizeListener(_:, _:)`` instead.
+/// You should use either ``backgroundSizeListener(_:, _:)``, 
+/// or ``backgroundSizeListener(_:, _:)`` instead.
 fileprivate struct BackgroundScreenListenerViewModifier: ViewModifier {
     /// Binding to the size that should be updated.
     @Binding fileprivate var size: CGSize?

@@ -13,9 +13,9 @@ public struct EmptyConfiguration { }
 /// the appearance & behavior of a view's content.
 ///
 /// - Warning: Do not conform to this protocol directly. You should use
-/// the ``Stylable(environmentKey:style:configurations:defaultStyle:)``
+/// the ``Stylable(environmentKey:style:configurations:accessLevel:)``
 /// macro instead.
-public protocol ViewStyle<Configuration>: DynamicProperty {
+public protocol ViewStyle<Configuration>: DynamicProperty, Sendable {
     /// The configuration data needed to create the styled view.
     associatedtype Configuration
     

@@ -55,39 +55,6 @@ public struct EMButtonStyleConfiguration {
     public var isPressed: Bool
 }
 
-/// The default style for ``Button`` when ``EMButtonStyleWrapper`` 
-/// is applied.
-public struct DefaultEMButtonStyle: EMButtonStyle {
-    /// Creates a default button style.
-    public init() { }
-    
-    /// Creates a view that represents the styled body of a button.
-    ///
-    /// The system calls this method for each ``Button`` instance
-    /// in a view hierarchy where this style is the current button style
-    /// & ``EMButtonStyleWrapper`` is applied.
-    ///
-    /// - Parameters:
-    ///   - content : The content of the button.
-    ///   - configuration : The properties of the button.
-    ///
-    /// - Returns: The styled styled body of the button.
-    public func makeBody(
-        content: Content,
-        configuration: Configuration
-    ) -> some View {
-        content
-    }
-}
-
-extension EMButtonStyle where Self == DefaultEMButtonStyle {
-    /// The default style for ``Button`` when ``EMButtonStyleWrapper``
-    ///  is applied.
-    public static var `default`: DefaultEMButtonStyle {
-        return DefaultEMButtonStyle()
-    }
-}
-
 extension EnvironmentValues {
     // TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
@@ -122,20 +89,27 @@ extension View {
     /// }
     /// ```
     ///
-    /// - Parameter style: The style to apply to all text fields within 
-    /// the hierarchy.
+    /// - Parameters:
+    ///  - style: The style to apply to all text fields within the hierarchy.
+    ///  - override: Wether to override the existing styles, or aggregate
+    ///  them with the new style.
     ///
     /// - Returns: A view modified to use the specified button style.
     ///
     /// - Warning: You must set the vanilla button style to 
     /// ``EMButtonStyleWrapper``
     /// up the hierarchy, preferably in your ``App`` struct.
-    public func emButtonStyle<S: EMButtonStyle>(
-        _ style: S
+    @ViewBuilder public func emButtonStyle<S: EMButtonStyle>(
+        _ style: S,
+        override: Bool = false
     ) -> some View {
-        // TODO: - Remove `swift(>=6.0)` when Xcode 16 comes out of beta.
-#if swift(>=6.0)
-        modifier(EMButton.StyleViewModifier(style: style))
+            // TODO: - Remove `swift(>=5.10)` when Xcode 16 comes out of beta.
+#if swift(>=5.10)
+        if override {
+            environment(\.emButtonStyle, style)
+        }else {
+            modifier(EMButton.StyleViewModifier(style: style))
+        }
 #else
         environment(\.emButtonStyle, style)
 #endif

@@ -10,17 +10,22 @@ import SwiftUI
 /// Factory for creating variable font descriptors.
 ///
 /// This enum provides static methods to create ``UIFontDescriptor``
-/// or ``NSFontDescriptor`` with variable font attributes based on the platform.
-/// It maps font variation attributes to the appropriate descriptor format for **iOS** or **macOS**.
+/// or ``NSFontDescriptor`` with variable font attributes 
+/// based on the platform.
+/// It maps font variation attributes to the appropriate descriptor
+/// format for **iOS** or **macOS**.
 internal enum VariableFontDescriptorFactory {
 #if canImport(UIKit)
-    /// Creates a ``UIFontDescriptor`` with the specified name & font variation attributes.
+    /// Creates a ``UIFontDescriptor`` with the specified name 
+    /// & font variation attributes.
     ///
     /// - Parameters:
     ///   - name: The name of the font.
-    ///   - attributes: A dictionary of font variation attributes & their corresponding values.
+    ///   - attributes: A dictionary of font variation attributes 
+    ///   & their corresponding values.
     ///
-    /// - Returns: A ``UIFontDescriptor`` instance configured with the specified name & attributes.
+    /// - Returns: A ``UIFontDescriptor`` instance configured 
+    /// with the specified name & attributes.
     internal static func make(
         name: String,
         attributes: [FontVariation: Double]
@@ -37,12 +42,15 @@ internal enum VariableFontDescriptorFactory {
     }
     
 #elseif canImport(AppKit)
-    /// Creates an ``NSFontDescriptor`` with the specified name & font variation attributes.
+    /// Creates an ``NSFontDescriptor`` with the specified name 
+    /// & font variation attributes.
     ///
     /// - Parameters:
     ///   - name: The name of the font.
-    ///   - attributes: A dictionary of font variation attributes & their corresponding values.
-    /// - Returns: An ``NSFontDescriptor`` instance configured with the specified name & attributes.
+    ///   - attributes: A dictionary of font variation attributes 
+    ///   & their corresponding values.
+    /// - Returns: An ``NSFontDescriptor`` instance configured 
+    /// with the specified name & attributes.
     internal static func make(
         name: String,
         attributes: [FontVariation: Double]

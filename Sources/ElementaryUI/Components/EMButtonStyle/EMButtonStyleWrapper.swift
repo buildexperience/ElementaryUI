@@ -93,7 +93,7 @@ extension EMButtonStyleWrapper: ButtonStyle {
     /// hierarchy where this style is the current button style.
     ///
     /// - Parameter configuration : The properties of the button.
-    public func makeBody(configuration: Configuration) -> some View {
+    @MainActor public func makeBody(configuration: Configuration) -> some View {
         let content = AnyView(configuration.label)
         let configuration = EMButtonStyleConfiguration(
             role: configuration.role,
@@ -106,7 +106,7 @@ extension EMButtonStyleWrapper: ButtonStyle {
                     configuration: configuration
                 )
             )
-        }
+        }.foregroundStyle(Color.accentColor)
     }
 }
 
