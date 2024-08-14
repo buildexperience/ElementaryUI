@@ -79,7 +79,7 @@ import SwiftUI
     }
     
     /// Returns `self` inset by `amount`.
-    @MainActor @inlinable public func inset(
+    @inlinable nonisolated public func inset(
         by amount: CGFloat
     ) -> some InsettableShape {
         return RoundableRectangle(
@@ -107,7 +107,7 @@ import SwiftUI
 }
 
 // MARK: - InsettableShape
-#if swift(>=5.10)
+#if swift(>=6.0)
 extension RoundableRectangle: @preconcurrency InsettableShape { }
 #else
 extension RoundableRectangle: InsettableShape { }

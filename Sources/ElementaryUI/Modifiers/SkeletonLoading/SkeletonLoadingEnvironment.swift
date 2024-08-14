@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension EnvironmentValues {
-// TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
     /// The current state of the skeleton loading.
     @Entry public var skeletonLoading = false

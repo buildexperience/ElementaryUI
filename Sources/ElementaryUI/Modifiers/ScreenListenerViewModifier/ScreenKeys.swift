@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension EnvironmentValues {
-// TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
     /// The screen representation of the listener's container view.
     @Entry public var screen = Screen.zero

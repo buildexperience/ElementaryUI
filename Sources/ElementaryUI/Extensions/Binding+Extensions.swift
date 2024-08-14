@@ -67,6 +67,6 @@ extension Binding {
     }
 }
 
-#if swift(>=5.10)
+#if swift(>=6.0)
 extension KeyPath: @unchecked @retroactive Sendable { }
 #endif

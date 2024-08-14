@@ -41,7 +41,7 @@ import SwiftUI
 }
 
 // MARK: - DynamicViewContent
-#if swift(>=5.10)
+#if swift(>=6.0)
 extension ForEachSkeletonView: @preconcurrency DynamicViewContent { }
 #else
 extension ForEachSkeletonView: DynamicViewContent { }

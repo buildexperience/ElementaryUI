@@ -56,7 +56,6 @@ public struct EMButtonStyleConfiguration {
 }
 
 extension EnvironmentValues {
-    // TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
     /// The current button style set in the environment.
     @Entry internal var emButtonStyle: (any EMButtonStyle) = .default
@@ -103,15 +102,10 @@ extension View {
         _ style: S,
         override: Bool = false
     ) -> some View {
-            // TODO: - Remove `swift(>=5.10)` when Xcode 16 comes out of beta.
-#if swift(>=5.10)
         if override {
             environment(\.emButtonStyle, style)
         }else {
             modifier(EMButton.StyleViewModifier(style: style))
         }
-#else
-        environment(\.emButtonStyle, style)
-#endif
     }
 }

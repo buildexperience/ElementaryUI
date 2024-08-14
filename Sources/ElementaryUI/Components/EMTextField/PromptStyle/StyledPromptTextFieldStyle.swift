@@ -71,7 +71,6 @@ fileprivate struct PromptStyleViewModifier: ViewModifier {
 }
 
 extension EnvironmentValues {
-// TODO: - Remove `canImport(SwiftUICore)` when Xcode 16 comes out of beta.
 #if canImport(SwiftUICore)
     /// Key for accessing the ``promptStyle`` environment value.
     @Entry internal var promptStyle: any PromptStyle = .default
@@ -108,15 +107,10 @@ extension View {
         _ style: Style,
         override: Bool = false
     ) -> some View {
-            // TODO: - Remove `swift(>=5.10)` when Xcode 16 comes out of beta.
-#if swift(>=5.10)
         if override {
             environment(\.promptStyle, style)
         }else {
             modifier(PromptStyleViewModifier(style: style))
         }
-#else
-        environment(\.promptStyle, style)
-#endif
     }
 }
