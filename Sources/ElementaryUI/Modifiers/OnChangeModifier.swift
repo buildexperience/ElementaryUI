@@ -59,7 +59,7 @@ extension View {
         initial: Bool = false,
         _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void
     ) -> some View {
-        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
+        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, tvOS 17.0, *) {
             self
                 .onChange(of: value, initial: initial, action)
         }else {

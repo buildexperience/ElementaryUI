@@ -46,7 +46,7 @@ extension View {
     /// - Parameter style: The shape style to apply to the prompt text.
     ///
     /// - Returns: A view modified to use the specified foreground style for prompts.
-    @available(iOS 17.0, macOS 14.0, watchOS 10.0, tvOS 15.0, visionOS 1.0, *)
+    @available(iOS 17.0, macOS 14.0, watchOS 10.0, tvOS 17.0, *)
     @inlinable public func promptForegroundStyle<S: ShapeStyle>(
         _ style: S
     ) -> some View {
@@ -72,7 +72,7 @@ extension View {
     @available(iOS, deprecated: 17.0, renamed: "promptForegroundStyle")
     @available(macOS, deprecated: 14.0, renamed: "promptForegroundStyle")
     @available(watchOS, deprecated: 10.0, renamed: "promptForegroundStyle")
-    @available(tvOS, deprecated: 15.0, renamed: "promptForegroundStyle")
+    @available(tvOS, deprecated: 17.0, renamed: "promptForegroundStyle")
     @available(visionOS, deprecated: 1.0, renamed: "promptForegroundStyle")
     @inlinable public func promptForegroundColor(_ color: Color) -> some View {
         prompt({$0.foregroundColor(color)})
