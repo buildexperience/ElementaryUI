@@ -93,46 +93,4 @@ extension View {
             )
         )
     }
-    
-    /// Adds a background size listener to the view.
-    ///
-    /// This method listens for changes in the view's size
-    /// & updates the provided binding with the new size.
-    /// It also allows an optional closure to determine if the
-    /// size should be updated.
-    ///
-    /// ```swift
-    /// struct ContentView: View {
-    ///     @State var size = CGSize.zero
-    ///     var body: some View {
-    ///         Color.red
-    ///             .backgroundSizeListener($size) { newSize in
-    ///                 return size != newSize
-    ///             }
-    ///     }
-    /// }
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - size: A binding to the size that should be updated.
-    ///   - shouldUpdate: An optional closure to determine
-    ///   if the size should be updated.
-    ///
-    /// - Returns: A view that applies the background size listener.
-    ///
-    /// - Note: The ``GeometryReader`` is added to the
-    /// background of the view.
-    ///
-    /// - Note: This function uses a non optional ``CGSize`` binding.
-    public func backgroundSizeListener(
-        _ size: Binding<CGSize>,
-        _ shouldUpdate: ((_ newSize: CGSize) -> Bool)? = nil
-    ) -> some View {
-        modifier(
-            BackgroundScreenListenerViewModifier(
-                size: size.map({$0}, {$0 ?? .zero}),
-                shouldUpdate: shouldUpdate
-            )
-        )
-    }
 }

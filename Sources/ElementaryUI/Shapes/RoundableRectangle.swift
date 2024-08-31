@@ -14,7 +14,7 @@ import SwiftUI
 @available(watchOS, deprecated: 9.0, renamed: "UnevenRoundedRectangle")
 @available(tvOS, deprecated: 16.0, renamed: "UnevenRoundedRectangle")
 @available(visionOS, deprecated: 1.0, renamed: "UnevenRoundedRectangle")
-@MainActor public struct RoundableRectangle: Shape, Animatable, Sendable {
+@MainActor @preconcurrency public struct RoundableRectangle: Shape, Animatable, Sendable {
     /// The inset amount applied to the frame of the shape.
     @usableFromInline internal let inset: CGFloat
     
@@ -107,8 +107,8 @@ import SwiftUI
 }
 
 // MARK: - InsettableShape
-#if swift(>=6.0)
-extension RoundableRectangle: @preconcurrency InsettableShape { }
+#if compiler(>=6.0)
+extension RoundableRectangle: InsettableShape { }
 #else
 extension RoundableRectangle: InsettableShape { }
 #endif

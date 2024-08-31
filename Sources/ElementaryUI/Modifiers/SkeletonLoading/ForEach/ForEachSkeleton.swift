@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// - Warning: This is an internal modifier not meant to be used directly. 
 /// You should use ``skeletonLoadable()`` instead.
-@MainActor fileprivate struct ForEachSkeletonView<
+@MainActor @preconcurrency fileprivate struct ForEachSkeletonView<
     Content: DynamicViewContent,
     RowContent: View
 > where Content.Data.Element: Identifiable & Sendable {
@@ -41,7 +41,7 @@ import SwiftUI
 }
 
 // MARK: - DynamicViewContent
-#if swift(>=6.0)
+#if compiler(>=6.0)
 extension ForEachSkeletonView: @preconcurrency DynamicViewContent { }
 #else
 extension ForEachSkeletonView: DynamicViewContent { }
