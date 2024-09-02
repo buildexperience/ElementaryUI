@@ -18,11 +18,11 @@ ElementaryUI is a SwiftUI package designed to streamline the development of user
 
 | Platforms | Minimum Version  |         Status       |
 | :---      |       :---:      |         :---:        |
-| iOS       | 15.0             | :white_check_mark:   |
-| macOS     | 12.0             | :white_check_mark:   |
-| watchOS   | 8.0              | :white_check_mark:   |
-| tvOS      | 15.0             | WIP :x:              |
-| visionOS  | 1.0              |:white_check_mark:    |
+| iOS       | 15.0             |  :white_check_mark:  |
+| macOS     | 12.0             |  :white_check_mark:  |
+| watchOS   | 8.0              |  :white_check_mark:  |
+| tvOS      | 15.0             |  :white_check_mark:  |
+| visionOS  | 1.0              |  :white_check_mark:  |
 
 ## Installation
 
