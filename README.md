@@ -12,17 +12,19 @@ ElementaryUI is a SwiftUI package designed to streamline the development of user
 
 - [Platforms](https://github.com/buildexperience/ElementaryUI?tab=readme-ov-file#platforms)
 - [Installation](https://github.com/buildexperience/ElementaryUI?tab=readme-ov-file#installation)
+- [Documentation](https://github.com/buildexperience/ElementaryUI?tab=readme-ov-file#documentation)
+- [Dependencies](https://github.com/buildexperience/ElementaryUI?tab=readme-ov-file#dependencies)
 - [License](https://github.com/buildexperience/ElementaryUI?tab=readme-ov-file#license)
 
 ## Platforms
 
-| Platforms | Minimum Version  |         Status       |
-| :---      |       :---:      |         :---:        |
-| iOS       | 15.0             |  :white_check_mark:  |
-| macOS     | 12.0             |  :white_check_mark:  |
-| watchOS   | 8.0              |  :white_check_mark:  |
-| tvOS      | 15.0             |  :white_check_mark:  |
-| visionOS  | 1.0              |  :white_check_mark:  |
+| Platforms | Minimum Version  |
+| :---      |       :---:      |
+| iOS       | 15.0             |
+| macOS     | 12.0             | 
+| watchOS   | 8.0              |
+| tvOS      | 15.0             |
+| visionOS  | 1.0              |
 
 ## Installation
 
@@ -41,6 +43,20 @@ Then add it to your target:
 ```swift
 .product(name: "ElementaryUI", package: "ElementaryUI")
 ```
+
+
+## Documentation
+
+The [documentation](https://swiftpackageindex.com/buildexperience/ElementaryUI/0.4.7/documentation/elementaryui) is provided by [swiftpackageindex](https://swiftpackageindex.com).
+
+
+## Dependencies
+
+ElementaryUI relies on other packages for specific functionalities:
+
+- [swiftlang/swift-syntax](https://github.com/swiftlang/swift-syntax.git) for the implementation of macros.
+- [buildexperience/MacrosKit](https://github.com/buildexperience/MacrosKit.git) for macro related utilities & helpers.
+
 
 ## License
 
